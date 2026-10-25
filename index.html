@@ -324,6 +324,20 @@ function mdo10EditRfi(id){
  '<label>Stato MdO<select name="stato" class="field">'+['ESER','FUES','OFF','SOPP','DA_VERIFICARE'].map(x=>'<option value="'+x+'" '+(x===s?'selected':'')+'>'+x+'</option>').join('')+'</select></label>'+
  '<label>Data variazione stato<input class="field" type="date" name="data_stato" value="'+esc(m.data_stato||new Date().toISOString().slice(0,10))+'"></label>'+
  '<label class="full">Motivo / anomalia / officina<input class="field" name="causa" value="'+esc(m.causa||'')+'" placeholder="Obbligatorio per FUES e OFF"></label>'+
+ '<h3 class="full">Anagrafica e caratteristiche del mezzo</h3>'+ 
+ '<label class="full">Descrizione<input class="field" name="nome" required value="'+esc(m.nome||'')+'"></label>'+ 
+ '<label>Matricola / identificativo<input class="field" name="matricola" value="'+esc(m.matricola||'')+'"></label>'+ 
+ '<label>Costruttore<input class="field" name="costruttore" value="'+esc(m.costruttore||'')+'"></label>'+ 
+ '<label>Modello<input class="field" name="modello" value="'+esc(m.modello||'')+'"></label>'+ 
+ '<label>Nucleo<input class="field" name="nucleo" value="'+esc(m.nucleo||m.sede||'')+'"></label>'+ 
+ '<label>Riferimento libretto<input class="field" name="libretto" value="'+esc(m.libretto||'')+'"></label>'+ 
+ '<label class="full">Note generali<input class="field" name="note" value="'+esc(m.note||'')+'"></label>'+ 
+ '<h3 class="full">Caratteristiche tecniche</h3>'+tecnicaEditor(m.tecnica||{})+
+ '<h3 class="full">Verifiche del mezzo</h3><p class="small muted full">Indica la data effettiva dell’ultima verifica. Non serve allegare documenti.</p>'+ 
+ '<label>Ultima annuale<input class="field" type="date" name="ultima_annuale" value="'+esc(v.ultima_annuale||'')+'"></label>'+ 
+ '<label>Ultima periodica<input class="field" type="date" name="ultima_periodica" value="'+esc(v.ultima_periodica||'')+'"></label>'+ 
+ '<label>Ultima quinquennale<input class="field" type="date" name="ultima_quinquennale" value="'+esc(v.ultima_quinquennale||'')+'"></label>'+ 
+ '<label>Ultima verifica sollevamento generale<input class="field" type="date" name="ultima_soll_acc" value="'+esc(v.ultima_soll_acc||'')+'"></label>'+ 
  '<h3 class="full">Presenza apparecchiature</h3><div class="full note">Spunta le attrezzature effettivamente presenti. Solo per quelle selezionate compaiono date, verbali e obbligo di verifica. I dati storici già registrati vengono conservati anche se disattivi la presenza.</div>'+sections+
  '<div class="full note">Puoi registrare e modificare le date senza allegare documenti. La data inserita viene registrata e salvata senza richiedere riferimenti documentali.</div>'+
  '<div class="actions full"><button type="button" class="btn" onclick="closeModal()">Annulla</button><button type="submit" class="btn primary">Salva in Supabase</button></div></form>');
@@ -348,12 +362,23 @@ async function mdo10SaveRfi(e,id){
   apparecchiature[o.key]={...prev,presente,verifica_applicabile:applicabile,ultima_verifica:data,verbale,note,...(o.key==='altro'?{descrizione}:{})};
   if(data)verifiche[o.date]=data;
  }
+ const tecnica={...(m.tecnica||{})};
+ for(const key of ['massa_vuoto_t','carico_massimo_t','massa_frenata_vuoto_t','massa_frenata_carico_t','massa_frenata_stazionamento_t','numero_assi','velocita_composizione_kmh','velocita_autonoma_kmh','velocita_lavoro_kmh','lunghezza_mm','potenza_kw']){
+  const raw=String(f.get('tech_'+key)??'').trim();
+  if(raw==='')delete tecnica[key];
+  else {const n=Number(raw);if(!Number.isFinite(n)||n<0)return alert('Valore tecnico non valido: '+key);tecnica[key]=n;}
+ }
+ for(const key of ['aggancio','frenatura'])tecnica[key]=String(f.get('tech_'+key)||'').trim();
+ for(const key of ['ultima_annuale','ultima_periodica','ultima_quinquennale','ultima_soll_acc']){
+  const date=String(f.get(key)||'');if(date)verifiche[key]=date;else delete verifiche[key];
+ }
+ const nome=String(f.get('nome')||'').trim();if(!nome)return alert('Inserisci la descrizione del mezzo');
  const presenti=mdo11Equipment.filter(o=>apparecchiature[o.key].presente);
  const prevista=presenti.some(o=>apparecchiature[o.key].verifica_applicabile==='SI');
- const data={...m,stato,causa,data_stato:String(f.get('data_stato')||''),apparecchiature,verifiche,sollevamento_previsto:prevista?true:presenti.length===0?false:undefined,dataAggiornamento:new Date().toISOString()};
+ const data={...m,nome,matricola:String(f.get('matricola')||''),costruttore:String(f.get('costruttore')||''),modello:String(f.get('modello')||''),nucleo:String(f.get('nucleo')||''),libretto:String(f.get('libretto')||''),note:String(f.get('note')||''),tecnica,stato,causa,data_stato:String(f.get('data_stato')||''),apparecchiature,verifiche,sollevamento_previsto:prevista?true:presenti.length===0?false:undefined,dataAggiornamento:new Date().toISOString()};
  const btn=e.target.querySelector('button[type="submit"]');if(btn)btn.disabled=true;
  try{
-  mdoStatus('Salvataggio attrezzature e stato…');
+  mdoStatus('Salvataggio scheda completa MdO…');
   const {error}=await mdoClient.from('mdo_mezzi').upsert(mdoRow(data),{onConflict:'codice_sap'});if(error)throw error;
   await mdoLoadRemote();closeModal();render();mdoStatus('Scheda MdO '+id+' aggiornata su Supabase');
  }catch(err){mdoStatus('Modifica NON salvata: '+err.message,true);alert('Modifica non salvata: '+err.message)}finally{if(btn)btn.disabled=false}
