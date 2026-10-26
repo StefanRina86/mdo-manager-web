@@ -1095,7 +1095,10 @@ mdo18PrintFuel=function(r){
  const w=window.open('','_blank');
  if(!w){alert('Abilita le finestre popup per stampare il TV301.');return}
  w.document.open();w.document.write('<!doctype html><html lang="it"><head><meta charset="utf-8"><title>Mod. TV 301 G · A5</title>'+css+'</head><body>'+body+'</body></html>');w.document.close();w.focus();
- setTimeout(()=>w.print(),400);
+ const pic=w.document.querySelector('.rfi-official');let printed=false;
+ const fire=()=>{if(printed)return;printed=true;w.focus();w.print()};
+ if(pic){if(pic.complete&&pic.naturalWidth)fire();else{pic.addEventListener('load',fire,{once:true});pic.addEventListener('error',()=>alert('Logo TV301 non caricato: controlla assets/logo-rfi-tv301.svg'),{once:true})}}
+ else alert('Logo TV301 mancante dalla stampa');
 };
 // Nell'elenco rifornimenti il comando resta indipendente dai movimenti di cisterna.
 const mdo26RefreshFuel=mdo18Refresh;
