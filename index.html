@@ -2,7 +2,7 @@
 :root{--nav:#0b263f;--blue:#0879be;--bg:#f2f5f8;--line:#dce4ed;--text:#243348;--muted:#607489;--card:#fff;--red:#c73341;--yellow:#b97710;--green:#197654}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:default}.app{display:flex;min-height:100vh}.side{background:var(--nav);color:#dce9f5;width:242px;flex-shrink:0;padding:24px 12px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;padding:5px 12px 23px}.brand-mark{background:var(--blue);padding:8px;border-radius:9px;color:white}.subbrand{font-size:11px;font-weight:500;opacity:.8}.nav{display:block;width:100%;border:0;background:transparent;color:#bdcfe1;text-align:left;padding:11px 14px;border-radius:9px;margin:4px 0;font-weight:550}.nav:hover,.nav.active{background:#174669;color:white}.foot{position:absolute;bottom:17px;left:18px;right:18px;font-size:11px;color:#b5c6d5}.main{flex:1;min-width:0}.top{background:white;border-bottom:1px solid var(--line);padding:17px 27px;display:flex;justify-content:space-between;align-items:center;gap:10px}.top h1{font-size:21px;margin:0}.content{padding:24px 27px;max-width:1450px}.muted{color:var(--muted)}h2{font-size:18px;margin:0 0 14px}h3{font-size:15px;margin:0 0 12px}.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:20px}.kpi,.panel{background:white;border:1px solid var(--line);border-radius:13px;padding:18px}.kpi .num{font-size:29px;font-weight:760}.kpi .tiny{font-size:12px;color:var(--muted)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{margin-bottom:16px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}.toolbar .grow{flex:1}.btn{border:1px solid var(--line);padding:9px 13px;border-radius:8px;background:white;color:var(--text);font-weight:650}.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}.btn.danger{color:var(--red)}.field{border:1px solid #cbd5e0;border-radius:7px;padding:9px 10px;background:white;color:var(--text);min-width:0}.toolbar input{width:300px;max-width:100%}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:11px}table{border-collapse:collapse;width:100%;background:white;text-align:left}th,td{padding:11px 12px;border-bottom:1px solid #edf1f5;white-space:nowrap}th{font-size:12px;color:#5d7084;background:#f9fbfd}tr:last-child td{border-bottom:0}tr:hover td{background:#f8fafc}.tag{display:inline-block;padding:3px 9px;font-size:11px;border-radius:30px;font-weight:800;background:#eaf0f7;color:#456}.tag.ESER{background:#dff5e9;color:#126a48}.tag.FUES{background:#fff0df;color:#985000}.tag.OFF{background:#ffe2e7;color:#a71d30}.tag.SOPP{background:#e4e7eb;color:#596271}.tag.DA_VERIFICARE{background:#edf0f6;color:#425d82}.click{color:#0676b4;background:none;border:0;padding:0;font-weight:700;text-align:left}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.formgrid label{display:flex;flex-direction:column;gap:5px;font-weight:650;font-size:12px}.formgrid input,.formgrid select,.formgrid textarea{width:100%}.full{grid-column:1/-1}.note{border-left:4px solid #6a92b0;background:#edf5fc;padding:10px 13px;border-radius:5px;margin-bottom:18px}.warn{border-left-color:#e0a94b;background:#fff8e8}.bad{border-left-color:#bb3348;background:#fff0f1}.actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:15px}.stack{display:grid;gap:10px}.item{border:1px solid var(--line);border-radius:9px;padding:12px}.small{font-size:12px}.pill{padding:2px 7px;border:1px solid var(--line);border-radius:6px;font-size:12px}.empty{padding:35px;text-align:center;color:var(--muted)}.dialog-bg{position:fixed;inset:0;background:#071b2aaa;display:flex;align-items:center;justify-content:center;z-index:20;padding:12px}.dialog{background:white;max-width:850px;width:100%;max-height:90vh;overflow:auto;border-radius:14px;padding:22px;box-shadow:0 12px 50px #0015}.dialog h2{margin-right:32px}.close{float:right;border:none;background:none;font-size:25px;line-height:1}.mobile-menu{display:none}.status-led{width:9px;height:9px;border-radius:100%;background:var(--yellow);display:inline-block;margin-right:4px}@media(max-width:980px){.kpis{grid-template-columns:repeat(3,1fr)}.side{width:190px}.grid2{grid-template-columns:1fr}}@media(max-width:700px){.side{display:none;position:fixed;z-index:15;top:0;left:0;width:250px}.side.open{display:block}.mobile-menu{display:inline-block}.top{padding:12px 14px}.top h1{font-size:17px}.content{padding:13px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi{padding:12px}.kpi .num{font-size:24px}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.panel{padding:13px}.toolbar .grow{flex-basis:100%}.toolbar input{width:100%}}
 
 @media(max-width:740px){.formgrid{grid-template-columns:1fr!important}.grid2{grid-template-columns:1fr!important}}
-</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></head><body><div class="app" style="display:none"><aside class="side" id="sidebar"><div class="brand"><span class="brand-mark">M</span><div>MDO Manager<div class="subbrand">UM TE1 · Gallarate</div></div></div><nav id="nav"></nav><div class="foot">Versione online 2.2 · Supabase<br>Non sostituisce le verifiche RFI</div></aside><div class="main"><header class="top"><div style="display:flex;align-items:center;gap:10px"><button class="btn mobile-menu" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button><h1 id="title">Dashboard</h1></div><span class="muted small">● Sincronizzato con Supabase</span></header><main class="content" id="view"></main></div></div><div id="modal"></div><script>
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></head><body><div class="app" style="display:none"><aside class="side" id="sidebar"><div class="brand"><span class="brand-mark">M</span><div>MDO Manager<div class="subbrand">UM TE1 · Gallarate</div></div></div><nav id="nav"></nav><div class="foot">Versione online 2.4 · Supabase<br>Non sostituisce le verifiche RFI</div></aside><div class="main"><header class="top"><div style="display:flex;align-items:center;gap:10px"><button class="btn mobile-menu" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button><h1 id="title">Dashboard</h1></div><span class="muted small">● Sincronizzato con Supabase</span></header><main class="content" id="view"></main></div></div><div id="modal"></div><script>
 const SEED=[];
 const SAP_ORDINI_SEED=[];
 const KEY='mdo_manager_v1';
@@ -754,6 +754,89 @@ mdo18PrintFuel=function(r){
  // Use the previously implemented 3-section document while replacing unused fields and adding mileage.
  const dat={...r,dpt:'',genere_servizio:'',commessa:''};
  mdo23OldPrintFuel(dat);
+};
+
+
+// v2.4: staff directory and compact original-style TV301 A4
+let mdo24People=[];
+async function mdo24LoadPeople(){
+ if(!mdoSession)return [];
+ const {data,error}=await mdoClient.from('mdo_personale_carburante').select('id,cognome,nome,cid,puo_prelevare,puo_erogare,attivo').order('cognome');
+ if(error)throw Error('Anagrafica personale non disponibile: '+error.message+' — eseguire SQL 2.4');
+ mdo24People=data||[];return mdo24People;
+}
+function mdo24PersonOptions(kind){const perm=kind==='agente'?'puo_prelevare':'puo_erogare';return '<option value="">Seleziona nominativo · CID</option>'+mdo24People.filter(p=>p.attivo&&p[perm]).map(p=>'<option value="'+esc(p.id)+'">'+esc(p.cognome+' '+p.nome+' · CID '+p.cid)+'</option>').join('')}
+function mdo24PersonModal(){
+ if(mdoRole!=='admin')return alert('Riservato amministratore.');
+ const rows=mdo24People.map(p=>'<tr><td>'+esc(p.cognome+' '+p.nome)+'</td><td>'+esc(p.cid)+'</td><td>'+(p.puo_prelevare?'Sì':'No')+'</td><td>'+(p.puo_erogare?'Sì':'No')+'</td><td>'+(p.attivo?'Attivo':'Disattivato')+'</td><td><button class="btn" onclick="mdo24EditPerson(\''+esc(p.id)+'\')">Modifica</button></td></tr>');
+ modal('<h2>Personale rifornimenti</h2><p>Una sola anagrafica per nominativo e CID. Definisci chi può ricevere gasolio per un MdO e chi può erogarlo dalla cisterna.</p><button class="btn primary" onclick="mdo24EditPerson()">+ Aggiungi nominativo</button>'+tabella(['Nominativo','CID','Prelievo','Fornitura','Stato',''],rows));
+}
+function mdo24EditPerson(id=''){
+ if(mdoRole!=='admin')return;
+ const p=mdo24People.find(x=>x.id===id)||{};
+ modal('<h2>'+(id?'Modifica nominativo':'Nuovo nominativo')+'</h2><form class="formgrid" onsubmit="mdo24SavePerson(event,\''+esc(id)+'\')">'+
+ '<label>Cognome *<input class="field" name="cognome" required value="'+esc(p.cognome||'')+'"></label>'+ 
+ '<label>Nome *<input class="field" name="nome" required value="'+esc(p.nome||'')+'"></label>'+ 
+ '<label>CID *<input class="field" name="cid" required value="'+esc(p.cid||'')+'"></label>'+ 
+ '<label><input type="checkbox" name="prelievo" '+(p.puo_prelevare?'checked':'')+'> Abilitato al prelievo (riceve)</label>'+ 
+ '<label><input type="checkbox" name="erogazione" '+(p.puo_erogare?'checked':'')+'> Abilitato alla fornitura (eroga)</label>'+ 
+ '<label><input type="checkbox" name="attivo" '+(p.attivo===false?'':'checked')+'> Attivo</label>'+ 
+ '<div class="actions full"><button class="btn primary" type="submit">Salva</button><button class="btn" type="button" onclick="mdo24PersonModal()">Indietro</button></div></form>');
+}
+async function mdo24SavePerson(e,id){
+ e.preventDefault();if(mdoRole!=='admin')return;
+ const f=new FormData(e.target),btn=e.target.querySelector('[type=submit]');btn.disabled=true;
+ const row={cognome:String(f.get('cognome')||'').trim(),nome:String(f.get('nome')||'').trim(),cid:String(f.get('cid')||'').trim(),puo_prelevare:f.has('prelievo'),puo_erogare:f.has('erogazione'),attivo:f.has('attivo')};
+ try{const q=id?mdoClient.from('mdo_personale_carburante').update(row).eq('id',id):mdoClient.from('mdo_personale_carburante').insert(row);
+ const {error}=await q;if(error)throw error;await mdo24LoadPeople();mdo24PersonModal();mdoStatus('Nominativo salvato su Supabase');}
+ catch(err){alert('Non salvato: '+err.message)}finally{btn.disabled=false}
+}
+const mdo24OldAdmin=admin;
+admin=function(){return (mdoRole==='admin'?'<div class="toolbar"><button class="btn primary" onclick="mdo24OpenPeople()">Gestisci personale gasolio (CID)</button></div>':'')+mdo24OldAdmin()};
+async function mdo24OpenPeople(){try{await mdo24LoadPeople();mdo24PersonModal()}catch(err){alert(err.message)}}
+
+mdo18NewFuel=async function(id=''){
+ try{await mdo24LoadPeople()}catch(err){return alert(err.message)}
+ const opts=mdo21Tanks.filter(t=>t.attiva).map(t=>'<option value="'+esc(t.id)+'">'+esc(t.nome)+' · '+esc(t.giacenza_l)+' L</option>').join('');
+ const field=(n,label,type='text',other='')=>mdo18Input(n,label,type,'',other);
+ modal('<h2>TV301 · Rifornimento MdO</h2><p class="small muted">Nominativi selezionati dall’elenco CID. Dati condivisi su Supabase.</p>'+ 
+ '<form class="formgrid" onsubmit="mdo24SaveFuel(event)">'+mdo18Select('mezzo',id)+mdo18Input('data','Data rifornimento *','date',new Date().toISOString().slice(0,10),'required')+
+ field('numero','Numero TV301')+'<label>Cisterna UM *<select class="field" name="cisterna_um" required onchange="mdo23TankChanged()"><option value="">Seleziona cisterna</option>'+opts+'</select></label>'+ 
+ '<label>Incaricato al prelievo *<select class="field" name="agente_persona" required>'+mdo24PersonOptions('agente')+'</select></label>'+ 
+ '<label>Addetto alla fornitura *<select class="field" name="fornitore_persona" required>'+mdo24PersonOptions('fornitore')+'</select></label>'+ 
+ field('contatore_motore','Contaore del MdO','number','step="any" min="0"')+field('chilometri','Chilometri del MdO','number','step="any" min="0"')+field('luogo','Località')+
+ '<label>Contalitri iniziale *<input class="field" type="number" step="0.01" min="0" name="conta_ini" required '+(mdoRole==='admin'?'':'readonly')+'></label>'+ 
+ field('conta_fine','Contalitri finale *','number','step="0.01" min="0" required')+field('densita','Densità gasolio','number','step="any" min="0"')+field('temperatura','Temperatura gasolio (°C)','number','step="0.1"')+
+ '<label class="full">Note<input class="field" name="note"></label><div class="actions full"><button type="submit" class="btn primary">Salva e stampa TV301</button></div></form>');
+};
+const mdo24OldSaveFuel=mdo18SaveFuel;
+mdo24SaveFuel=async function(e){
+ e.preventDefault();const form=e.target;
+ for(const [role,ref] of [['agente','agente_persona'],['fornitore','fornitore_persona']]){
+  const id=form.elements[ref].value,p=mdo24People.find(x=>x.id===id);
+  if(!p||!p.attivo||(role==='agente'?!p.puo_prelevare:!p.puo_erogare))return alert('Selezionare un nominativo abilitato per '+(role==='agente'?'prelievo':'fornitura'));
+  for(const k of ['cognome','nome','cid']){const h=document.createElement('input');h.type='hidden';h.name=role+'_'+k;h.value=p[k];form.appendChild(h)}
+ }
+ await mdo24OldSaveFuel(e);
+};
+// Redrawn 3-section form. Keep signatures blank; print with no footer text split to another page.
+mdo18PrintFuel=function(r){
+ const p=(v)=>esc(String(v??''));
+ const full=(a,b)=>[a,b].filter(Boolean).join(' ').trim();
+ const tank=mdo21Tanks.find(t=>t.id===r.cisterna_id)?.nome||r.luogo||'';
+ const row=(label,val)=>'<div class="line"><span>'+p(label)+'</span><strong>'+p(val)+'</strong></div>';
+ const layout='<div class="sheet"><div class="head"><div class="mark">RFI <small>RETE FERROVIARIA ITALIANA</small></div><div>GRUPPO FERROVIE DELLO STATO</div></div>'+ 
+ '<div class="subtitle">Buono per il prelievo di gasolio <b><u>Mod. TV 301G</u></b> agevolato/nazionalizzato per MdM/MdO <b>N° '+p(r.numero_tv301)+'</b></div>'+ 
+ '<h3>01) - Rotabile/Mezzo d’opera prelevante</h3><div class="frame">'+ 
+ row('MdM/MdO n°',r.codice_sap+' · '+(r.mezzo_descrizione||''))+row('Lettura del contatore prima del rifornimento',r.ore_motore!=null?r.ore_motore+' h':(r.chilometri!=null?r.chilometri+' km':''))+ 
+ row('Chilometri / contaore',[(r.chilometri!=null?r.chilometri+' km':''),(r.ore_motore!=null?r.ore_motore+' h':'')].filter(Boolean).join(' · '))+ 
+ row('Agente prelevante · COGNOME / NOME',full(r.agente_cognome,r.agente_nome)+' · CID '+(r.agente_cid||''))+'</div>'+ 
+ '<h3>02) - Diesel Tank erogante</h3><div class="frame">'+row('Deposito combustibile di',tank)+row('Lettura contalitri prima del prelievo',r.contatore_iniziale)+row('Lettura contalitri dopo il prelievo',r.contatore_finale)+row('Gasolio agevolato/nazionalizzato: totale prelievo',r.litri+' L')+row('Densità gasolio atto prelievo',r.densita)+row('Temperatura gasolio atto prelievo',r.temperatura!=null?r.temperatura+' °C':'')+'</div>'+ 
+ '<h3>03) - Data e firme</h3><div class="frame"><div class="date">Giorno / Mese / Anno &nbsp; <b>'+p(r.data_rifornimento)+'</b></div>'+row('Incaricato al prelievo',full(r.agente_cognome,r.agente_nome)+' · CID '+(r.agente_cid||''))+row('Addetto alla fornitura',full(r.fornitore_cognome,r.fornitore_nome)+' · CID '+(r.fornitore_cid||''))+'<div class="signature">Firma dell’agente incaricato al prelievo <span>____________________________</span></div><div class="signature">Firma dell’addetto alla fornitura <span>____________________________</span></div></div>'+ 
+ '<footer>Il presente modulo va redatto in triplice copia</footer></div>';
+ const css='<style>@page{size:A4 portrait;margin:9mm}html,body{margin:0;padding:0;color:#122e56;font-family:Arial,sans-serif;font-size:10px}.sheet{width:100%;box-sizing:border-box;break-inside:avoid;page-break-inside:avoid}.head{font-size:11px;font-weight:bold;margin:2mm 0 3mm}.mark{font-size:19px;color:#086b87}.mark small{font-size:9px;margin-left:5px}.subtitle{font-size:11px;margin-bottom:3mm}.subtitle b:last-child{float:right}.sheet h3{font-size:11px;margin:4mm 0 1mm;color:#143c75}.frame{border:1.2px solid #303b45;padding:2mm 3mm}.line{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #8d9298;min-height:7mm;gap:10px}.line:last-child{border-bottom:0}.line span{width:54%}.line strong{width:46%;font-size:11px;text-align:left;color:#172d45;font-weight:600;overflow-wrap:anywhere}.date{padding:3mm 0;border-bottom:1px solid #888}.signature{min-height:11mm;display:flex;align-items:center;justify-content:space-between;gap:15px}.signature span{letter-spacing:1px}.sheet footer{text-align:right;font-size:9px;margin-top:2mm;text-decoration:underline}@media print{.sheet{height:auto;max-height:275mm}body{margin:0}html,body{print-color-adjust:exact;-webkit-print-color-adjust:exact}}</style>';
+ const w=window.open('','_blank');if(!w)return alert('Consenti i popup e stampa il TV301 dal registro rifornimenti.');
+ w.document.write('<!doctype html><html lang="it"><head><meta charset="utf-8"><title>Mod. TV 301G</title>'+css+'</head><body>'+layout+'</body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),350);
 };
 
 mdoBoot();
