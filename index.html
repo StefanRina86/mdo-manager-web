@@ -1510,8 +1510,8 @@ async function mdo31SaveCompany(e,id){
   fonte_date:String(f.get('fonte_date')||'').trim(),fonte_validata:true,
   stato:'CENSITO',abilitaComposizione:true,dataAggiornamento:new Date().toISOString()};
  try{
-  const {error}=await mdoClient.from('mdo_mezzi').update(mdoRow(upd)).eq('codice_sap',id).eq('proprietario','IMPRESA');
-  if(error)throw error;
+  const {data,error}=await mdoClient.from('mdo_mezzi').update(mdoRow(upd)).eq('codice_sap',id).eq('proprietario','IMPRESA').select('codice_sap');
+  if(error)throw error;if(!data?.length)throw Error('Supabase non ha aggiornato il mezzo: controlla i permessi');
   await mdoLoadRemote();closeModal();render();mdo15ShowGroup(firm);mdoStatus('MdO impresa aggiornato: '+id);
  }catch(err){alert('Modifica NON salvata: '+err.message)}
 }
@@ -1523,8 +1523,8 @@ async function mdo31DeleteCompany(id){
   (used?'ATTENZIONE: compare in '+used+' studi condivisi. Quegli studi potrebbero non trovare più il mezzo.\n':'')+
   'Le eventuali carte conservate separatamente non saranno cancellate.'))return;
  try{
-  const {error}=await mdoClient.from('mdo_mezzi').delete().eq('codice_sap',id).eq('proprietario','IMPRESA');
-  if(error)throw error;
+  const {data,error}=await mdoClient.from('mdo_mezzi').delete().eq('codice_sap',id).eq('proprietario','IMPRESA').select('codice_sap');
+  if(error)throw error;if(!data?.length)throw Error('Supabase non ha eliminato il mezzo: controlla i permessi');
   await mdoLoadRemote();render();mdo15ShowGroup(m.impresa);mdoStatus('MdO impresa eliminato: '+id);
  }catch(err){alert('Eliminazione NON riuscita: '+err.message)}
 }
@@ -1656,6 +1656,19 @@ calcoli=function(){
   'Senza carte, dati della linea e verifiche documentali il sistema non emette esiti favorevoli.',
   'I dati dei MdO censiti sono acquisiti dalle carte di circolazione e dalla documentazione tecnica già consultata. Non serve allegare nuovamente i documenti nello studio. Il calcolo verifica i parametri inseriti; la compatibilità con la tratta, le prestazioni, le prescrizioni e le condizioni reali di circolazione richiedono comunque i rispettivi controlli.'
  );
+};
+
+
+// Le schede d'impresa censite nelle vecchie versioni (DA_VERIFICARE) appaiono
+// come CENSITO in ogni elenco dopo la sincronizzazione. Non si altera il dato RFI.
+const mdo31LoadRemoteOld=mdoLoadRemote;
+mdoLoadRemote=async function(){
+ await mdo31LoadRemoteOld();
+ for(const m of db.mezzi){
+  if(m.proprieta==='IMPRESA'&&m.stato==='DA_VERIFICARE'){
+   m.stato='CENSITO';m.fonte_validata=true;m.abilitaComposizione=true;
+  }
+ }
 };
 
 mdoBoot();
