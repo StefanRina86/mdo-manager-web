@@ -2,7 +2,7 @@
 :root{--nav:#0b263f;--blue:#0879be;--bg:#f2f5f8;--line:#dce4ed;--text:#243348;--muted:#607489;--card:#fff;--red:#c73341;--yellow:#b97710;--green:#197654}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:default}.app{display:flex;min-height:100vh}.side{background:var(--nav);color:#dce9f5;width:242px;flex-shrink:0;padding:24px 12px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;padding:5px 12px 23px}.brand-mark{background:var(--blue);padding:8px;border-radius:9px;color:white}.subbrand{font-size:11px;font-weight:500;opacity:.8}.nav{display:block;width:100%;border:0;background:transparent;color:#bdcfe1;text-align:left;padding:11px 14px;border-radius:9px;margin:4px 0;font-weight:550}.nav:hover,.nav.active{background:#174669;color:white}.foot{position:absolute;bottom:17px;left:18px;right:18px;font-size:11px;color:#b5c6d5}.main{flex:1;min-width:0}.top{background:white;border-bottom:1px solid var(--line);padding:17px 27px;display:flex;justify-content:space-between;align-items:center;gap:10px}.top h1{font-size:21px;margin:0}.content{padding:24px 27px;max-width:1450px}.muted{color:var(--muted)}h2{font-size:18px;margin:0 0 14px}h3{font-size:15px;margin:0 0 12px}.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:20px}.kpi,.panel{background:white;border:1px solid var(--line);border-radius:13px;padding:18px}.kpi .num{font-size:29px;font-weight:760}.kpi .tiny{font-size:12px;color:var(--muted)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{margin-bottom:16px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}.toolbar .grow{flex:1}.btn{border:1px solid var(--line);padding:9px 13px;border-radius:8px;background:white;color:var(--text);font-weight:650}.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}.btn.danger{color:var(--red)}.field{border:1px solid #cbd5e0;border-radius:7px;padding:9px 10px;background:white;color:var(--text);min-width:0}.toolbar input{width:300px;max-width:100%}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:11px}table{border-collapse:collapse;width:100%;background:white;text-align:left}th,td{padding:11px 12px;border-bottom:1px solid #edf1f5;white-space:nowrap}th{font-size:12px;color:#5d7084;background:#f9fbfd}tr:last-child td{border-bottom:0}tr:hover td{background:#f8fafc}.tag{display:inline-block;padding:3px 9px;font-size:11px;border-radius:30px;font-weight:800;background:#eaf0f7;color:#456}.tag.ESER{background:#dff5e9;color:#126a48}.tag.FUES{background:#fff0df;color:#985000}.tag.OFF{background:#ffe2e7;color:#a71d30}.tag.SOPP{background:#e4e7eb;color:#596271}.tag.DA_VERIFICARE{background:#edf0f6;color:#425d82}.click{color:#0676b4;background:none;border:0;padding:0;font-weight:700;text-align:left}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.formgrid label{display:flex;flex-direction:column;gap:5px;font-weight:650;font-size:12px}.formgrid input,.formgrid select,.formgrid textarea{width:100%}.full{grid-column:1/-1}.note{border-left:4px solid #6a92b0;background:#edf5fc;padding:10px 13px;border-radius:5px;margin-bottom:18px}.warn{border-left-color:#e0a94b;background:#fff8e8}.bad{border-left-color:#bb3348;background:#fff0f1}.actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:15px}.stack{display:grid;gap:10px}.item{border:1px solid var(--line);border-radius:9px;padding:12px}.small{font-size:12px}.pill{padding:2px 7px;border:1px solid var(--line);border-radius:6px;font-size:12px}.empty{padding:35px;text-align:center;color:var(--muted)}.dialog-bg{position:fixed;inset:0;background:#071b2aaa;display:flex;align-items:center;justify-content:center;z-index:20;padding:12px}.dialog{background:white;max-width:850px;width:100%;max-height:90vh;overflow:auto;border-radius:14px;padding:22px;box-shadow:0 12px 50px #0015}.dialog h2{margin-right:32px}.close{float:right;border:none;background:none;font-size:25px;line-height:1}.mobile-menu{display:none}.status-led{width:9px;height:9px;border-radius:100%;background:var(--yellow);display:inline-block;margin-right:4px}@media(max-width:980px){.kpis{grid-template-columns:repeat(3,1fr)}.side{width:190px}.grid2{grid-template-columns:1fr}}@media(max-width:700px){.side{display:none;position:fixed;z-index:15;top:0;left:0;width:250px}.side.open{display:block}.mobile-menu{display:inline-block}.top{padding:12px 14px}.top h1{font-size:17px}.content{padding:13px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi{padding:12px}.kpi .num{font-size:24px}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.panel{padding:13px}.toolbar .grow{flex-basis:100%}.toolbar input{width:100%}}
 
 @media(max-width:740px){.formgrid{grid-template-columns:1fr!important}.grid2{grid-template-columns:1fr!important}}
-</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></head><body><div class="app" style="display:none"><aside class="side" id="sidebar"><div class="brand"><span class="brand-mark">M</span><div>MDO Manager<div class="subbrand">UM TE1 · Gallarate</div></div></div><nav id="nav"></nav><div class="foot">Versione online 2.4 · Supabase<br>Non sostituisce le verifiche RFI</div></aside><div class="main"><header class="top"><div style="display:flex;align-items:center;gap:10px"><button class="btn mobile-menu" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button><h1 id="title">Dashboard</h1></div><span class="muted small">● Sincronizzato con Supabase</span></header><main class="content" id="view"></main></div></div><div id="modal"></div><script>
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></head><body><div class="app" style="display:none"><aside class="side" id="sidebar"><div class="brand"><span class="brand-mark">M</span><div>MDO Manager<div class="subbrand">UM TE1 · Gallarate</div></div></div><nav id="nav"></nav><div class="foot">Versione online 2.5 · Supabase<br>Non sostituisce le verifiche RFI</div></aside><div class="main"><header class="top"><div style="display:flex;align-items:center;gap:10px"><button class="btn mobile-menu" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button><h1 id="title">Dashboard</h1></div><span class="muted small">● Sincronizzato con Supabase</span></header><main class="content" id="view"></main></div></div><div id="modal"></div><script>
 const SEED=[];
 const SAP_ORDINI_SEED=[];
 const KEY='mdo_manager_v1';
@@ -838,6 +838,200 @@ mdo18PrintFuel=function(r){
  const w=window.open('','_blank');if(!w)return alert('Consenti i popup e stampa il TV301 dal registro rifornimenti.');
  w.document.write('<!doctype html><html lang="it"><head><meta charset="utf-8"><title>Mod. TV 301G</title>'+css+'</head><body>'+layout+'</body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),350);
 };
+
+// MDO Manager 2.5 — A5 landscape TV301 + amministrazione rettifiche
+// REQUIRE SQL migration MDO_Manager_v25_rettifiche.sql.
+
+function mdo25FmtN(v){return v==null||v===''?'':String(v)}
+function mdo25Rows(opts,values){return opts.map(([v,label])=>'<option value="'+esc(v)+'" '+(String(values)===String(v)?'selected':'')+'>'+esc(label)+'</option>').join('')}
+function mdo25DateLocal(iso){if(!iso)return '';const d=new Date(iso);if(!Number.isFinite(d.getTime()))return '';return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16)}
+
+// Evidenzia rifornimenti annullati; i documenti storici restano consultabili.
+const mdo25OldFuelRefresh=mdo18Refresh;
+mdo18Refresh=async function(){
+ await mdo25OldFuelRefresh();
+ const c=document.getElementById('mdo18Logs'),list=window.mdo18Fuel;
+ if(!c||!Array.isArray(list))return;
+ const tables=c.querySelectorAll('table');if(tables.length<2)return;
+ const table=tables[tables.length-1];
+ table.querySelector('thead tr')?.insertAdjacentHTML('beforeend','<th>Rettifiche</th>');
+ table.querySelectorAll('tbody tr').forEach((tr,i)=>{
+   const r=list[i];if(!r)return;
+   const td=document.createElement('td');
+   if(r.annullato){tr.style.opacity='.65';td.textContent='ANNULLATO · storico';}
+   else if(mdoRole==='admin')td.innerHTML='<button class="btn" onclick="mdo25EditFuel('+i+')">Modifica</button> <button class="btn" onclick="mdo25CancelFuel('+i+')">Annulla</button>';
+   else td.textContent='—';
+   tr.appendChild(td);
+   if(r.annullato){const first=tr.children[0];if(first)first.textContent+=' · ANNULLATO';}
+ });
+ const n=document.createElement('p');n.className='small muted';n.textContent='Le registrazioni annullate e le rettifiche restano nello storico; solo l’amministratore può modificarle.';table.parentElement?.before(n);
+};
+
+async function mdo25EditFuel(i){
+ if(mdoRole!=='admin')return alert('Modifica riservata all’amministratore');
+ const r=window.mdo18Fuel?.[i];if(!r||r.annullato)return;
+ try{await mdo24LoadPeople()}catch(err){return alert(err.message)}
+ const opts=mdo21Tanks.filter(z=>z.attiva||z.id===r.cisterna_id).map(z=>[z.id,z.nome+' · '+z.giacenza_l+' L']);
+ const people=(perm,cid)=>'<option value="">Seleziona nominativo</option>'+mdo24People.filter(p=>p.attivo&&p[perm]||p.cid===cid).map(p=>'<option value="'+esc(p.id)+'" '+(p.cid===cid?'selected':'')+'>'+esc(p.cognome+' '+p.nome+' · CID '+p.cid)+'</option>').join('');
+ modal('<h2>Correggi rifornimento TV301</h2><div class="note warn">La correzione è tracciata: il TV301 precedente viene annullato, il relativo gasolio stornato e una nuova versione registrata. Se i quantitativi non sono compatibili con la giacenza corrente, la modifica sarà rifiutata. Le registrazioni su GAMOC devono essere corrette separatamente.</div>'+ 
+ '<form class="formgrid" onsubmit="mdo25SaveFuelEdit(event,\''+esc(r.id)+'\')">'+
+ '<label>Mezzo RFI *<select class="field" name="mezzo" required>'+mdo25Rows(db.mezzi.filter(x=>x.proprieta!=='IMPRESA'&&!x.archiviato).map(x=>[x.id,x.id+' · '+x.nome]),r.codice_sap)+'</select></label>'+mdo18Input('data','Data rifornimento','date',r.data_rifornimento,'required')+
+ mdo18Input('numero','Numero TV301','text',r.numero_tv301||'')+
+ '<label>Cisterna UM<select class="field" name="cisterna" required>'+mdo25Rows(opts,r.cisterna_id)+'</select></label>'+ 
+ '<label>Incaricato al prelievo<select class="field" name="agente" required>'+people('puo_prelevare',r.agente_cid)+'</select></label>'+ 
+ '<label>Addetto alla fornitura<select class="field" name="fornitore" required>'+people('puo_erogare',r.fornitore_cid)+'</select></label>'+ 
+ mdo18Input('ore','Contaore MdO','number',mdo25FmtN(r.ore_motore),'step="any" min="0"')+mdo18Input('km','Chilometri MdO','number',mdo25FmtN(r.chilometri),'step="any" min="0"')+
+ mdo18Input('iniziale','Contalitri iniziale','number',mdo25FmtN(r.contatore_iniziale),'step="0.01" min="0" required')+mdo18Input('finale','Contalitri finale','number',mdo25FmtN(r.contatore_finale),'step="0.01" min="0" required')+
+ mdo18Input('densita','Densità','number',mdo25FmtN(r.densita),'step="any" min="0"')+mdo18Input('temperatura','Temperatura °C','number',mdo25FmtN(r.temperatura),'step="0.1"')+
+ mdo18Input('luogo','Località','text',r.luogo||'')+mdo18Input('note','Note','text',r.note||'')+
+ '<label class="full">Motivo rettifica *<input class="field" name="motivo" required placeholder="Per esempio: errore lettura contalitri"></label>'+
+ '<div class="actions full"><button class="btn primary" type="submit">Salva rettifica</button></div></form>');
+}
+async function mdo25SaveFuelEdit(e,id){
+ e.preventDefault();if(mdoRole!=='admin')return;
+ const f=new FormData(e.target),btn=e.target.querySelector('[type=submit]');
+ const a=Number(f.get('iniziale')),b=Number(f.get('finale'));
+ if(!Number.isFinite(a)||!Number.isFinite(b)||b<=a)return alert('Contalitri non validi.');
+ const mo=db.mezzi.find(m=>m.id===f.get('mezzo'));
+ if(!mo||mo.proprieta==='IMPRESA')return alert('Seleziona un mezzo RFI');
+ const ap=mdo24People.find(p=>p.id===f.get('agente')),fp=mdo24People.find(p=>p.id===f.get('fornitore'));
+ if(!ap||!fp)return alert('Seleziona i due nominativi');
+ const optional=n=>String(f.get(n)||'').trim()===''?null:Number(f.get(n));
+ if(optional('ore')===null&&optional('km')===null)return alert('Inserisci contaore e/o chilometri');
+ const patch={codice_sap:mo.id,mezzo_descrizione:mo.nome,data_rifornimento:f.get('data'),numero_tv301:f.get('numero'),cisterna_id:f.get('cisterna'),contatore_iniziale:a,contatore_finale:b,ore_motore:optional('ore'),chilometri:optional('km'),densita:optional('densita'),temperatura:optional('temperatura'),luogo:f.get('luogo'),note:f.get('note'),operatore:ap.cognome+' '+ap.nome,agente_cognome:ap.cognome,agente_nome:ap.nome,agente_cid:ap.cid,fornitore_cognome:fp.cognome,fornitore_nome:fp.nome,fornitore_cid:fp.cid};
+ btn.disabled=true;
+ try{
+  const {data,error}=await mdoClient.rpc('mdo25_modifica_tv301',{p_id:id,p_patch:patch,p_motivo:String(f.get('motivo')).trim()});
+  if(error)throw error;
+  closeModal();await Promise.all([mdo18Refresh(),mdo21Refresh()]);mdoStatus('TV301 rettificato: nuovo documento '+data);
+ }catch(err){alert('Rettifica NON eseguita: '+err.message)}finally{btn.disabled=false}
+}
+async function mdo25CancelFuel(i){
+ if(mdoRole!=='admin')return;
+ const r=window.mdo18Fuel?.[i];if(!r||r.annullato)return;
+ const reason=prompt('Motivo dell’annullamento TV301 '+(r.numero_tv301||r.id)+' (obbligatorio):','');
+ if(reason===null)return;if(!reason.trim())return alert('Motivo obbligatorio');
+ if(!confirm('ANNULLARE il rifornimento e stornare '+r.litri+' L sulla cisterna? La registrazione resta nello storico. Eventuali registrazioni GAMOC vanno corrette manualmente.'))return;
+ const {error}=await mdoClient.rpc('mdo25_annulla_tv301',{p_id:r.id,p_motivo:reason.trim()});
+ if(error)return alert('Annullamento NON eseguito: '+error.message);
+ await Promise.all([mdo18Refresh(),mdo21Refresh()]);mdoStatus('TV301 annullato; movimento compensativo registrato');
+}
+
+const mdo25OldTankRefresh=mdo21Refresh;
+mdo21Refresh=async function(){
+ await mdo25OldTankRefresh();
+ const c=document.getElementById('mdo21Data');if(!c||!Array.isArray(mdo21Moves))return;
+ const tables=c.querySelectorAll('table');if(!tables.length)return;
+ const table=tables[tables.length-1];
+ table.querySelector('thead tr')?.insertAdjacentHTML('beforeend','<th>Modifica / annulla</th>');
+ table.querySelectorAll('tbody tr').forEach((tr,i)=>{
+  const r=mdo21Moves[i];if(!r)return;
+  const td=document.createElement('td');
+  if(r.annullato){tr.style.opacity='.65';td.textContent='Annullato · storico';}
+  else if(r.documento==='STORNO'){td.textContent='Storno tracciato';}
+  else if(r.rifornimento_id){td.innerHTML='<button class="btn" onclick="mdo18Goto()">Apri registro TV301</button>'}
+  else if(mdoRole==='admin')td.innerHTML='<button class="btn" onclick="mdo25EditMove('+i+')">Modifica</button> <button class="btn" onclick="mdo25CancelMove('+i+')">Annulla</button>';
+  else td.textContent='—';
+  tr.appendChild(td);
+  if(r.annullato)tr.children[2].textContent+=' · ANNULLATO';
+ });
+ const info=document.createElement('p');info.className='muted small';info.textContent='Modifiche e annullamenti effettuano storni tracciati, senza cancellare lo storico. I movimenti relativi ai TV301 si gestiscono dal registro rifornimenti.';
+ table.parentElement?.before(info);
+};
+function mdo25EditMove(i){
+ if(mdoRole!=='admin')return alert('Solo amministratore');
+ const m=mdo21Moves[i];if(!m||m.annullato||m.rifornimento_id||m.documento==='STORNO')return;
+ modal('<h2>Modifica movimento gasolio</h2><div class="note warn">La correzione registra uno storno e un nuovo movimento, entrambi tracciati. La cisterna del movimento non può essere cambiata da questa schermata.</div>'+ 
+ '<form class="formgrid" onsubmit="mdo25SaveMoveEdit(event,\''+esc(m.id)+'\')">'+
+ '<label>Cisterna<input class="field" readonly value="'+esc(mdo21Tanks.find(x=>x.id===m.cisterna_id)?.nome||m.cisterna_id)+'"></label>'+ 
+ '<label>Tipo movimento<select class="field" name="tipo">'+mdo25Rows([['CARICO','Carico'],['PRELIEVO','Prelievo manuale'],['RETTIFICA_POS','Rettifica +'],['RETTIFICA_NEG','Rettifica −']],m.tipo)+'</select></label>'+ 
+ mdo18Input('litri','Quantità litri','number',String(m.litri),'step="0.01" min="0.01" required')+
+ mdo18Input('data','Data e ora','datetime-local',mdo25DateLocal(m.data_movimento),'required')+
+ mdo18Input('origine','Provenienza / destinazione','text',m.origine_destinazione||'')+
+ mdo18Input('documento','Documento','text',m.documento||'')+
+ mdo18Input('note','Note','text',m.note||'')+
+ '<label class="full">Motivo rettifica *<input class="field" name="motivo" required></label>'+ 
+ '<div class="actions full"><button class="btn primary" type="submit">Salva rettifica</button></div></form>');
+}
+async function mdo25SaveMoveEdit(e,id){
+ e.preventDefault();if(mdoRole!=='admin')return;
+ const f=new FormData(e.target),btn=e.target.querySelector('[type=submit]');btn.disabled=true;
+ try{
+  const {error}=await mdoClient.rpc('mdo25_modifica_movimento',{p_id:id,p_tipo:f.get('tipo'),p_litri:Number(f.get('litri')),p_data:new Date(f.get('data')).toISOString(),p_origine:f.get('origine'),p_documento:f.get('documento'),p_note:f.get('note'),p_motivo:f.get('motivo')});
+  if(error)throw error;
+  closeModal();await mdo21Refresh();mdoStatus('Movimento rettificato; storno tracciato');
+ }catch(err){alert('Modifica NON salvata: '+err.message)}finally{btn.disabled=false}
+}
+async function mdo25CancelMove(i){
+ if(mdoRole!=='admin')return;
+ const m=mdo21Moves[i];if(!m||m.annullato||m.rifornimento_id||m.documento==='STORNO')return;
+ const reason=prompt('Motivo dell’annullamento del movimento (obbligatorio):','');
+ if(reason===null)return;if(!reason.trim())return alert('Motivo obbligatorio');
+ if(!confirm('Annullare il movimento da '+m.litri+' L e registrare lo storno? Lo storico rimarrà consultabile.'))return;
+ const {error}=await mdoClient.rpc('mdo25_annulla_movimento',{p_id:m.id,p_motivo:reason.trim()});
+ if(error)return alert('Annullamento NON eseguito: '+error.message);
+ await mdo21Refresh();mdoStatus('Movimento annullato con storno tracciato');
+}
+
+// La proposta del contalitri esclude le registrazioni annullate.
+mdo23TankChanged=function(){
+ const f=document.querySelector('#modal form');if(!f)return;
+ const id=f.querySelector('[name="cisterna_um"]')?.value,input=f.querySelector('[name="conta_ini"]');
+ if(!input)return;input.value='';input.placeholder='Recupero ultimo contalitri…';if(!id)return;
+ mdoClient.from('mdo_rifornimenti').select('contatore_finale,data_rifornimento,created_at').eq('cisterna_id',id).eq('annullato',false).order('created_at',{ascending:false}).limit(1)
+  .then(({data,error})=>{
+   if(!f.isConnected||f.querySelector('[name="cisterna_um"]')?.value!==id)return;
+   if(error){input.placeholder='Verifica contalitri (SQL 2.5)';return;}
+   const cis=mdo21Tanks.find(t=>t.id===id);
+   input.value=data?.length?data[0].contatore_finale:(cis?.contalitri_base??'');
+   input.placeholder=input.value===''?'Nessuna lettura disponibile':'Ultimo valore valido';
+  });
+};
+
+// Modulo TV301 G: stampa A5 orizzontale, un solo foglio, stile grafico
+// e ripartizione 01 / 02 / 03 del modello fornito (firme manuali).
+mdo18PrintFuel=function(r){
+ const val=x=>esc(x??'');
+ const label=(k,v)=>'<div class="mdo25row"><div class="mdo25lbl">'+val(k)+'</div><div class="mdo25value">'+val(v)+'</div></div>';
+ const tank=mdo21Tanks.find(t=>t.id===r.cisterna_id)?.nome||r.luogo||'';
+ const agent=[r.agente_cognome,r.agente_nome].filter(Boolean).join(' ').trim();
+ const supplier=[r.fornitore_cognome,r.fornitore_nome].filter(Boolean).join(' ').trim();
+ const readings=[];if(r.ore_motore!=null&&r.ore_motore!=='')readings.push(r.ore_motore+' h');if(r.chilometri!=null&&r.chilometri!=='')readings.push(r.chilometri+' km');
+ const data=String(r.data_rifornimento||'');const date=data.match(/^(\d{4})-(\d\d)-(\d\d)$/);const italian=date?date[3]+'/'+date[2]+'/'+date[1]:data;
+ const body='<div class="mdo25paper"><header class="mdo25head"><div class="mdo25logo"><b>RFI</b><span>RETE FERROVIARIA ITALIANA<br><strong>GRUPPO FERROVIE DELLO STATO</strong></span></div><div class="mdo25title">Buono per il prelievo di gasolio <b><u>Mod. TV 301G</u></b> agevolato/nazionalizzato per MdM/MdO <span>N° '+val(r.numero_tv301)+'</span></div></header>'+ 
+ '<section class="mdo25sec"><h3>01) - Rotabile/Mezzo d’opera prelevante</h3><div class="mdo25frame">'+
+ label('MdM/MdO n°',r.codice_sap+' · '+r.mezzo_descrizione)+
+ label('Lettura contatore prima del rifornimento',readings.join(' · '))+
+ label('Agente prelevante · COGNOME / NOME',agent+(r.agente_cid?' · CID '+r.agente_cid:''))+
+ label('Località',r.luogo||'')+'</div></section>'+ 
+ '<section class="mdo25sec"><h3>02) - Diesel Tank erogante</h3><div class="mdo25frame">'+
+ label('Deposito combustibile di',tank)+
+ label('Lettura contalitri prima del prelievo',r.contatore_iniziale)+
+ label('Lettura contalitri dopo il prelievo',r.contatore_finale)+
+ label('Gasolio agevolato/nazionalizzato: totale prelievo',r.litri+' L')+
+ label('Densità gasolio atto prelievo',r.densita??'')+
+ label('Temperatura gasolio atto prelievo',r.temperatura!=null?r.temperatura+' °C':'')+'</div></section>'+ 
+ '<section class="mdo25sec"><h3>03) - Data e firme</h3><div class="mdo25frame">'+
+ label('Giorno / Mese / Anno',italian)+label('Incaricato al prelievo',agent+' · CID '+(r.agente_cid||''))+
+ label('Addetto alla fornitura',supplier+' · CID '+(r.fornitore_cid||''))+
+ '<div class="mdo25row mdo25sign"><div class="mdo25lbl">Firma dell’agente incaricato al prelievo</div><div class="mdo25value">______________________________________</div></div>'+ 
+ '<div class="mdo25row mdo25sign"><div class="mdo25lbl">Firma dell’addetto alla fornitura</div><div class="mdo25value">______________________________________</div></div></div></section>'+ 
+ '<div class="mdo25bottom">Il presente modulo va redatto in triplice copia</div></div>';
+ const css=`<style>
+ @page{size:210mm 148mm;margin:0}
+ *{box-sizing:border-box}html,body{width:210mm;height:148mm;padding:0;margin:0;background:#fff;color:#183f63;font-family:Arial,Helvetica,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ .mdo25paper{width:210mm;min-height:0;max-height:146mm;overflow:hidden;padding:4.8mm 6.5mm 3.5mm;display:block;background:#fff}
+ .mdo25head{flex-shrink:0}.mdo25logo{display:flex;align-items:center;gap:2mm;height:12mm;color:#14658a}.mdo25logo>b{font-size:23pt;line-height:1;font-style:italic;letter-spacing:-.7mm}.mdo25logo span{font-size:7pt;line-height:1.25;font-weight:bold}.mdo25title{font-size:9pt;color:#103e67;white-space:nowrap;border-bottom:.35mm solid #7f9eae;padding-bottom:1mm}.mdo25title span{float:right;font-weight:bold}
+ .mdo25sec{min-width:0;margin-top:1.7mm}.mdo25sec h3{font-size:8.3pt;font-weight:bold;color:#124c75;margin:0 0 .65mm;padding:.75mm 1.0mm;background:#fff;border:0;color:#145077}
+ .mdo25frame{border:.22mm solid #747d86}.mdo25row{display:grid;grid-template-columns:46% 54%;min-height:5.0mm;align-items:center;border-bottom:.17mm solid #aab3bb}.mdo25row:last-child{border-bottom:none}.mdo25lbl,.mdo25value{min-width:0;padding:.65mm 1.8mm;font-size:7.2pt;line-height:1.12}.mdo25lbl{border-right:.17mm solid #9eafbd}.mdo25value{font-size:7.6pt;font-weight:bold;color:#123755;overflow-wrap:anywhere}.mdo25sign{min-height:6mm}.mdo25sign .mdo25value{font-size:7pt;text-align:center;font-weight:normal}
+ .mdo25bottom{margin-top:1.5mm;text-align:right;text-decoration:underline;font-size:6.9pt;color:#185179}
+ @media screen{body{margin:12px auto;box-shadow:0 0 0 1px #ddd,0 5px 25px #ccc}}
+ @media print{html,body{margin:0!important;box-shadow:none!important}.mdo25paper{break-inside:avoid;page-break-inside:avoid}}
+ </style>`;
+ const w=window.open('','_blank');if(!w)return alert('Abilita i popup per stampare TV301');
+ w.document.open();w.document.write('<!doctype html><html lang="it"><head><meta charset="utf-8"><title>Mod. TV 301G · A5 orizzontale</title>'+css+'</head><body>'+body+'</body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),400);
+};
+
 
 mdoBoot();
 
