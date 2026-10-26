@@ -2,7 +2,7 @@
 :root{--nav:#0b263f;--blue:#0879be;--bg:#f2f5f8;--line:#dce4ed;--text:#243348;--muted:#607489;--card:#fff;--red:#c73341;--yellow:#b97710;--green:#197654}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:default}.app{display:flex;min-height:100vh}.side{background:var(--nav);color:#dce9f5;width:242px;flex-shrink:0;padding:24px 12px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;padding:5px 12px 23px}.brand-mark{background:var(--blue);padding:8px;border-radius:9px;color:white}.subbrand{font-size:11px;font-weight:500;opacity:.8}.nav{display:block;width:100%;border:0;background:transparent;color:#bdcfe1;text-align:left;padding:11px 14px;border-radius:9px;margin:4px 0;font-weight:550}.nav:hover,.nav.active{background:#174669;color:white}.foot{position:absolute;bottom:17px;left:18px;right:18px;font-size:11px;color:#b5c6d5}.main{flex:1;min-width:0}.top{background:white;border-bottom:1px solid var(--line);padding:17px 27px;display:flex;justify-content:space-between;align-items:center;gap:10px}.top h1{font-size:21px;margin:0}.content{padding:24px 27px;max-width:1450px}.muted{color:var(--muted)}h2{font-size:18px;margin:0 0 14px}h3{font-size:15px;margin:0 0 12px}.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:20px}.kpi,.panel{background:white;border:1px solid var(--line);border-radius:13px;padding:18px}.kpi .num{font-size:29px;font-weight:760}.kpi .tiny{font-size:12px;color:var(--muted)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{margin-bottom:16px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}.toolbar .grow{flex:1}.btn{border:1px solid var(--line);padding:9px 13px;border-radius:8px;background:white;color:var(--text);font-weight:650}.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}.btn.danger{color:var(--red)}.field{border:1px solid #cbd5e0;border-radius:7px;padding:9px 10px;background:white;color:var(--text);min-width:0}.toolbar input{width:300px;max-width:100%}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:11px}table{border-collapse:collapse;width:100%;background:white;text-align:left}th,td{padding:11px 12px;border-bottom:1px solid #edf1f5;white-space:nowrap}th{font-size:12px;color:#5d7084;background:#f9fbfd}tr:last-child td{border-bottom:0}tr:hover td{background:#f8fafc}.tag{display:inline-block;padding:3px 9px;font-size:11px;border-radius:30px;font-weight:800;background:#eaf0f7;color:#456}.tag.ESER{background:#dff5e9;color:#126a48}.tag.FUES{background:#fff0df;color:#985000}.tag.OFF{background:#ffe2e7;color:#a71d30}.tag.SOPP{background:#e4e7eb;color:#596271}.tag.DA_VERIFICARE{background:#edf0f6;color:#425d82}.click{color:#0676b4;background:none;border:0;padding:0;font-weight:700;text-align:left}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.formgrid label{display:flex;flex-direction:column;gap:5px;font-weight:650;font-size:12px}.formgrid input,.formgrid select,.formgrid textarea{width:100%}.full{grid-column:1/-1}.note{border-left:4px solid #6a92b0;background:#edf5fc;padding:10px 13px;border-radius:5px;margin-bottom:18px}.warn{border-left-color:#e0a94b;background:#fff8e8}.bad{border-left-color:#bb3348;background:#fff0f1}.actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:15px}.stack{display:grid;gap:10px}.item{border:1px solid var(--line);border-radius:9px;padding:12px}.small{font-size:12px}.pill{padding:2px 7px;border:1px solid var(--line);border-radius:6px;font-size:12px}.empty{padding:35px;text-align:center;color:var(--muted)}.dialog-bg{position:fixed;inset:0;background:#071b2aaa;display:flex;align-items:center;justify-content:center;z-index:20;padding:12px}.dialog{background:white;max-width:850px;width:100%;max-height:90vh;overflow:auto;border-radius:14px;padding:22px;box-shadow:0 12px 50px #0015}.dialog h2{margin-right:32px}.close{float:right;border:none;background:none;font-size:25px;line-height:1}.mobile-menu{display:none}.status-led{width:9px;height:9px;border-radius:100%;background:var(--yellow);display:inline-block;margin-right:4px}@media(max-width:980px){.kpis{grid-template-columns:repeat(3,1fr)}.side{width:190px}.grid2{grid-template-columns:1fr}}@media(max-width:700px){.side{display:none;position:fixed;z-index:15;top:0;left:0;width:250px}.side.open{display:block}.mobile-menu{display:inline-block}.top{padding:12px 14px}.top h1{font-size:17px}.content{padding:13px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi{padding:12px}.kpi .num{font-size:24px}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.panel{padding:13px}.toolbar .grow{flex-basis:100%}.toolbar input{width:100%}}
 
 @media(max-width:740px){.formgrid{grid-template-columns:1fr!important}.grid2{grid-template-columns:1fr!important}}
-</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></head><body><div class="app" style="display:none"><aside class="side" id="sidebar"><div class="brand"><span class="brand-mark">M</span><div>MDO Manager<div class="subbrand">UM TE1 · Gallarate</div></div></div><nav id="nav"></nav><div class="foot">Versione online 2.9 · Supabase<br>Non sostituisce le verifiche RFI</div></aside><div class="main"><header class="top"><div style="display:flex;align-items:center;gap:10px"><button class="btn mobile-menu" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button><h1 id="title">Dashboard</h1></div><span class="muted small">● Sincronizzato con Supabase</span></header><main class="content" id="view"></main></div></div><div id="modal"></div><script>
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></head><body><div class="app" style="display:none"><aside class="side" id="sidebar"><div class="brand"><span class="brand-mark">M</span><div>MDO Manager<div class="subbrand">UM TE1 · Gallarate</div></div></div><nav id="nav"></nav><div class="foot">Versione online 2.10 · Supabase<br>Non sostituisce le verifiche RFI</div></aside><div class="main"><header class="top"><div style="display:flex;align-items:center;gap:10px"><button class="btn mobile-menu" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button><h1 id="title">Dashboard</h1></div><span class="muted small">● Sincronizzato con Supabase</span></header><main class="content" id="view"></main></div></div><div id="modal"></div><script>
 const SEED=[];
 const SAP_ORDINI_SEED=[];
 const KEY='mdo_manager_v1';
@@ -1333,6 +1333,109 @@ mdo18PrintFault=function(r){
  '</body></html>';
  const w=window.open('','_blank');if(!w)return alert('Consenti popup per stampare la scheda guasti');
  w.document.open();w.document.write(html);w.document.close();w.focus();setTimeout(()=>w.print(),350);
+};
+
+
+// MDO 2.10 — Abilitazioni inserimento anomalie per CUM / Specialista / CT.
+// L'abilitazione è verificata sia nel client sia in PostgreSQL prima dell'INSERT.
+let mdo30Staff=[];
+async function mdo30CanReport(){
+ if(!mdoSession)return false;
+ const {data,error}=await mdoClient.rpc('mdo30_puo_segnalare');
+ if(error)throw Error('Controllo abilitazione non disponibile. Eseguire SQL 2.10. '+error.message);
+ return data===true;
+}
+async function mdo30AdminPeople(){
+ if(mdoRole!=='admin')return alert('Solo l’amministratore può gestire le autorizzazioni.');
+ const {data,error}=await mdoClient.rpc('mdo30_elenca_personale');
+ if(error)return alert('Elenco abilitazioni non disponibile: '+error.message);
+ mdo30Staff=data||[];
+ const staff=mdo30Staff.map((p,i)=>
+ '<tr><td>'+esc([p.cognome,p.nome].filter(Boolean).join(' ')||p.email||'')+
+ '<div class="small muted">'+esc(p.email||'')+' · CID '+esc(p.cid||'non inserito')+'</div></td>'+
+ '<td><select class="field" id="mdo30level'+i+'">'+
+ ['CUM','SPECIALISTA','CT'].map(level=>'<option '+(p.livello===level?'selected':'')+' value="'+level+'">'+(level==='SPECIALISTA'?'Specialista':level)+'</option>').join('')+
+ '</select></td><td><label><input type="checkbox" id="mdo30active'+i+'" '+(p.attivo?'checked':'')+'> Abilitato</label></td>'+
+ '<td><button class="btn" onclick="mdo30SaveAuthorization('+i+')">Salva</button></td></tr>'
+ ).join('');
+ modal('<h2>Personale abilitato alle anomalie</h2>'+
+ '<p class="note">Assegna a ciascun utente MDO il livello <b>CUM, Specialista o CT</b> e attiva/disattiva il diritto di aprire nuove segnalazioni. Chi non è abilitato può consultare le schede secondo i permessi già assegnati. I permessi sono applicati anche da Supabase.</p>'+
+ '<p class="small muted">Sono elencati gli account già presenti nel gestionale; per aggiungere una persona nuova occorre prima darle accesso MDO da Supabase Authentication.</p>'+
+ tabella(['Utente / CID','Livello','Inserimento anomalie',''],staff));
+}
+async function mdo30SaveAuthorization(i){
+ if(mdoRole!=='admin')return;
+ const p=mdo30Staff[i],level=document.getElementById('mdo30level'+i)?.value;
+ const active=!!document.getElementById('mdo30active'+i)?.checked;
+ if(!p||!['CUM','SPECIALISTA','CT'].includes(level))return alert('Selezione non valida');
+ const {error}=await mdoClient.rpc('mdo30_imposta_abilitazione',{
+  p_user_id:p.user_id,p_livello:level,p_attivo:active
+ });
+ if(error)return alert('Non salvato: '+error.message);
+ mdoStatus('Abilitazione anomalie aggiornata su Supabase');
+ await mdo30AdminPeople();
+}
+const mdo30PreviousAdmin=admin;
+admin=function(){
+ return (mdoRole==='admin'
+  ?'<div class="toolbar"><button class="btn primary" onclick="mdo30AdminPeople()">Gestisci autorizzati anomalie · CUM / Specialista / CT</button></div>'
+  :'')+mdo30PreviousAdmin();
+};
+const mdo30PriorNewFault=mdo18NewFault;
+mdo18NewFault=async function(id=''){
+ try{
+  if(!await mdo30CanReport())return alert('Il tuo account non è abilitato a inserire anomalie. Rivolgiti al CUM.');
+  return await mdo30PriorNewFault(id);
+ }catch(err){alert(err.message)}
+};
+const mdo30PriorSaveFault=mdo18SaveFault;
+mdo18SaveFault=async function(e){
+ e.preventDefault();
+ try{
+  if(!await mdo30CanReport())return alert('Autorizzazione alla segnalazione revocata. Salvataggio non consentito.');
+  return await mdo30PriorSaveFault(e);
+ }catch(err){alert('Salvataggio non disponibile: '+err.message)}
+};
+
+// Ripristino dell'impostazione grafica della scheda guasti 2.3, mantenendo
+// TUTTI i valori e i flag raccolti con la compilazione completa introdotta nella 2.9.
+mdo18PrintFault=function(r){
+ const d=r.dettagli||{},m=mdo18M(r.codice_sap)||{};
+ const v=x=>esc(x==null?'':String(x));
+ const field=(label,value)=>'<div class="gfield"><span>'+v(label)+'</span><strong>'+v(value)+'</strong></div>';
+ const ck=x=>x?'☒':'☐';
+ const fullDate=String(r.data_riscontro||'');
+ const header='<div class="gh"><div>RFI SpA - DOIT Milano</div><div>Unità Territoriale Milano Linee Nord</div>'+
+ '<h2>SCHEDA SEGNALAZIONE GUASTI AI MEZZI D’OPERA</h2><h2>CIRCOLANTI SU ROTAIA</h2></div>';
+ const tipo='<div class="grow">Tipo intervento richiesto: &nbsp;'+ck(!!d.riparazione)+
+ ' riparazione guasto &emsp;'+ck(!!d.fornitura_materiali)+' fornitura materiali</div>';
+ const base='<div class="gbar">A</div><div class="gbody"><u>Riferimenti</u>'+
+ field('Unità Manutentiva richiedente',(d.unita||'UM TE1')+' di '+(d.sede||'Gallarate'))+
+ field('Responsabile UM / Specialista UM / Capo Tecnico',(d.firmatario||r.segnalante||'')+(d.funzione?' · '+d.funzione:''))+
+ field('Recapito telefonico / Cell.',[d.telefono,d.cellulare].filter(Boolean).join(' / '))+
+ field('Ubicazione mezzo',d.luogo||r.luogo)+
+ field('Tipo mezzo',d.tipo_mezzo||m.nome||r.mezzo_descrizione)+
+ field('Marca / Modello',[d.marca||m.costruttore,d.modello||m.modello].filter(Boolean).join(' / '))+
+ field('Codice di servizio mezzo / Matricola',[d.codice_servizio||r.codice_sap,d.matricola||m.matricola].filter(Boolean).join(' / '))+
+ '</div>';
+ const parteB='<div class="gbar">B</div><div class="gtext"><u>Guasto riscontrato</u>'+
+ '<p>'+v(r.descrizione||'').replace(/\n/g,'<br>')+'</p>'+
+ (r.azioni?'<p>Provvedimenti / note: '+v(r.azioni).replace(/\n/g,'<br>')+'</p>':'')+'</div>'+
+ '<div class="gtext materials"><u>Materiali richiesti</u><p>'+v(d.materiali||'').replace(/\n/g,'<br>')+'</p></div>';
+ const page='<div class="faultsheet">'+header+
+ '<div class="grow">Segnalazione Guasto n° _________________ del __________ <small>(a cura della Direzione Lavori / ricevente)</small></div>'+
+ tipo+base+parteB+
+ '<div class="grow">AVVISO N. '+v(d.avviso||'___________')+' &emsp; ODL N. '+v(d.odl||'___________')+'</div>'+
+ '<div class="grow">Grado di urgenza: '+ck(String(r.gravita).toLowerCase()==='alto')+' alto &emsp;'+
+ ck(String(r.gravita).toLowerCase()==='medio')+' medio &emsp;'+
+ ck(String(r.gravita).toLowerCase()==='basso')+' basso</div>'+
+ '<div class="gsign"><span>Il Responsabile del CdL<br><br>_______________________<br><small>Nominativo compilatore: '+
+ v(d.firmatario||r.segnalante)+' · CID '+v(d.cid||'')+'</small></span>'+
+ '<span>Il Direttore Esecuzione del Contratto<br><br>_______________________</span></div></div>'+
+ '<p class="small">Data riscontro: '+v(fullDate?new Date(fullDate).toLocaleString('it-IT'):'')+
+ '. La firma riportata è nominativa; la firma effettiva resta da apporre.</p>';
+ const style='<style>@page{size:A4 portrait;margin:12mm}.faultsheet{font:11px Arial;color:#111;border:2px solid #111}.gh{text-align:center;border-bottom:1px solid #111}.gh>div{font-weight:bold;border-bottom:1px solid #111;padding:4px}.gh h2{font-size:13px;margin:10px}.grow{border-bottom:1px solid #111;padding:10px}.gbar{text-align:center;background:#e9e9e9;border-bottom:1px solid #111;font-weight:bold}.gbody{min-height:200px;text-align:center;border-bottom:1px solid #111;padding:12px}.gfield{text-align:left;display:flex;gap:15px;margin:12px 0}.gfield span{min-width:45%}.gfield strong{border-bottom:1px solid #aaa;flex:1;font-weight:normal}.gtext{text-align:center;min-height:145px;border-bottom:1px solid #111;padding:12px}.gtext p{text-align:left;white-space:pre-wrap}.materials{min-height:85px}.gsign{display:flex;justify-content:space-around;text-align:center;padding:16px}.gsign span{width:45%}</style>';
+ mdo18Print('Scheda segnalazione guasti',style+page);
 };
 
 mdoBoot();
