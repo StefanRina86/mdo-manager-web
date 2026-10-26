@@ -245,7 +245,7 @@ function mdo10EditRfi(id){
  '<label>Ultima verifica ponte sviluppabile<input class="field" type="date" name="ultima_ponte_sviluppabile" value="'+esc(v.ultima_ponte_sviluppabile||'')+'"></label>'+ 
  '<label>Ultima verifica gru (se presente)<input class="field" type="date" name="ultima_gru" value="'+esc(v.ultima_gru||'')+'"></label>'+ 
  '<label class="full">Note sollevamento<textarea class="field" rows="2" name="note_sollevamento">'+esc(m.note_sollevamento||'')+'</textarea></label>'+ 
- '<div class="actions full"><button type="button" class="btn" onclick="closeModal()">Annulla</button><button class="btn primary">Salva in Supabase</button></div></form>');
+ '<div class="actions full"><button type="button" class="btn" onclick="closeModal()">Annulla</button><button class="btn primary">Salva</button></div></form>');
 }
 async function mdo10SaveRfi(e,id){
  e.preventDefault();if(!mdoSession||mdoRole!=='admin')return alert('Accesso amministratore necessario');
@@ -340,7 +340,7 @@ function mdo10EditRfi(id){
  '<label>Ultima verifica sollevamento generale<input class="field" type="date" name="ultima_soll_acc" value="'+esc(v.ultima_soll_acc||'')+'"></label>'+ 
  '<h3 class="full">Presenza apparecchiature</h3><div class="full note">Spunta le attrezzature effettivamente presenti. Solo per quelle selezionate compaiono date, verbali e obbligo di verifica. I dati storici già registrati vengono conservati anche se disattivi la presenza.</div>'+sections+
  '<div class="full note">Puoi registrare e modificare le date senza allegare documenti. La data inserita viene registrata e salvata senza richiedere riferimenti documentali.</div>'+
- '<div class="actions full"><button type="button" class="btn" onclick="closeModal()">Annulla</button><button type="submit" class="btn primary">Salva in Supabase</button></div></form>');
+ '<div class="actions full"><button type="button" class="btn" onclick="closeModal()">Annulla</button><button type="submit" class="btn primary">Salva</button></div></form>');
 }
 async function mdo10SaveRfi(e,id){
  e.preventDefault();if(!mdoSession||mdoRole!=='admin')return alert('Accesso amministratore necessario');
@@ -645,6 +645,116 @@ function mdo22Backup(){
 }
 // Promote a dependable link to the existing anomaly history, and avoid misleading local mode copy.
 
+
+
+// v2.3 Collaudo: TV301 con campi semplificati, letture cisterna e moduli di stampa fedeli.
+const mdo23TankFormOld=mdo21TankForm;
+mdo21TankForm=function(id=''){
+ mdo23TankFormOld(id);
+ const f=document.querySelector('#modal form');if(!f)return;
+ const tank=mdo21Tanks.find(x=>x.id===id);
+ const before=f.querySelector('.actions');
+ const l=document.createElement('label');l.className='full';
+ l.innerHTML='Contalitri della cisterna alla data di censimento <input class="field" name="contalitri_base" type="number" step="0.01" min="0" value="'+esc(tank?.contalitri_base??'')+'"><span class="muted small">Solo amministratore: riferimento per la prima lettura TV301. Le successive si ricavano dall’ultimo prelievo registrato.</span>';
+ before?.before(l);
+};
+const mdo23TankSaveOld=mdo21SaveTank;
+mdo21SaveTank=async function(e,id){
+ e.preventDefault();const val=e.target.querySelector('[name="contalitri_base"]')?.value;
+ // New cisterna: save core via original function, then set baseline if explicitly provided.
+ if(!id){
+  if(val==='')return mdo23TankSaveOld(e,id);
+  const name=e.target.querySelector('[name="nome"]')?.value?.trim();
+  await mdo23TankSaveOld(e,id);
+  const {data,error}=await mdoClient.from('mdo_cisterne').select('id').eq('nome',name).maybeSingle();
+  if(error||!data)return alert('Cisterna salvata, ma contalitri iniziale non aggiornato: '+(error?.message||'controllare il nome'));
+  const up=await mdoClient.from('mdo_cisterne').update({contalitri_base:Number(val)}).eq('id',data.id);
+  if(up.error)alert('Contalitri NON aggiornato: '+up.error.message);
+  await mdo21Refresh();return;
+ }
+ if(val!==''&&(!Number.isFinite(Number(val))||Number(val)<0))return alert('Contalitri non valido');
+ const f=new FormData(e.target);const row={nome:String(f.get('nome')||'').trim(),tipo:String(f.get('tipo')||''),ubicazione:String(f.get('ubicazione')||''),capienza_l:Number(f.get('capienza')),note:String(f.get('note')||''),contalitri_base:val===''?null:Number(val)};
+ if(!row.nome||!Number.isFinite(row.capienza_l)||row.capienza_l<=0)return alert('Nome o capienza non validi');
+ const btn=e.target.querySelector('[type=submit]');btn.disabled=true;
+ try{const {error}=await mdoClient.from('mdo_cisterne').update(row).eq('id',id);if(error)throw error;closeModal();await mdo21Refresh();mdoStatus('Cisterna salvata')}catch(err){alert('Salvataggio non riuscito: '+err.message)}finally{btn.disabled=false}
+};
+function mdo23TankChanged(){
+ const f=document.querySelector('#modal form');if(!f)return;
+ const id=f.querySelector('[name="cisterna_um"]')?.value;
+ const input=f.querySelector('[name="conta_ini"]');
+ if(!input)return;
+ input.value='';input.placeholder='Recupero ultimo contalitri…';
+ if(!id)return;
+ // Read the latest refueling record for this exact tank, not the latest record overall.
+ mdoClient.from('mdo_rifornimenti').select('contatore_finale,data_rifornimento,created_at').eq('cisterna_id',id).order('created_at',{ascending:false}).limit(1).then(({data,error})=>{
+  if(!f.isConnected||f.querySelector('[name="cisterna_um"]')?.value!==id)return;
+  if(error){input.placeholder='Imposta manualmente la lettura';return}
+  const tank=mdo21Tanks.find(t=>t.id===id);
+  const val=data?.length?data[0].contatore_finale:tank?.contalitri_base;
+  input.value=val??'';
+  input.placeholder=val==null?'Inserire lettura iniziale':'Ultima lettura disponibile';
+ });
+}
+mdo18NewFuel=function(id=''){
+ const input=(n,title,type='text',other='')=>mdo18Input(n,title,type,'',other);
+ const opts=mdo21Tanks.filter(t=>t.attiva).map(t=>'<option value="'+esc(t.id)+'">'+esc(t.nome)+' · '+esc(t.giacenza_l)+' L</option>').join('');
+ modal('<h2>Rifornimento MdO / TV301</h2><p class="muted small">Solo mezzi RFI. Il contalitri iniziale viene proposto dall’ultimo prelievo della cisterna; può correggerlo soltanto un amministratore.</p>'+ 
+ '<form class="formgrid" onsubmit="mdo18SaveFuel(event)">'+mdo18Select('mezzo',id)+
+ mdo18Input('data','Data rifornimento *','date',new Date().toISOString().slice(0,10),'required')+
+ input('numero','Numero TV301')+
+ '<label>Provenienza *<select class="field" name="cisterna_um" required onchange="mdo23TankChanged()"><option value="">Seleziona cisterna UM</option>'+opts+'</select></label>'+
+ input('contatore_motore','Contaore (h)','number','step="any" min="0"')+
+ input('chilometri','Chilometri mezzo (km)','number','step="any" min="0"')+
+ input('agente_cognome','Cognome incaricato al prelievo *','text','required')+input('agente_nome','Nome incaricato al prelievo *','text','required')+input('agente_cid','CID incaricato')+
+ input('fornitore_cognome','Cognome addetto alla fornitura *','text','required')+input('fornitore_nome','Nome addetto alla fornitura *','text','required')+input('fornitore_cid','CID addetto alla fornitura')+
+ input('luogo','Località')+
+ '<label>Lettura contalitri iniziale *<input class="field" type="number" step="0.01" min="0" name="conta_ini" required '+(mdoRole==='admin'?'':'readonly')+'></label>'+
+ input('conta_fine','Lettura contalitri finale *','number','step="0.01" min="0" required')+
+ input('densita','Densità gasolio al prelievo','number','step="any" min="0"')+
+ input('temperatura','Temperatura gasolio °C','number','step="0.1"')+
+ '<label class="full">Note<input class="field" name="note"></label><div class="actions full"><button class="btn primary" type="submit">Salva e prepara TV301</button></div></form>');
+};
+mdo18SaveFuel=async function(e){
+ e.preventDefault();const f=new FormData(e.target),btn=e.target.querySelector('[type="submit"]');
+ const m=mdo18M(f.get('mezzo'));if(!m||m.proprieta==='IMPRESA')return alert('Seleziona un MdO RFI.');
+ if(!f.get('cisterna_um'))return alert('Seleziona una cisterna UM.');
+ const a=Number(f.get('conta_ini')),b=Number(f.get('conta_fine'));
+ if(!Number.isFinite(a)||!Number.isFinite(b)||a<0||b<=a)return alert('Letture contalitri non valide.');
+ const hrs=String(f.get('contatore_motore')||'').trim(),km=String(f.get('chilometri')||'').trim();
+ if(hrs===''&&km==='')return alert('Inserisci almeno uno tra contaore e chilometri.');
+ const who=['agente_cognome','agente_nome','fornitore_cognome','fornitore_nome'];
+ for(const k of who)if(!String(f.get(k)||'').trim())return alert('Manca il campo: '+k.replaceAll('_',' '));
+ btn.disabled=true;
+ try{
+ const density=String(f.get('densita')||'').trim(),temp=String(f.get('temperatura')||'').trim();
+ const data={cisterna_id:f.get('cisterna_um'),codice_sap:m.id,mezzo_descrizione:m.nome,impresa:null,data_rifornimento:f.get('data'),numero_tv301:f.get('numero')||'',dpt:'',genere_servizio:'',commessa:'',ore_motore:hrs===''?null:Number(hrs),chilometri:km===''?null:Number(km),operatore:(f.get('agente_cognome')+' '+f.get('agente_nome')).trim(),luogo:f.get('luogo')||'',combustibile:'Gasolio',contatore_iniziale:a,contatore_finale:b,litri:Math.round((b-a)*100)/100,densita:density===''?null:Number(density),temperatura:temp===''?null:Number(temp),note:f.get('note')||''};
+ for(const k of ['agente_cognome','agente_nome','agente_cid','fornitore_cognome','fornitore_nome','fornitore_cid'])data[k]=String(f.get(k)||'').trim();
+ const {data:row,error}=await mdoClient.from('mdo_rifornimenti').insert(data).select('*').single();
+ if(error)throw error;closeModal();await mdo21Refresh();mdo18PrintFuel(row);mdoStatus('Rifornimento salvato e giacenza aggiornata');
+ }catch(err){alert('Rifornimento NON registrato: '+err.message)}finally{btn.disabled=false}
+};
+// Printed fault form: same sections and visual hierarchy as the uploaded XLS, no forged signature.
+mdo18PrintFault=function(r){
+ const field=(label,val)=>'<div class="gfield"><span>'+esc(label)+'</span><strong>'+esc(val??'')+'</strong></div>';
+ const m=mdo18M(r.codice_sap)||{};
+ const header='<div class="gh"><div>RFI SpA - DOIT Milano</div><div>Unità Territoriale Milano Linee Nord</div><h2>SCHEDA SEGNALAZIONE GUASTI AI MEZZI D’OPERA</h2><h2>CIRCOLANTI SU ROTAIA</h2></div>';
+ const page='<div class="faultsheet">'+header+
+ '<div class="grow">Segnalazione Guasto n° '+esc(String(r.id||'').slice(0,8))+' del '+esc(String(r.data_riscontro||'').slice(0,10))+' <small>(a cura della Direzione Lavori)</small></div>'+
+ '<div class="grow">Tipo intervento richiesto: &nbsp; □ riparazione guasto &nbsp;&nbsp; □ fornitura materiali</div>'+
+ '<div class="gbar">A</div><div class="gbody"><u>Riferimenti</u>'+field('Unità Manutentiva richiedente','UM TE1 di GALLARATE')+field('Responsabile UM / Specialista UM / Capo Tecnico','')+field('Recapito telefonico / Cell.','')+field('Ubicazione mezzo',r.luogo)+field('Tipo mezzo',m.nome)+field('Marca / Modello',(m.costruttore||'')+' / '+(m.modello||''))+field('Codice di servizio mezzo / Matricola',(m.matricola||'')+' / '+r.codice_sap)+'</div>'+
+ '<div class="gbar">B</div><div class="gtext"><u>Guasto riscontrato</u><p>'+esc(r.descrizione||'').replaceAll('\n','<br>')+'</p><p>'+esc(r.azioni||'').replaceAll('\n','<br>')+'</p></div>'+
+ '<div class="gtext materials"><u>Materiali richiesti</u></div>'+
+ '<div class="grow">AVVISO N. __________________ &nbsp;&nbsp; ODL N. __________________</div>'+
+ '<div class="grow">Grado di urgenza: &nbsp; □ alto &nbsp;&nbsp; □ medio &nbsp;&nbsp; □ basso <small>('+esc(r.gravita||'Da valutare')+')</small></div>'+
+ '<div class="gsign"><span>Il Responsabile del CdL<br><br>_______________________</span><span>Il Direttore Esecuzione del Contratto<br><br>_______________________</span></div></div>';
+ mdo18Print('Scheda segnalazione guasti', '<style>@page{size:A4 portrait;margin:12mm}.faultsheet{font:11px Arial;color:#111;border:2px solid #111}.gh{text-align:center;border-bottom:1px solid #111}.gh>div{font-weight:bold;border-bottom:1px solid #111;padding:4px}.gh h2{font-size:13px;margin:10px}.grow{border-bottom:1px solid #111;padding:10px}.gbar{text-align:center;background:#e9e9e9;border-bottom:1px solid #111;font-weight:bold}.gbody{min-height:220px;text-align:center;border-bottom:1px solid #111;padding:12px}.gfield{text-align:left;display:flex;gap:15px;margin:13px 0}.gfield span{min-width:45%}.gfield strong{border-bottom:1px solid #aaa;flex:1;font-weight:normal}.gtext{text-align:center;min-height:180px;border-bottom:1px solid #111;padding:12px}.gtext p{text-align:left;white-space:pre-wrap}.materials{min-height:105px}.gsign{display:flex;justify-content:space-around;text-align:center;padding:20px}.gsign span{width:45%}</style>'+page);
+};
+const mdo23OldPrintFuel=mdo18PrintFuel;
+mdo18PrintFuel=function(r){
+ // Use the previously implemented 3-section document while replacing unused fields and adding mileage.
+ const dat={...r,dpt:'',genere_servizio:'',commessa:''};
+ mdo23OldPrintFuel(dat);
+};
 
 mdoBoot();
 
