@@ -1275,6 +1275,13 @@ mdo18NewFault=async function(id=''){
  '<label class="full">Foto/documento facoltativo, max 8MB<input class="field" type="file" name="allegato" accept="image/*,application/pdf"></label>'+
  '<div class="full note">Numero segnalazione guasto: <b>a cura del ricevente</b> (non compilabile qui). Redatta da: '+esc(person)+' · account '+esc(mdoSession.user.email||'')+'.</div>'+
  '<div class="actions full"><button class="btn primary" type="submit">Salva scheda guasto</button></div></form>');
+ const faultForm=document.querySelector('#modal form');
+ const vehicle=faultForm?.querySelector('select[name=mezzo]');
+ const hydrate=()=>{const m=mdo18M(vehicle?.value);if(!m)return;
+  const autofill={codice_servizio:m.codice_servizio||m.id,matricola:m.matricola||m.numero||'',marca:m.marca||m.costruttore||'',modello:m.modello||'',tipo_mezzo:m.tipo||m.famiglia||''};
+  for(const [key,value] of Object.entries(autofill)){const input=faultForm.elements.namedItem(key);if(input&&!input.value&&value)input.value=String(value)};
+ };
+ vehicle?.addEventListener('change',hydrate);hydrate();
 };
 mdo18SaveFault=async function(e){
  e.preventDefault();const btn=e.target.querySelector('[type=submit]');btn.disabled=true;
