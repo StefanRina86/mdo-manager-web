@@ -2758,6 +2758,7 @@ mdo33ParseForm=function(f,original={}){
  // Equipara le denominazioni presenti sulle carte per il limite ICMO
  // senza alterare il testo originale trascritto.
  const raw=String(out.tipologia_organi_aggancio||'').trim().toUpperCase();
+ if(f.get('card_tipologia_organi_aggancio')!==null)out.aggancio_unificato='DA_CARTA';
  if(raw==='UNIFICATI FS'||raw==='UNIFICATI_FS')out.aggancio_unificato='FS';
  else if(raw==='UNIFICATI UIC'||raw==='UNIFICATI_UIC')out.aggancio_unificato='UIC';
  else if(raw==='NON UNIFICATI'||raw==='NON UNIFICATI FS'||raw==='NON_UNIFICATI')out.aggancio_unificato='NON_UNIFICATI';
@@ -2812,8 +2813,9 @@ async function mdo37SaveCompany(e,id){
  try{
   const m=db.mezzi.find(x=>x.id===id&&x.proprieta==='IMPRESA');if(!m)throw Error('MdO impresa non trovato');
   const tecnica=mdo33ParseForm(new FormData(e.target),m.tecnica||{});
-  const firm=String(tecnica.proprietario||m.impresa||'').trim();
-  const upd={...m,tecnica,impresa:firm||m.impresa,modello:tecnica.modello||m.modello,
+  // Proprietario indicato sulla carta e impresa operativa sono due concetti
+  // distinti: correggere la carta non deve cambiare il gruppo aziendale.
+  const upd={...m,tecnica,modello:tecnica.modello||m.modello,
    dataAggiornamento:new Date().toISOString()};
   const {error}=await mdoClient.from('mdo_mezzi').update(mdoRow(upd)).eq('codice_sap',id).eq('proprietario','IMPRESA');
   if(error)throw error;
