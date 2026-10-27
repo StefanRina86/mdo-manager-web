@@ -293,6 +293,11 @@ async function mdo217ApplyFL(){
  mdoStatus('Percorso ricostruito con '+path.length+' tratto/i FL validati; controllare dati operativi, binari e prescrizioni.');
 }
 
+function mdo217ChangePL(value){
+ const d=window.compDraft;if(!d)return;
+ d.presenzaPL=value==='SI'?true:value==='NO'?false:null;
+ render();
+}
 const mdo217PriorCalcoli=calcoli;
 calcoli=function(){
  let html=mdo217PriorCalcoli();
@@ -303,6 +308,17 @@ calcoli=function(){
  '<p class="small muted">I FL devono prima essere caricati come dati strutturati, controllati e convalidati. L’app non interpreta autonomamente le fiancate PDF.</p>';
  html=html.replace('<div class="panel"><h2>3 · Tratti percorsi e relativi FL</h2>',
  extra+'<div class="panel"><h2>3 · Tratti percorsi e relativi FL</h2>');
+ const pl=d.presenzaPL===true?'SI':d.presenzaPL===false?'NO':'';
+ const detail='<div class="formgrid">'+
+  '<label>Passaggi a livello nel percorso<select class="field" onchange="mdo217ChangePL(this.value)">'+
+  '<option value="" '+(!pl?'selected':'')+'>Da accertare su FL e disposizioni</option>'+
+  '<option value="SI" '+(pl==='SI'?'selected':'')+'>Presenti</option>'+
+  '<option value="NO" '+(pl==='NO'?'selected':'')+'>Assenti</option></select></label>'+
+  mdo32GenericInput('faseLavori','Fase di lavoro / invio / ricovero')+
+  mdo32GenericInput('kmInizio','Progressiva inizio cantiere')+
+  mdo32GenericInput('kmFine','Progressiva fine cantiere')+'</div>';
+ html=html.replace('<div class="panel"><h2>5 · Preparazione M.40 MdO (ICMO All. 1)</h2>',
+ '<div class="panel"><h2>5 · Preparazione M.40 MdO (ICMO All. 1)</h2>'+detail);
  return html;
 };
 const mdo217PriorPrintM40=printM40Draft;
@@ -324,7 +340,10 @@ printM40Draft=function(){
   ' · binario '+e(d.binario||'DA INSERIRE')+' · linea '+e(d.linea||'DA INSERIRE')+'.');
  }else{
   add(2,'Circolazione per lavori: binario '+e(d.binario||'DA INSERIRE')+
-  ' · origine '+e(d.origine)+' · progressive cantiere / fase di invio o ricovero: DA COMPLETARE.');
+  ' · origine '+e(d.origine)+' · fase '+e(d.faseLavori||'DA DEFINIRE')+
+  ' · p.km inizio '+e(d.kmInizio||'DA INDICARE')+
+  ' · p.km fine '+e(d.kmFine||'DA INDICARE')+
+  ' · ricovero '+e(d.ricovero||'DA INDICARE')+'.');
  }
  add(3,'Massa rimorchiata: '+n(t.hauled,'t')+' (conteggio preliminare).');
  add(4,'Percentuale di massa frenata esistente: <b>'+n(t.ratio,'%')+'</b> (calcolo preliminare, da verificare).');
