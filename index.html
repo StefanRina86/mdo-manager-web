@@ -2220,6 +2220,13 @@ mdo9AddCompany=function(){
  const wrap=document.createElement('div');wrap.className='full';
  wrap.innerHTML='<div class="formgrid">'+mdo33Fields({})+'</div>';
  actions.before(wrap);
+ // Evita campi doppi: tara, frenatura, aggancio, assi ecc. si compilano
+ // una volta sola nella scheda di circolazione, non nel vecchio modulo rapido.
+ ['numero_assi','massa_vuoto_t','carico_massimo_t','massa_frenata_vuoto_t',
+  'massa_frenata_carico_t','lunghezza_mm','velocita_composizione_kmh','aggancio','frenatura']
+ .forEach(k=>f.querySelector('[name="'+k+'"]')?.closest('label')?.remove());
+ // Il codice di identificazione è già richiesto in alto per l'identità del mezzo.
+ wrap.querySelector('[name="card_codice_identificazione"]')?.closest('label')?.remove();
 };
 const mdo33OriginalCompanySave=mdo9SaveCompany;
 mdo9SaveCompany=async function(e){
