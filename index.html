@@ -2749,7 +2749,13 @@ mdo33Fields=function(t={}){
 };
 // Compilazione carta separata dalle verifiche e dallo stato operativo,
 // che sono già gestiti da funzionalità autonome.
-mdo35RfiCard=function(m){return mdo33Fields(m?.tecnica||{})};
+mdo35RfiCard=function(m){
+ const t={...(m?.tecnica||{})};
+ if(!t.equipment&&/^\d{6,15}$/.test(String(m?.id||'')))t.equipment=String(m.id);
+ if(!t.costruttore&&m?.costruttore)t.costruttore=m.costruttore;
+ if(!t.modello&&m?.modello)t.modello=m.modello;
+ return mdo33Fields(t);
+};
 // Evita modifiche arbitrarie agli altri attributi: il parse cambia solo
 // le chiavi card_* realmente presenti nel form.
 const mdo37OriginalParse=mdo33ParseForm;
@@ -2803,7 +2809,9 @@ mdo31EditCompany=function(id){
  modal('<h2>Carta di circolazione · '+esc(id)+'</h2>'+
  '<p class="small muted">'+esc(m.impresa||'')+' · '+esc(m.nome||'')+'</p>'+
  '<form class="formgrid" onsubmit="mdo37SaveCompany(event,\''+esc(id)+'\')">'+
- mdo33Fields(m.tecnica||{})+
+ mdo33Fields({...m.tecnica,
+  modello:m.tecnica?.modello||m.modello||'',
+  codice_identificazione:m.tecnica?.codice_identificazione||m.matricola||''})+
  '<div class="actions full"><button class="btn" type="button" onclick="closeModal()">Annulla</button>'+
  '<button class="btn primary" type="submit">Salva carta su Supabase</button></div></form>');
 };
