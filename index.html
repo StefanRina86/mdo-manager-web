@@ -2235,6 +2235,8 @@ mdo9SaveCompany=async function(e){
   if(!mdoSession)throw Error('Accesso necessario');
   if(db.mezzi.some(x=>x.id===id))throw Error('Mezzo già censito');
   const tech={...specs};
+  if(tech.codice_identificazione&&tech.codice_identificazione!==raw)throw Error('Il codice di identificazione deve essere uguale in anagrafica e nella carta');
+  tech.codice_identificazione=raw;
   for(const k of ['numero_assi','massa_vuoto_t','carico_massimo_t','massa_frenata_vuoto_t',
      'massa_frenata_carico_t','lunghezza_mm','velocita_composizione_kmh']){
     const v=String(form.get(k)||'').trim();
