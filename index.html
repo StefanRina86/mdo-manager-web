@@ -324,7 +324,11 @@ function mdo10EditRfi(id){
  '<label>Stato MdO<select name="stato" class="field">'+['ESER','FUES','OFF','SOPP','DA_VERIFICARE'].map(x=>'<option value="'+x+'" '+(x===s?'selected':'')+'>'+x+'</option>').join('')+'</select></label>'+
  '<label>Data variazione stato<input class="field" type="date" name="data_stato" value="'+esc(m.data_stato||new Date().toISOString().slice(0,10))+'"></label>'+
  '<label class="full">Motivo / anomalia / officina<input class="field" name="causa" value="'+esc(m.causa||'')+'" placeholder="Obbligatorio per FUES e OFF"></label>'+
- '<div class="full note"><b>Modifica unica:</b> anagrafica, carta di circolazione, verifiche e attrezzature vengono salvate insieme su Supabase. Il valore 0 km/h importato da SAP non equivale a una velocità certificata.</div>'+ '<h3 class="full">Anagrafica e caratteristiche del mezzo</h3>'+ 
+ '<div class="full note"><b>Modifica unica:</b> anagrafica, carta di circolazione, verifiche e attrezzature vengono salvate insieme su Supabase. Il valore 0 km/h importato da SAP non equivale a una velocità certificata.</div>'+ '<div class="toolbar full" style="position:sticky;top:0;z-index:2;background:white;padding:6px 0">'+
+ '<button type="button" class="btn" onclick="mdo35Jump(\'mdo35Carta\')">Carta di circolazione · 86 campi</button>'+
+ '<button type="button" class="btn" onclick="mdo35Jump(\'mdo35Verifiche\')">Verifiche</button>'+
+ '<button type="button" class="btn" onclick="mdo35Jump(\'mdo35Attrezzature\')">Attrezzature</button></div>'+
+ '<h3 class="full">Anagrafica e caratteristiche del mezzo</h3>'+ 
  '<label class="full">Descrizione<input class="field" name="nome" required value="'+esc(m.nome||'')+'"></label>'+ 
  '<label>Matricola / riferimento anagrafico<input class="field" name="matricola" value="'+esc(m.matricola||'')+'"></label>'+ 
  '<label>Costruttore<input class="field" name="costruttore" value="'+esc(m.costruttore||'')+'"></label>'+ 
@@ -332,13 +336,13 @@ function mdo10EditRfi(id){
  '<label>Nucleo<input class="field" name="nucleo" value="'+esc(m.nucleo||m.sede||'')+'"></label>'+ 
  '<label>Riferimento libretto<input class="field" name="libretto" value="'+esc(m.libretto||'')+'"></label>'+ 
  '<label class="full">Note generali<input class="field" name="note" value="'+esc(m.note||'')+'"></label>'+ 
- '<h3 class="full">Carta di circolazione · Allegato J</h3>'+mdo35RfiCard(m)+
- '<h3 class="full">Verifiche del mezzo</h3><p class="small muted full">Indica la data effettiva dell’ultima verifica. Non serve allegare documenti.</p>'+ 
+ '<h3 id="mdo35Carta" class="full">Carta di circolazione · Allegato J</h3>'+mdo35RfiCard(m)+
+ '<h3 id="mdo35Verifiche" class="full">Verifiche del mezzo</h3><p class="small muted full">Indica la data effettiva dell’ultima verifica. Non serve allegare documenti.</p>'+ 
  '<label>Ultima annuale<input class="field" type="date" name="ultima_annuale" value="'+esc(v.ultima_annuale||'')+'"></label>'+ 
  '<label>Ultima periodica<input class="field" type="date" name="ultima_periodica" value="'+esc(v.ultima_periodica||'')+'"></label>'+ 
  '<label>Ultima quinquennale<input class="field" type="date" name="ultima_quinquennale" value="'+esc(v.ultima_quinquennale||'')+'"></label>'+ 
  '<label>Ultima verifica sollevamento generale<input class="field" type="date" name="ultima_soll_acc" value="'+esc(v.ultima_soll_acc||'')+'"></label>'+ 
- '<h3 class="full">Presenza apparecchiature</h3><div class="full note">Spunta le attrezzature effettivamente presenti. Solo per quelle selezionate compaiono date, verbali e obbligo di verifica. I dati storici già registrati vengono conservati anche se disattivi la presenza.</div>'+sections+
+ '<h3 id="mdo35Attrezzature" class="full">Presenza apparecchiature</h3><div class="full note">Spunta le attrezzature effettivamente presenti. Solo per quelle selezionate compaiono date, verbali e obbligo di verifica. I dati storici già registrati vengono conservati anche se disattivi la presenza.</div>'+sections+
  '<div class="full note">Puoi registrare e modificare le date senza allegare documenti. La data inserita viene registrata e salvata senza richiedere riferimenti documentali.</div>'+
  '<div class="actions full"><button type="button" class="btn" onclick="closeModal()">Annulla</button><button type="submit" class="btn primary">Salva</button></div></form>');
 }
@@ -2454,6 +2458,16 @@ const mdo34ExistingKeys=new Set(mdo33Specs.map(x=>x[0]));
 for(const entry of [...mdo34Groups.flatMap(g=>g.fields),...mdo34Additional]){
  if(!mdo34ExistingKeys.has(entry[0])){mdo33Specs.push(entry);mdo34ExistingKeys.add(entry[0])}
 }
+const mdo35OriginalCardInput=mdo33Input;
+mdo33Input=function(k,label,type,options,value){
+ if(type==='select'&&value!==undefined&&value!==null&&String(value)!==''&&!options.includes(String(value))){
+  const raw=String(value);
+  return '<label>'+esc(label)+'<select class="field" name="card_'+k+'"><option value="">Non indicato</option>'+
+   '<option value="'+esc(raw)+'" selected>Valore SAP / carta: '+esc(raw)+'</option>'+
+   options.map(x=>'<option value="'+esc(x)+'">'+esc(x.replaceAll('_',' '))+'</option>').join('')+'</select></label>';
+ }
+ return mdo35OriginalCardInput(k,label,type,options,value);
+};
 const mdo34OldInput=mdo33Input;
 mdo33Input=function(k,label,type,options,value){
  if(type==='date')return '<label>'+esc(label)+'<input class="field" type="date" name="card_'+k+'" value="'+esc(value||'')+'"></label>';
@@ -2558,6 +2572,7 @@ renderCompResult=function(d){
 
 
 // MDO 2.15 — carta completa accessibile direttamente nella scheda RFI.
+function mdo35Jump(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'})}
 function mdo35RfiCard(m){
  const tecnica=m?.tecnica||{};
  let html=mdo33Fields(tecnica);
@@ -2566,7 +2581,7 @@ function mdo35RfiCard(m){
  html=html.replace(/<label>Data ultima verifica (?:annuale|periodica|quinquennale) documentata<input[^>]+><\/label>/g,'');
  // Il costruttore è già un campo nella testata del mezzo e viene sincronizzato in salvataggio.
  html=html.replace(/<label>Costruttore<input[^>]*name="card_costruttore"[^>]*><\/label>/g,'');
- return '<div class="full note">Compila i valori riportati sulla carta. I menu guidati servono per le voci con pochi esiti; massa, frenatura, velocità e quote restano numeriche. **Un valore 0 importato da SAP non costituisce una velocità valida.**</div>'+html;
+ return '<div class="full note">Compila i valori riportati sulla carta. I menu guidati servono per le voci con pochi esiti; massa, frenatura, velocità e quote restano numeriche. Un valore 0 importato da SAP non costituisce una velocità valida.</div>'+html;
 }
 
 mdoBoot();
