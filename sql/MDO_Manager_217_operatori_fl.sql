@@ -164,6 +164,39 @@ DROP POLICY IF EXISTS mdo217_fl_admin ON public.mdo_fl_tratti;
 CREATE POLICY mdo217_fl_admin ON public.mdo_fl_tratti FOR ALL TO authenticated
  USING (public.mdo_is_admin()) WITH CHECK (public.mdo_is_admin());
 
+
+-- TV301: i CID di prelevante ed erogatore devono essere autorizzati.
+-- Questa verifica blocca anche eventuali invii diretti che saltano il modulo HTML.
+-- Non modifica i rifornimenti o le giacenze già registrati.
+CREATE OR REPLACE FUNCTION public.mdo217_controlla_personale_tv301()
+RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path=''
+AS $fn$
+BEGIN
+ IF auth.role() IS DISTINCT FROM 'service_role' THEN
+  IF NOT EXISTS (
+   SELECT 1 FROM public.mdo_personale_carburante p
+    WHERE p.cid=NEW.agente_cid AND p.attivo AND p.puo_prelevare
+  ) THEN
+   RAISE EXCEPTION 'CID del prelevante non presente o non autorizzato per TV301'
+    USING ERRCODE='42501';
+  END IF;
+  IF NOT EXISTS (
+   SELECT 1 FROM public.mdo_personale_carburante p
+    WHERE p.cid=NEW.fornitore_cid AND p.attivo AND p.puo_erogare
+  ) THEN
+   RAISE EXCEPTION 'CID dell''erogatore non presente o non autorizzato per TV301'
+    USING ERRCODE='42501';
+  END IF;
+ END IF;
+ RETURN NEW;
+END
+$fn$;
+DROP TRIGGER IF EXISTS mdo217_tv301_verifica_personale ON public.mdo_rifornimenti;
+CREATE TRIGGER mdo217_tv301_verifica_personale
+ BEFORE INSERT ON public.mdo_rifornimenti
+ FOR EACH ROW EXECUTE FUNCTION public.mdo217_controlla_personale_tv301();
+
+
 COMMIT;
 
 -- CONTROLLI DI SOLA LETTURA: nessun mezzo/giacenza/studio modificato.
