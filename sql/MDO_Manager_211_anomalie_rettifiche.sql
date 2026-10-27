@@ -18,7 +18,7 @@ BEGIN
    RAISE EXCEPTION 'Segnalazione archiviata: non modificabile';
  END IF;
  IF NOT public.mdo_is_admin() AND (
-   oldrow.dettagli->>'account_id' IS DISTINCT FROM auth.uid()::text
+   oldrow.created_by IS DISTINCT FROM auth.uid()
    OR NOT public.mdo30_puo_segnalare()
  ) THEN RAISE EXCEPTION 'Modifica consentita solo al compilatore autorizzato o amministratore' USING ERRCODE='42501'; END IF;
  IF jsonb_typeof(p_valori) IS DISTINCT FROM 'object' THEN RAISE EXCEPTION 'Formato valori non valido'; END IF;
@@ -72,7 +72,7 @@ BEGIN
  SELECT * INTO oldrow FROM public.mdo_anomalie WHERE id=p_id FOR UPDATE;
  IF NOT FOUND THEN RAISE EXCEPTION 'Segnalazione non trovata'; END IF;
  IF NOT public.mdo_is_admin() AND (
-   oldrow.dettagli->>'account_id' IS DISTINCT FROM auth.uid()::text
+   oldrow.created_by IS DISTINCT FROM auth.uid()
    OR NOT public.mdo30_puo_segnalare()) THEN
    RAISE EXCEPTION 'Eliminazione consentita solo al compilatore autorizzato o amministratore' USING ERRCODE='42501'; END IF;
  IF COALESCE(oldrow.dettagli->>'annullato','false')='true' THEN RETURN; END IF;
