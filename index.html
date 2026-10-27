@@ -2308,5 +2308,65 @@ mdo32PrintDistinta=function(){
  mdo32Print('Distinta convoglio MdO',html,true);
 };
 
+
+// M.40 MdO: nessuna casella da flaggare per le voci numeriche.
+// I valori disponibili vengono riportati senza annotazioni nella riga.
+// Impaginazione di lavoro derivata dalla struttura dell'All.1 ICMO; emissione/notifica restano distinte.
+const mdo33FlaglessCalcoli=calcoli;
+calcoli=function(){
+ let html=mdo33FlaglessCalcoli();
+ const d=window.compDraft;mdo32Init(d);
+ return html.replace('<div id="mdo32M40Flags">'+mdo32Flags(d)+'</div>',
+ '<div class="note">Le prescrizioni numeriche si compilano dai dati del convoglio e della tratta. Per le condizioni particolari usa il campo “Ulteriori prescrizioni / indicazioni”. Le attestazioni di prova freno si compilano soltanto dopo la prova eseguita.</div>');
+};
+printM40Draft=function(){
+ const d=window.compDraft;if(!d?.ids?.length)return alert('Aggiungi prima almeno un MdO');
+ mdo32Init(d);const t=mdo32Totals(d),six=mdo33SixCheck(d);
+ if(six.status==='BLOCCANTE')return alert('Non è possibile predisporre il M.40: composizione superiore al limite di sei rotabili non unificati, salvo diversa previsione della carta.');
+ const e=x=>esc(x==null?'':String(x));
+ const n=(v,dec=1)=>v===null||v===undefined?'____________':Number(v).toLocaleString('it-IT',{minimumFractionDigits:0,maximumFractionDigits:dec});
+ const item=(no,content)=>'<tr><td class="num">'+no+'</td><td>'+content+'</td></tr>';
+ const pre='<div class="m40hdr"><div class="stamp"><b>RFI</b><span>MOD. M.40 MdO<br>ICMO · ALLEGATO 1</span></div>'+
+ '<div class="center"><b>PRESCRIZIONI PER LA CIRCOLAZIONE DEI MEZZI D’OPERA</b></div></div>'+
+ '<div class="headrow">UM / UT: <b>'+e(d.um||'UM TE1 Gallarate')+'</b> &emsp; M.40 MdO n° '+e(d.numeroM40||'________')+
+ ' &emsp; Data: '+e(d.data||'________')+' &emsp; Ore: '+e(d.oraM40||'________')+'</div>'+
+ '<div class="headrow">Dati di composizione: '+e(d.ids.join(' — '))+'</div>';
+ const pct=t.ratio===null?'____________':n(t.ratio,1);
+ const massH=t.hauled===null?'____________':n(t.hauled,2);
+ const maxV=t.minSpeed===null?'____________':n(t.minSpeed,1);
+ const grade=t.maxSlope===null?'____________':n(t.maxSlope,1);
+ const terms=[
+ ['Per trasferimento, circolate da <u>'+e(d.origine||'________')+'</u> a <u>'+e(d.destinazione||'________')+'</u> sul binario '+e(d.binario||'________')+' della linea '+e(d.linea||'________')+' interrotta.'],
+ ['Per lavori, circolate sulla tratta e sul binario indicati, secondo le disposizioni del provvedimento di interruzione.'],
+ ['Massa rimorchiata <b>'+massH+'</b> t.'],
+ ['Freno continuo tipo Merci. Massa frenata esistente <b>'+pct+'</b> %.'],
+ ['Velocità massima <b>'+maxV+'</b> km/h rispetto ai veicoli in composizione.'],
+ ['Massima pendenza del tratto di linea da percorrere <b>'+grade+'</b> ‰.'],
+ ['Nei casi prescritti, procedete con marcia a vista non superando 4 km/h in corrispondenza dei passaggi a livello.'],
+ ['Effettuata prova freno tipo <b>'+e(d.provaTipo||'________')+'</b> con esito <b>'+e(d.provaEsito||'________')+'</b>.'],
+ ['Ricoveratevi a <b>'+e(d.ricovero||'________')+'</b>.'],
+ [e(d.noteM40||d.note||'Ulteriori prescrizioni, quando applicabili: __________________________________________')]
+ ];
+ const cols=terms.map((row,i)=>item(i+1,row[0])).join('');
+ const ctx=['frenatura presente in carta per tutte le unità',t.ratio!==null].every(x=>x!==false);
+ const missing=[];
+ if(t.ratio===null)missing.push('percentuale di massa frenata');
+ if(t.hauled===null)missing.push('massa rimorchiata');
+ if(t.minSpeed===null)missing.push('limite velocità da carte e tratte');
+ if(t.maxSlope===null)missing.push('pendenza massima');
+ if(!d.origine||!d.destinazione)missing.push('percorso');
+ const footer='<div class="signrow"><div>Agente di scorta<br>____________________________</div>'+
+ '<div>Agente addetto alla guida<br>____________________________</div></div>'+
+ '<p class="foot">FACSIMILE DI PREPARAZIONE · Non è un modulo M.40 MdO emesso o notificato. L’attestazione della prova freno, l’individuazione delle prescrizioni applicabili e le firme spettano al personale competente.</p>'+
+ (missing.length?'<div class="missing">CAMPI NON COMPLETI PER LA PREPARAZIONE: '+e(missing.join('; '))+'.</div>':'');
+ const css='<style>@page{size:A4 portrait;margin:11mm}html,body{font-family:Arial,sans-serif;color:#0f2640;font-size:9pt;margin:0}'+
+ '.m40hdr{border:1px solid #223a56;padding:8px}.stamp{display:flex;justify-content:space-between;gap:6px}.stamp b{font-size:21pt;font-style:italic;color:#006c92}.stamp span{font-size:9pt;text-align:right}.center{text-align:center;font-size:12pt;margin:8px 0}'+
+ '.headrow{border:1px solid #223a56;border-top:0;padding:8px}table{width:100%;border-collapse:collapse;table-layout:fixed;margin-top:10px}td{border:1px solid #526a83;padding:9px 7px;vertical-align:top;line-height:1.4}td.num{width:28px;text-align:center;font-weight:bold}'+
+ '.signrow{display:flex;justify-content:space-between;text-align:center;margin-top:20px}.signrow div{width:48%}.foot{font-size:8pt;margin-top:16px;border-top:1px solid #888;padding-top:8px}.missing{font-size:8pt;border:1px solid #945;margin-top:8px;padding:6px}@media print{body{margin:0}}</style>';
+ const w=window.open('','_blank');if(!w)return alert('Consenti popup per stampare');
+ w.document.open();w.document.write('<!doctype html><html lang="it"><head><meta charset="utf-8"><title>Mod. M.40 MdO · Studio</title>'+css+
+ '</head><body>'+pre+'<table>'+cols+'</table>'+footer+'</body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),400);
+};
+
 mdoBoot();
 </script></body></html>
