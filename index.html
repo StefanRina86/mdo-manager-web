@@ -2,7 +2,7 @@
 :root{--nav:#0b263f;--blue:#0879be;--bg:#f2f5f8;--line:#dce4ed;--text:#243348;--muted:#607489;--card:#fff;--red:#c73341;--yellow:#b97710;--green:#197654}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:default}.app{display:flex;min-height:100vh}.side{background:var(--nav);color:#dce9f5;width:242px;flex-shrink:0;padding:24px 12px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;padding:5px 12px 23px}.brand-mark{background:var(--blue);padding:8px;border-radius:9px;color:white}.subbrand{font-size:11px;font-weight:500;opacity:.8}.nav{display:block;width:100%;border:0;background:transparent;color:#bdcfe1;text-align:left;padding:11px 14px;border-radius:9px;margin:4px 0;font-weight:550}.nav:hover,.nav.active{background:#174669;color:white}.foot{position:absolute;bottom:17px;left:18px;right:18px;font-size:11px;color:#b5c6d5}.main{flex:1;min-width:0}.top{background:white;border-bottom:1px solid var(--line);padding:17px 27px;display:flex;justify-content:space-between;align-items:center;gap:10px}.top h1{font-size:21px;margin:0}.content{padding:24px 27px;max-width:1450px}.muted{color:var(--muted)}h2{font-size:18px;margin:0 0 14px}h3{font-size:15px;margin:0 0 12px}.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:20px}.kpi,.panel{background:white;border:1px solid var(--line);border-radius:13px;padding:18px}.kpi .num{font-size:29px;font-weight:760}.kpi .tiny{font-size:12px;color:var(--muted)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{margin-bottom:16px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}.toolbar .grow{flex:1}.btn{border:1px solid var(--line);padding:9px 13px;border-radius:8px;background:white;color:var(--text);font-weight:650}.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}.btn.danger{color:var(--red)}.field{border:1px solid #cbd5e0;border-radius:7px;padding:9px 10px;background:white;color:var(--text);min-width:0}.toolbar input{width:300px;max-width:100%}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:11px}table{border-collapse:collapse;width:100%;background:white;text-align:left}th,td{padding:11px 12px;border-bottom:1px solid #edf1f5;white-space:nowrap}th{font-size:12px;color:#5d7084;background:#f9fbfd}tr:last-child td{border-bottom:0}tr:hover td{background:#f8fafc}.tag{display:inline-block;padding:3px 9px;font-size:11px;border-radius:30px;font-weight:800;background:#eaf0f7;color:#456}.tag.ESER{background:#dff5e9;color:#126a48}.tag.FUES{background:#fff0df;color:#985000}.tag.OFF{background:#ffe2e7;color:#a71d30}.tag.SOPP{background:#e4e7eb;color:#596271}.tag.DA_VERIFICARE{background:#edf0f6;color:#425d82}.click{color:#0676b4;background:none;border:0;padding:0;font-weight:700;text-align:left}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.formgrid label{display:flex;flex-direction:column;gap:5px;font-weight:650;font-size:12px}.formgrid input,.formgrid select,.formgrid textarea{width:100%}.full{grid-column:1/-1}.note{border-left:4px solid #6a92b0;background:#edf5fc;padding:10px 13px;border-radius:5px;margin-bottom:18px}.warn{border-left-color:#e0a94b;background:#fff8e8}.bad{border-left-color:#bb3348;background:#fff0f1}.actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:15px}.stack{display:grid;gap:10px}.item{border:1px solid var(--line);border-radius:9px;padding:12px}.small{font-size:12px}.pill{padding:2px 7px;border:1px solid var(--line);border-radius:6px;font-size:12px}.empty{padding:35px;text-align:center;color:var(--muted)}.dialog-bg{position:fixed;inset:0;background:#071b2aaa;display:flex;align-items:center;justify-content:center;z-index:20;padding:12px}.dialog{background:white;max-width:850px;width:100%;max-height:90vh;overflow:auto;border-radius:14px;padding:22px;box-shadow:0 12px 50px #0015}.dialog h2{margin-right:32px}.close{float:right;border:none;background:none;font-size:25px;line-height:1}.mobile-menu{display:none}.status-led{width:9px;height:9px;border-radius:100%;background:var(--yellow);display:inline-block;margin-right:4px}@media(max-width:980px){.kpis{grid-template-columns:repeat(3,1fr)}.side{width:190px}.grid2{grid-template-columns:1fr}}@media(max-width:700px){.side{display:none;position:fixed;z-index:15;top:0;left:0;width:250px}.side.open{display:block}.mobile-menu{display:inline-block}.top{padding:12px 14px}.top h1{font-size:17px}.content{padding:13px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi{padding:12px}.kpi .num{font-size:24px}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.panel{padding:13px}.toolbar .grow{flex-basis:100%}.toolbar input{width:100%}}
 
 @media(max-width:740px){.formgrid{grid-template-columns:1fr!important}.grid2{grid-template-columns:1fr!important}}
-</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></head><body><div class="app" style="display:none"><aside class="side" id="sidebar"><div class="brand"><span class="brand-mark">M</span><div>MDO Manager<div class="subbrand">UM TE1 · Gallarate</div></div></div><nav id="nav"></nav><div class="foot">Versione online 2.11 · Supabase<br>Non sostituisce le verifiche RFI</div></aside><div class="main"><header class="top"><div style="display:flex;align-items:center;gap:10px"><button class="btn mobile-menu" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button><h1 id="title">Dashboard</h1></div><span class="muted small">● Sincronizzato con Supabase</span></header><main class="content" id="view"></main></div></div><div id="modal"></div><script>
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></head><body><div class="app" style="display:none"><aside class="side" id="sidebar"><div class="brand"><span class="brand-mark">M</span><div>MDO Manager<div class="subbrand">UM TE1 · Gallarate</div></div></div><nav id="nav"></nav><div class="foot">Versione online 2.12 · Supabase<br>Non sostituisce le verifiche RFI</div></aside><div class="main"><header class="top"><div style="display:flex;align-items:center;gap:10px"><button class="btn mobile-menu" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button><h1 id="title">Dashboard</h1></div><span class="muted small">● Sincronizzato con Supabase</span></header><main class="content" id="view"></main></div></div><div id="modal"></div><script>
 const SEED=[];
 const SAP_ORDINI_SEED=[];
 const KEY='mdo_manager_v1';
@@ -1670,6 +1670,266 @@ mdoLoadRemote=async function(){
   }
  }
 };
+
+
+// MDO 2.12 — Distinta e preparazione M.40 MdO, ICMO Allegato 1.
+// I dati delle carte restano in anagrafica: qui si registrano SOLO condizioni d'impiego.
+const mdo32N=v=>v==null||String(v).trim()===''?null:(Number.isFinite(Number(v))?Number(v):null);
+const mdo32Fmt=(v,dec=2)=>v==null?'—':Number(v).toLocaleString('it-IT',{maximumFractionDigits:dec});
+function mdo32Init(d=window.compDraft){
+ if(!d)return;
+ if(!Array.isArray(d.ids))d.ids=[];
+ if(!Array.isArray(d.voci))d.voci=[];
+ d.voci=d.ids.map((id,i)=>d.voci[i]?.id===id?d.voci[i]:{id,ruolo:i===0?'MOTRICE':'RIMORCHIATO',carico_t:'',massa_frenata_t:'',freno_inserito:true,limite_kmh:'',note:''});
+ if(!Array.isArray(d.segmenti))d.segmenti=[];
+ if(!d.m40||typeof d.m40!=='object')d.m40={};
+ if(!d.um)d.um='UM TE1 Gallarate';
+}
+function mdo32Set(i,key,value){
+ const d=window.compDraft;mdo32Init(d);
+ if(!d.voci[i])return;
+ d.voci[i][key]=value;
+ const out=document.getElementById('compResult');if(out)out.innerHTML=renderCompResult(d);
+}
+function mdo32SegSet(i,key,value){
+ const d=window.compDraft;mdo32Init(d);
+ if(d.segmenti[i])d.segmenti[i][key]=value;
+ const out=document.getElementById('compResult');if(out)out.innerHTML=renderCompResult(d);
+}
+function mdo32SegAdd(){
+ const d=window.compDraft;mdo32Init(d);
+ d.segmenti.push({da:'',a:'',fl:'',binario:'',pendenza:'',velocita:'',categoria:'',lunghezza:'',note:''});
+ mdo32DrawSegments();
+}
+function mdo32SegRemove(i){const d=window.compDraft;mdo32Init(d);d.segmenti.splice(i,1);mdo32DrawSegments()}
+function mdo32DrawSegments(){
+ const el=document.getElementById('mdo32Segments');
+ if(el)el.innerHTML=mdo32Segments(window.compDraft);
+ const out=document.getElementById('compResult');if(out)out.innerHTML=renderCompResult(window.compDraft);
+}
+function mdo32Segments(d){
+ mdo32Init(d);
+ const items=d.segmenti.map((x,i)=>{
+  const field=(key,label,type='text')=>'<label class="small">'+label+'<input class="field" type="'+type+'" '+(type==='number'?'step="any" ':'')+'value="'+esc(x[key]||'')+'" oninput="mdo32SegSet('+i+',\''+key+'\',this.value)"></label>';
+  return '<div class="item" style="margin:8px 0;padding:12px"><div class="toolbar"><b>Tratto '+(i+1)+'</b><button class="btn" onclick="mdo32SegRemove('+i+')">Rimuovi</button></div>'+
+   '<div class="formgrid">'+field('da','Da')+field('a','A')+field('fl','FL e versione')+field('binario','Binario')+
+   field('pendenza','Pendenza massima (‰)','number')+field('velocita','Limite velocità (km/h)','number')+
+   field('categoria','Categoria di carico')+field('lunghezza','Lunghezza massima (m)','number')+field('note','Note e prescrizioni')+'</div></div>';
+ }).join('');
+ return items||'<p class="small muted">Nessun tratto aggiuntivo: utilizza i dati del percorso principale sopra.</p>';
+}
+function mdo32Voci(d){
+ mdo32Init(d);
+ return d.ids.map((id,i)=>{
+  const m=(d.temporanei||[]).find(x=>x.id===id)||db.mezzi.find(x=>x.id===id);
+  const t=m?.tecnica||{},v=d.voci[i];
+  const tare=mdo32N(t.massa_vuoto_t??m?.massa);
+  const load=mdo32N(v.carico_t);
+  const mass=tare!==null&&tare>0&&load!==null&&load>=0?tare+load:null;
+  const brake=v.freno_inserito===false?0:mdo32N(v.massa_frenata_t);
+  const length=mdo32N(t.lunghezza_mm);
+  const speed=mdo32N(v.limite_kmh)||mdo32N(t.velocita_composizione_kmh);
+  const nAx=mdo32N(t.numero_assi);
+  return {id,i,m,v,t,tare,load,mass,brake,length,speed,nAx,
+   axleAvg:mass!==null&&nAx>0?mass/nAx:null};
+ });
+}
+function mdo32Totals(d){
+ const a=mdo32Voci(d),valid=(field)=>a.length>0&&a.every(x=>x[field]!==null&&x[field]!==undefined);
+ const totalMass=valid('mass')?a.reduce((n,x)=>n+x.mass,0):null;
+ const brakeMass=valid('brake')?a.reduce((n,x)=>n+x.brake,0):null;
+ const length=valid('length')?a.reduce((n,x)=>n+x.length,0):null;
+ const ratio=totalMass>0&&brakeMass!==null?100*brakeMass/totalMass:null;
+ const hauled=a.length&&a.every(x=>x.mass!==null)?a.filter(x=>x.v.ruolo!=='MOTRICE').reduce((n,x)=>n+x.mass,0):null;
+ const lim=a.map(x=>x.speed).filter(x=>x!==null);
+ const segments=Array.isArray(d.segmenti)?d.segmenti:[];
+ const segSpeeds=segments.map(x=>mdo32N(x.velocita)).filter(x=>x!==null);
+ const classic=mdo32N(d.velocitaLinea);
+ const allSeg=segments.length&&segments.every(x=>x.da&&x.a&&x.fl);
+ const minSpeed=lim.length===a.length&&a.length>0&&(segSpeeds.length===segments.length||!segments.length)?Math.min(...lim,...segSpeeds,...(classic!==null?[classic]:[])):null;
+ const slopes=segments.map(x=>mdo32N(x.pendenza)).filter(x=>x!==null);
+ const maxSlope=slopes.length===segments.length&&segments.length?Math.max(...slopes):mdo32N(d.pendenza);
+ const lenLimits=[mdo32N(d.lunghezzaLimite),...segments.map(x=>mdo32N(x.lunghezza))].filter(x=>x!==null);
+ const minLengthLimit=lenLimits.length?Math.min(...lenLimits):null;
+ const exceedsLength=length!==null&&minLengthLimit!==null&&length/1000>minLengthLimit;
+ return {a,totalMass,brakeMass,length,ratio,hauled,minSpeed,maxSlope,minLengthLimit,exceedsLength,allSeg};
+}
+const mdo32OriginalAdd=addComp;
+addComp=function(){
+ const id=document.getElementById('compAdd')?.value;if(!id)return;
+ const d=window.compDraft;mdo32Init(d);d.ids.push(id);
+ d.voci.push({id,ruolo:d.ids.length===1?'MOTRICE':'RIMORCHIATO',carico_t:'',massa_frenata_t:'',freno_inserito:true,limite_kmh:'',note:''});
+ refreshComp();
+};
+removeComp=function(i){const d=window.compDraft;mdo32Init(d);d.ids.splice(i,1);d.voci.splice(i,1);refreshComp()};
+moveComp=function(i,delta){
+ const d=window.compDraft;mdo32Init(d);const j=i+delta;
+ if(j<0||j>=d.ids.length)return;
+ [d.ids[i],d.ids[j]]=[d.ids[j],d.ids[i]];
+ [d.voci[i],d.voci[j]]=[d.voci[j],d.voci[i]];
+ refreshComp();
+};
+renderCompList=function(d){
+ mdo32Init(d);
+ if(!d.ids.length)return '<div class="empty">Seleziona un MdO RFI o di impresa per iniziare la distinta.</div>';
+ return d.ids.map((id,i)=>{
+  const m=compMezzo(id),t=m?.tecnica||{},v=d.voci[i];
+  const input=(key,label,hint='',type='number')=>'<label class="small">'+label+
+   '<input class="field" type="'+type+'" '+(type==='number'?'step="any" min="0" ':'')+
+   'placeholder="'+esc(hint)+'" value="'+esc(v[key]??'')+'" oninput="mdo32Set('+i+',\''+key+'\',this.value)"></label>';
+  const numHint=(n,u='')=>n==null?'':String(n)+' '+u;
+  return '<div class="item" style="margin:10px 0;padding:12px">'+
+    '<div class="toolbar"><b>'+(i+1)+'. '+esc(id)+' · '+esc(m?.nome||'Mezzo non trovato')+'</b>'+
+    '<span class="small muted">'+esc(m?.impresa||m?.proprieta||'RFI')+'</span>'+
+    '<button class="btn" onclick="moveComp('+i+',-1)">↑</button>'+
+    '<button class="btn" onclick="moveComp('+i+',1)">↓</button>'+
+    '<button class="btn" onclick="removeComp('+i+')">Rimuovi</button></div>'+
+    '<p class="small muted">Dati di carta: tara '+esc(numHint(t.massa_vuoto_t??m?.massa,'t'))+
+    ' · massa frenata a vuoto '+esc(numHint(t.massa_frenata_vuoto_t,'t'))+
+    ' · a carico '+esc(numHint(t.massa_frenata_carico_t,'t'))+
+    ' · lunghezza '+esc(numHint(t.lunghezza_mm,'mm'))+'.</p>'+
+    '<div class="formgrid"><label class="small">Ruolo in composizione<select class="field" onchange="mdo32Set('+i+',\'ruolo\',this.value)">'+
+    ['MOTRICE','RIMORCHIATO','MOTRICE INATTIVA'].map(x=>'<option '+(x===v.ruolo?'selected':'')+'>'+x+'</option>').join('')+
+    '</select></label>'+
+    input('carico_t','Carico effettivo presente (t)','Inserire 0 se vuoto')+
+    input('massa_frenata_t','Massa frenata effettivamente disponibile (t)',t.massa_frenata_carico_t||t.massa_frenata_vuoto_t||'')+
+    '<label class="small">Freno incluso nel conteggio<select class="field" onchange="mdo32Set('+i+',\'freno_inserito\',this.value===\'SI\')">'+
+    '<option value="SI" '+(v.freno_inserito!==false?'selected':'')+'>Sì</option><option value="NO" '+(v.freno_inserito===false?'selected':'')+'>No / isolato</option></select></label>'+
+    input('limite_kmh','Limite di velocità d’impiego (km/h)',t.velocita_composizione_kmh||'')+
+    input('note','Note sul mezzo nel convoglio','', 'text')+
+    '</div></div>';
+ }).join('');
+};
+const mdo32OldCalcoli=calcoli;
+calcoli=function(){
+ let html=mdo32OldCalcoli(),d=window.compDraft;mdo32Init(d);
+ const segments='<div class="panel"><h2>3 · Tratti percorsi e relativi FL</h2>'+
+ '<p class="small muted">Puoi indicare più tratti. Ogni pendenza/limite è un valore trascritto dal FL, non un valore inventato dall’applicativo.</p>'+
+ '<div id="mdo32Segments">'+mdo32Segments(d)+'</div>'+
+ '<div class="toolbar"><button class="btn" onclick="mdo32SegAdd()">+ Tratto</button></div></div>';
+ const m40='<div class="panel"><h2>5 · Preparazione M.40 MdO (ICMO All. 1)</h2>'+
+ '<p class="small muted">Seleziona soltanto le prescrizioni da predisporre; la notifica, la prova freno e la firma competono al personale incaricato. Un campo valorizzato non equivale a una prescrizione emessa.</p>'+
+ '<div class="formgrid">'+
+ mdo32GenericInput('um','DTP/UT/UM')+mdo32GenericInput('numeroM40','Numero modulo (se assegnato)')+
+ mdo32GenericInput('oraM40','Ora prevista','time')+mdo32GenericInput('provaTipo','Prova freno · tipo')+
+ mdo32GenericInput('provaEsito','Prova freno · esito (solo dopo esecuzione)')+
+ mdo32GenericInput('ricovero','Località di ricovero')+mdo32GenericInput('noteM40','Ulteriori prescrizioni / indicazioni')+
+ '</div><div id="mdo32M40Flags">'+mdo32Flags(d)+'</div>'+
+ '<div class="actions"><button class="btn" onclick="mdo32PrintDistinta()">Stampa distinta del convoglio</button>'+
+ '<button class="btn" onclick="printM40Draft()">Anteprima M.40 MdO</button></div></div>';
+ html=html.replace('<div class="panel"><h2>3 · Risultati, controlli e M.40</h2>',segments+'<div class="panel"><h2>4 · Risultati e controlli</h2>');
+ html+=m40;
+ return html;
+};
+function mdo32GenericInput(key,label,type='text'){
+ const d=window.compDraft;
+ return '<label>'+esc(label)+'<input class="field" type="'+type+'" value="'+esc(d[key]||'')+
+  '" oninput="compUpdate(\''+key+'\',this.value)"></label>';
+}
+function mdo32Flags(d){
+ mdo32Init(d);
+ return '<div class="formgrid">'+[1,2,3,4,5,6,7,8,9,10].map(n=>'<label class="small"><input type="checkbox" '+
+  (d.m40['p'+n]?'checked ':'')+'onchange="mdo32Flag('+n+',this.checked)"> Prescrizione '+n+'</label>').join('')+'</div>';
+}
+function mdo32Flag(n,v){const d=window.compDraft;mdo32Init(d);d.m40['p'+n]=v}
+const mdo32OldResult=renderCompResult;
+renderCompResult=function(d){
+ const t=mdo32Totals(d),fmt=mdo32Fmt,rows=t.a.map(x=>'<tr><td>'+(x.i+1)+'</td><td>'+esc(x.id)+'</td><td>'+esc(x.v.ruolo)+'</td>'+
+ '<td>'+fmt(x.tare)+'</td><td>'+fmt(x.load)+'</td><td>'+fmt(x.mass)+'</td><td>'+fmt(x.brake)+'</td>'+
+ '<td>'+fmt(x.axleAvg)+'</td></tr>');
+ const summary='<h3>Distinta aritmetica della composizione</h3>'+
+ tabella(['Pos.','MdO','Ruolo','Tara t','Carico t','Massa t','Massa frenata t','Media t/asse'],rows)+
+ '<div class="grid2"><div class="item"><b>'+fmt(t.totalMass)+' t</b><div class="small">Massa complessiva</div></div>'+
+ '<div class="item"><b>'+fmt(t.hauled)+' t</b><div class="small">Massa delle unità non motrici attive (preliminare)</div></div>'+
+ '<div class="item"><b>'+fmt(t.ratio)+' %</b><div class="small">Rapporto aritmetico di frenatura dichiarato</div></div>'+
+ '<div class="item"><b>'+fmt(t.length!=null?t.length/1000:null)+' m</b><div class="small">Lunghezza nominale</div></div></div>'+
+ '<p class="small muted">Limite di velocità indicativo '+fmt(t.minSpeed,1)+' km/h · massima pendenza trascritta '+fmt(t.maxSlope,1)+
+ ' ‰ · limite lunghezza più restrittivo '+fmt(t.minLengthLimit,1)+' m.</p>'+
+ (t.exceedsLength?'<div class="note bad">La lunghezza supera almeno un limite dichiarato. Verifica necessaria.</div>':'')+
+ (t.a.some(x=>x.tare==null||x.load==null||x.brake==null||x.length==null)?'<div class="note warn">Alcuni dati d’impiego sono mancanti: i totali incompleti non sono confrontabili.</div>':'')+
+ '<p class="small muted">La media massa/asse non dimostra la distribuzione reale sui singoli assi. Percentuale frenata, prestazione della trazione, compatibilità di aggancio, categoria di carico e stazionamento richiedono verifiche specifiche.</p>';
+ return summary+'<h3>Altri controlli da completare</h3>'+mdo32OldResult(d);
+};
+function mdo32Print(title,html,landscape=true){
+ const w=window.open('','_blank');if(!w)return alert('Consenti popup per stampare');
+ const css='@page{size:A4 '+(landscape?'landscape':'portrait')+';margin:12mm}body{font:11px Arial;color:#132c43}'+
+ 'h1{font-size:17px}h2{font-size:13px}table{width:100%;border-collapse:collapse;margin:9px 0}th,td{border:1px solid #789;padding:5px;text-align:left;vertical-align:top}th{background:#eaf1f6}'+
+ '.notice{border:2px solid #a54;padding:8px;margin:9px 0}.cell{border:1px solid #567;padding:7px}.num{width:25px;text-align:center;font-weight:bold}.line{min-height:25px}.small{font-size:9px}.m40head{text-align:center}';
+ w.document.open();w.document.write('<!doctype html><html lang="it"><head><meta charset="utf-8"><title>'+esc(title)+'</title><style>'+css+'</style></head><body>'+html+'</body></html>');
+ w.document.close();w.focus();setTimeout(()=>w.print(),350);
+}
+function mdo32PrintDistinta(){
+ const d=window.compDraft;if(!d?.ids?.length)return alert('Aggiungi prima i MdO');
+ const t=mdo32Totals(d),fmt=mdo32Fmt,esc2=x=>esc(x??'');
+ const rr=t.a.map(x=>'<tr><td>'+(x.i+1)+'</td><td>'+esc2(x.id)+'<br>'+esc2(x.m?.nome)+'</td>'+
+ '<td>'+esc2(x.m?.impresa||x.m?.proprieta||'RFI')+'</td><td>'+esc2(x.v.ruolo)+'</td>'+
+ '<td>'+fmt(x.tare)+'</td><td>'+fmt(x.load)+'</td><td>'+fmt(x.mass)+'</td><td>'+fmt(x.brake)+'</td>'+
+ '<td>'+fmt(x.length!=null?x.length/1000:null)+'</td><td>'+fmt(x.speed,1)+'</td>'+
+ '<td>'+esc2(x.t.aggancio)+'</td><td>'+esc2(x.v.note)+'</td></tr>');
+ const parts='<h1>Distinta del convoglio MdO</h1><div class="notice"><b>Studio tecnico preliminare — non certificazione di circolabilità.</b> I dati di targa/carta sono quelli anagrafati; carichi, masse frenate d’impiego e ruoli sono dichiarati per questo studio.</div>'+
+ '<p>UM: '+esc2(d.um)+' · Data: '+esc2(d.data)+' · Percorso: '+esc2(d.origine)+' → '+esc2(d.destinazione)+
+ ' · Linea: '+esc2(d.linea)+' · Binario: '+esc2(d.binario)+'</p>'+
+ '<table><thead><tr>'+['Pos.','Mezzo','Proprietà','Ruolo','Tara t','Carico t','Massa t','Massa frenata t','Lunghezza m','Vel. km/h','Aggancio','Note'].map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+rr.join('')+'</tbody></table>'+
+ '<h2>Riepilogo aritmetico</h2><p>Massa complessiva '+fmt(t.totalMass)+' t · massa rimorchiata preliminare '+fmt(t.hauled)+
+ ' t · massa frenata '+fmt(t.brakeMass)+' t · rapporto aritmetico '+fmt(t.ratio)+'% · lunghezza '+fmt(t.length!=null?t.length/1000:null)+' m.</p>'+
+ '<h2>Tratti</h2>'+tabella(['Da','A','FL','Binario','Pendenza ‰','Vel. km/h','Cat.','Note'],(d.segmenti||[]).map(x=>'<tr>'+['da','a','fl','binario','pendenza','velocita','categoria','note'].map(k=>'<td>'+esc2(x[k])+'</td>').join('')+'</tr>'))+
+ '<p class="small">Da verificare: prestazioni di trazione alla pendenza applicabile, percentuale frenata prescritta, prova freno, compatibilità degli accoppiamenti, carichi reali per asse, prescrizioni di circolazione e stazionamento.</p>'+
+ '<p>Responsabile verifica tecnica / firma: ___________________________________________</p>';
+ mdo32Print('Distinta convoglio MdO',parts,true);
+}
+printM40Draft=function(){
+ const d=window.compDraft;if(!d?.ids?.length)return alert('Aggiungi prima i MdO');
+ mdo32Init(d);const t=mdo32Totals(d),n=mdo32Fmt;
+ const cell=(i,html)=>'<tr><td class="num">'+(d.m40['p'+i]?'☒':'☐')+' '+i+'</td><td>'+html+'</td></tr>';
+ const e=x=>esc(x??'');
+ const x='<div class="m40head"><p>ICMO — Allegato 1 · Mod. M.40 MdO</p><h1>CIRCOLAZIONE DI MdO IN REGIME D’INTERRUZIONE</h1>'+
+ '<p><b>BOZZA NON EMESSA — DATI DA VERIFICARE E NOTIFICARE</b></p></div>'+
+ '<p>DTP/UT/UM: '+e(d.um)+' &emsp; N° '+e(d.numeroM40)+' &emsp; Data '+e(d.data)+' &emsp; Ore '+e(d.oraM40)+'</p>'+
+ '<p>Si predispongono le prescrizioni la cui casella è barrata. L’emissione e la notifica effettiva spettano all’agente competente.</p>'+
+ '<table>'+cell(1,'Per trasferimento circolate da <u>'+e(d.origine)+'</u> a <u>'+e(d.destinazione)+'</u> sul binario '+e(d.binario)+' della linea '+e(d.linea)+' interrotto.')+
+ cell(2,'Per lavori circolate sul binario '+e(d.binario)+' della linea '+e(d.linea)+' interrotto da '+e(d.origine)+' a '+e(d.destinazione)+'.')+
+ cell(3,'Massa rimorchiata '+(t.hauled==null?'________ (da determinare)':n(t.hauled)+' t (dato aritmetico da verificare)')+'.')+
+ cell(4,'Freno continuo tipo Merci. Massa frenata esistente '+(t.ratio==null?'________':n(t.ratio)+' % (dato aritmetico, non validato)')+'.')+
+ cell(5,'Velocità massima '+(t.minSpeed==null?'________':n(t.minSpeed,1)+' km/h (limite aritmetico)')+' rispetto veicoli in composizione.')+
+ cell(6,'Massima pendenza del tratto di linea da percorrere '+(t.maxSlope==null?'________':n(t.maxSlope,1))+' ‰.')+
+ cell(7,'Procedete con marcia a vista non superando la velocità di 4 km/h in corrispondenza dei PL incontrati durante il percorso.')+
+ cell(8,'Effettuata prova freno tipo '+e(d.provaTipo||'________')+' con esito '+e(d.provaEsito||'________')+'. (Da attestare solo dopo la prova effettiva.)')+
+ cell(9,'Ricoveratevi a '+e(d.ricovero||'________')+' rispettando le indicazioni da completare.')+
+ cell(10,e(d.noteM40||d.note||'Ulteriori prescrizioni da definire.'))+'</table>'+
+ '<div style="display:flex;justify-content:space-around;margin-top:18px"><div>Agente di scorta<br><br>_____________________</div><div>Agente addetto alla guida<br><br>_____________________</div></div>'+
+ '<p class="small">Riferimento: ICMO DE 2025/12, Allegato 1. Questo è un facsimile di preparazione, non un M.40 emesso né notificato. Le prescrizioni non spuntate non devono essere interpretate come autorizzazioni.</p>';
+ mdo32Print('Bozza M.40 MdO',x,false);
+};
+const mdo32OriginalSave=saveComp;
+saveComp=async function(){
+ const d=window.compDraft;
+ if(!mdoSession)return alert('Accedi prima di salvare');
+ if(!d?.ids?.length)return alert('Seleziona almeno un mezzo');
+ mdo32Init(d);const t=mdo32Totals(d),title=[d.origine,d.destinazione].filter(Boolean).join(' → ')||'Studio convoglio';
+ let studyId=null;
+ try{
+  mdoStatus('Salvataggio distinta e studio online…');
+  const payload={titolo:title,nucleo:d.um||'UM TE1 Gallarate',stato:'BOZZA',
+   percorso:JSON.parse(JSON.stringify(d)),
+   dati_calcolo:{conteggi_preliminari:{massa_t:t.totalMass,massa_rimorchiata_t:t.hauled,
+    massa_frenata_t:t.brakeMass,rapporto_aritmetico_percento:t.ratio,lunghezza_mm:t.length,
+    limite_velocita_indicativo_kmh:t.minSpeed}},
+   risultati:{avvertenza:'Distinta e M.40 preparatori; non attestano idoneità alla circolazione'}};
+  const {data,error}=await mdoClient.from('mdo_convogli').insert(payload).select('id').single();
+  if(error)throw error;studyId=data.id;
+  const items=d.ids.map((id,i)=>({convoglio_id:studyId,posizione:i+1,
+   mezzo_temporaneo:{id,mezzo:compMezzo(id)?.nome||id,simulazione:!!compMezzo(id)?.temporaneo},
+   dati_impiego:{...d.voci[i]}}));
+  const saved=await mdoClient.from('mdo_convoglio_elementi').insert(items);
+  if(saved.error)throw saved.error;
+  await mdoLoadRemote();mdoStatus('Studio e distinta salvati su Supabase');
+  alert('Studio, distinta e selezioni M.40 salvati. Aprili in Studi condivisi.');
+ }catch(err){
+  mdoStatus('Salvataggio incompleto: '+err.message,true);
+  alert('Studio non salvato completamente: '+err.message+(studyId?' · Registrazione principale ID '+studyId+' da verificare':''));
+ }
+};
+
 
 mdoBoot();
 </script></body></html>
