@@ -2854,5 +2854,35 @@ async function mdo37SaveNewCompany(e){
  finally{btn.disabled=false}
 }
 
+
+// Anche il censimento NUOVO RFI utilizza soltanto i dati del foglio.
+// Equipment identifica la registrazione SAP; lo stato operativo si assegna
+// successivamente con il comando apposito, non si deduce dalla carta.
+mdo15AddRfi=function(){
+ if(mdoRole!=='admin')return alert('Censimento riservato all’amministratore');
+ modal('<h2>Nuovo MdO RFI · Carta di circolazione</h2>'+
+ '<form class="formgrid" onsubmit="mdo37SaveNewRfi(event)">'+mdo33Fields({})+
+ '<div class="actions full"><button type="button" class="btn" onclick="closeModal()">Annulla</button>'+
+ '<button type="submit" class="btn primary">Salva nuovo MdO RFI</button></div></form>');
+};
+async function mdo37SaveNewRfi(e){
+ e.preventDefault();if(mdoRole!=='admin')return;
+ const btn=e.target.querySelector('button[type=submit]');btn.disabled=true;
+ try{
+  const t=mdo33ParseForm(new FormData(e.target),{});
+  const id=String(t.equipment||'').trim(),desc=[t.tipo_mdo,t.modello].filter(Boolean).join(' · ');
+  if(!/^[0-9]{6,15}$/.test(id))throw Error('Il campo Equipment deve contenere il codice SAP numerico del mezzo (6–15 cifre)');
+  if(!desc)throw Error('Inserisci Definizione classe mezzo o Modello');
+  if(db.mezzi.some(m=>m.id===id))throw Error('Equipment già censito');
+  const m={id,nome:desc,matricola:t.matricola_costruttore||'',costruttore:t.costruttore||'',
+   modello:t.modello||'',nucleo:'',stato:'DA_VERIFICARE',proprieta:'RFI',impresa:null,
+   archiviato:false,tecnica:t,verifiche:{},dataAggiornamento:new Date().toISOString()};
+  const {error}=await mdoClient.from('mdo_mezzi').insert(mdoRow(m));if(error)throw error;
+  await mdoLoadRemote();closeModal();render();
+  mdoStatus('MdO RFI censito; imposta separatamente il suo stato operativo');
+ }catch(err){alert('MdO NON salvato: '+err.message)}
+ finally{btn.disabled=false}
+}
+
 mdoBoot();
 </script></body></html>
