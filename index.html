@@ -2206,5 +2206,107 @@ mdo32Totals=function(d){
  return t;
 };
 
+
+// Censimento completo dalla carta in un'unica operazione.
+const mdo33CompanyForm=mdo9AddCompany;
+mdo9AddCompany=function(){
+ mdo33CompanyForm();
+ const f=document.querySelector('#modal form');if(!f)return;
+ const actions=f.querySelector('.actions');
+ if(!actions)return;
+ const old=f.querySelector('[name=matricola]')?.closest('label');
+ if(old)old.firstChild.textContent='Codice di identificazione *';
+ const wrap=document.createElement('div');wrap.className='full';
+ wrap.innerHTML='<div class="formgrid">'+mdo33Fields({})+'</div>';
+ actions.before(wrap);
+};
+const mdo33OriginalCompanySave=mdo9SaveCompany;
+mdo9SaveCompany=async function(e){
+ e.preventDefault();
+ const form=new FormData(e.target);
+ let specs;
+ try{specs=mdo33ParseForm(form,{})}catch(err){return alert(err.message)}
+ const firm=String(form.get('impresa')||'').trim();
+ const raw=String(form.get('matricola')||'').trim();
+ const id='IMP-'+firm.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,24)+'-'+raw.toUpperCase().replace(/[^A-Z0-9-]/g,'').slice(0,40);
+ if(!firm||!raw||!String(form.get('nome')||'').trim())return alert('Impresa, codice di identificazione e descrizione sono obbligatori');
+ const btn=e.target.querySelector('button[type=submit]');if(btn)btn.disabled=true;
+ try{
+  if(!mdoSession)throw Error('Accesso necessario');
+  if(db.mezzi.some(x=>x.id===id))throw Error('Mezzo già censito');
+  const tech={...specs};
+  for(const k of ['numero_assi','massa_vuoto_t','carico_massimo_t','massa_frenata_vuoto_t',
+     'massa_frenata_carico_t','lunghezza_mm','velocita_composizione_kmh']){
+    const v=String(form.get(k)||'').trim();
+    if(v&&!Object.prototype.hasOwnProperty.call(tech,k))tech[k]=Number(v);
+  }
+  for(const k of ['aggancio','frenatura']){
+    const v=String(form.get(k)||'').trim();if(v&&!tech[k])tech[k]=v;
+  }
+  const m={id,nome:String(form.get('nome')||'').trim(),modello:String(form.get('modello')||'').trim(),
+    matricola:raw,impresa:firm,proprieta:'IMPRESA',stato:'CENSITO',abilitaComposizione:true,
+    tecnica:tech,fonte_date:String(form.get('fonte')||tech.fonte_carta||''),
+    fonte_validata:true,verifiche:{}};
+  const {error}=await mdoClient.from('mdo_mezzi').insert(mdoRow(m));if(error)throw error;
+  await mdoLoadRemote();closeModal();render();mdoStatus('Carta MdO di '+firm+' salvata integralmente');
+ }catch(err){alert('MdO NON salvato: '+err.message)}finally{if(btn)btn.disabled=false}
+};
+// Segnalazione condizionale dei rami deviati per il percorso principale e per ciascun tratto.
+function mdo33SetDeviata(flag){const d=window.compDraft;d.ramo_deviato=flag;document.getElementById('compResult').innerHTML=renderCompResult(d)}
+const mdo33OldSegments=mdo32Segments;
+mdo32Segments=function(d){
+ let html=mdo33OldSegments(d),i=0;
+ html=html.replace(/<div class="formgrid">/g,()=>{
+  const idx=i++;
+  return '<div class="formgrid"><label class="full small">'+
+    '<input type="checkbox" '+(d.segmenti?.[idx]?.ramo_deviato?'checked ':'')+
+    'onchange="mdo33SegDeviata('+idx+',this.checked)"> Percorso su ramo deviato in questo tratto</label>';
+ });
+ return html;
+};
+function mdo33SegDeviata(i,v){const d=window.compDraft;mdo32Init(d);if(d.segmenti[i])d.segmenti[i].ramo_deviato=v;document.getElementById('compResult').innerHTML=renderCompResult(d)}
+const mdo33BeforeCalc=calcoli;
+calcoli=function(){
+ let html=mdo33BeforeCalc(),d=window.compDraft;
+ return html.replace('<div class="panel"><h2>3 · Tratti percorsi e relativi FL</h2>',
+ '<div class="panel"><h2>3 · Tratti percorsi e relativi FL</h2>'+
+ '<label class="small"><input type="checkbox" '+(d.ramo_deviato?'checked ':'')+
+ 'onchange="mdo33SetDeviata(this.checked)"> Il percorso comprende rami deviati (applica i limiti specifici delle carte)</label>');
+};
+// Report sintetico distinte A4: righe leggibili, dati di carta e d'impiego separati.
+mdo32PrintDistinta=function(){
+ const d=window.compDraft;if(!d?.ids?.length)return alert('Aggiungi i MdO');
+ const t=mdo32Totals(d),fmt=mdo32Fmt,e=x=>esc(x??'');
+ const rows=t.a.map(x=>'<tr><td>'+(x.i+1)+'</td><td><b>'+e(x.id)+'</b><br>'+e(x.m?.nome)+'</td>'+
+ '<td>'+e(x.m?.impresa||x.m?.proprieta||'RFI')+'</td><td>'+e(x.v.ruolo)+'</td>'+
+ '<td>'+fmt(x.tare)+'</td><td>'+fmt(x.load)+'</td><td><b>'+fmt(x.mass)+'</b></td>'+
+ '<td>'+fmt(x.brake)+'</td><td>'+fmt(x.length!==null?x.length/1000:null)+'</td>'+
+ '<td>'+fmt(x.speed,1)+'</td></tr>').join('');
+ const six=mdo33SixCheck(d);
+ const html='<div style="display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #137092;padding-bottom:7px">'+
+ '<div><h1 style="margin:0">DISTINTA DEL CONVOGLIO MdO</h1><span class="small">UM TE1 Gallarate · Studio tecnico</span></div>'+
+ '<div><b>Data:</b> '+e(d.data)+'</div></div>'+
+ '<table><tr><th>Origine</th><td>'+e(d.origine)+'</td><th>Destinazione</th><td>'+e(d.destinazione)+'</td>'+
+ '<th>Linea / FL</th><td>'+e(d.linea)+'</td><th>Binario</th><td>'+e(d.binario)+'</td></tr></table>'+
+ '<h2>Ordine dei rotabili e dati d’impiego</h2><table><thead><tr>'+
+ ['N.','Identificativo MdO','Proprietà','Ruolo','Tara (t)','Carico (t)','Massa (t)','M. frenata (t)','Lung. (m)','V. max (km/h)'].map(x=>'<th>'+x+'</th>').join('')+
+ '</tr></thead><tbody>'+rows+'</tbody></table>'+
+ '<table><tr><th>Massa convoglio</th><th>Massa rimorchiata</th><th>Massa frenata</th><th>Percentuale frenata</th><th>Lunghezza</th><th>Velocità limite</th></tr>'+
+ '<tr>'+[fmt(t.totalMass)+' t',fmt(t.hauled)+' t',fmt(t.brakeMass)+' t',fmt(t.ratio)+' %',fmt(t.length!==null?t.length/1000:null)+' m',fmt(t.minSpeed,1)+' km/h'].map(x=>'<td><b>'+x+'</b></td>').join('')+'</tr></table>'+
+ '<h2>Prescrizioni e caratteristiche da carta</h2>'+
+ '<table><tr><th>Rotabile</th><th>Aggancio e repulsione</th><th>Occupazione CdB</th><th>Velocità isolato</th><th>Limiti specifici</th></tr>'+
+ t.a.map(x=>'<tr><td>'+e(x.id)+'</td><td>'+e(x.t.aggancio_unificato||x.t.aggancio)+'</td>'+
+ '<td>'+e(x.t.occupazione_cdb)+'</td><td>'+e(x.t.velocita_isolato_kmh)+'</td>'+
+ '<td>'+e(x.t.limiti_circolazione)+'</td></tr>').join('')+'</table>'+
+ '<h2>Tratti del percorso</h2>'+
+ '<table><tr><th>Da</th><th>A</th><th>FL / versione</th><th>Binario</th><th>‰</th><th>km/h</th><th>Ramo deviato</th></tr>'+
+ (d.segmenti||[]).map(x=>'<tr>'+['da','a','fl','binario','pendenza','velocita'].map(k=>'<td>'+e(x[k])+'</td>').join('')+
+ '<td>'+(x.ramo_deviato?'Sì':'No')+'</td></tr>').join('')+'</table>'+
+ '<div class="notice"><b>Limite mezzi con aggancio non unificato:</b> '+e(six.msg)+
+ '<br>Le velocità e le masse sono calcolate sui dati inseriti; l’idoneità operativa e le prescrizioni effettive seguono PGOS, ICMO e FL.</div>'+
+ '<p>Compilatore / verifica e firma: _________________________________________</p>';
+ mdo32Print('Distinta convoglio MdO',html,true);
+};
+
 mdoBoot();
 </script></body></html>
