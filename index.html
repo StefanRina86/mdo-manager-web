@@ -2200,8 +2200,9 @@ mdo32Totals=function(d){
  const diversion=(d.segmenti||[]).some(x=>x.ramo_deviato===true)||d.ramo_deviato===true;
  if(diversion){
   const x=t.a.map(v=>mdo32N(v.m?.tecnica?.velocita_deviata_kmh)).filter(v=>v!==null&&v>0);
-  if(x.length!==t.a.length)t.minSpeed=null;
-  else if(x.length)t.minSpeed=t.minSpeed===null?Math.min(...x):Math.min(t.minSpeed,...x);
+  if(x.length&&t.minSpeed!==null)t.minSpeed=Math.min(t.minSpeed,...x);
+  // Un limite rami deviati mancante non equivale a una nuova limitazione a zero:
+  // resta il limite normale da carta, salvo altre prescrizioni in testo.
  }
  return t;
 };
