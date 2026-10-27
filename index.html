@@ -1721,7 +1721,7 @@ function mdo32Segments(d){
  const items=d.segmenti.map((x,i)=>{
   const field=(key,label,type='text')=>'<label class="small">'+label+'<input class="field" type="'+type+'" '+(type==='number'?'step="any" ':'')+'value="'+esc(x[key]||'')+'" oninput="mdo32SegSet('+i+',\''+key+'\',this.value)"></label>';
   return '<div class="item" style="margin:8px 0;padding:12px"><div class="toolbar"><b>Tratto '+(i+1)+'</b><button class="btn" onclick="mdo32SegRemove('+i+')">Rimuovi</button></div>'+
-   '<div class="formgrid">'+field('da','Da')+field('a','A')+field('fl','FL e versione')+field('binario','Binario')+
+   '<div class="formgrid">'+field('da','Da')+field('a','A')+field('fl','FL e versione')+field('binario','Binario')+field('direzione','Direzione (senso di marcia)')+
    field('pendenza','Pendenza massima (‰)','number')+field('velocita','Limite velocità (km/h)','number')+
    field('categoria','Categoria di carico')+field('lunghezza','Lunghezza massima (m)','number')+field('note','Note e prescrizioni')+'</div></div>';
  }).join('');
