@@ -3145,5 +3145,74 @@ checkRows=function(d){
  return result;
 };
 
+
+// MDO 2.18 — integrazioni tecniche per il singolo studio (NON aggiornano carta).
+function mdo218StudyNumber(v){const n=mdo32N(v);return n!==null&&n>=0?n:null}
+const mdo218StudyOriginalVoci=mdo32Voci;
+mdo32Voci=function(d){
+ const result=mdo218StudyOriginalVoci(d);
+ return result.map(x=>{
+  const o=x.v?.integrazione_studio||{},t={...x};
+  const overrides=[
+   ['tara_t','tare'],['lunghezza_mm','length'],['massa_frenata_t','brake'],
+   ['velocita_kmh','speed']
+  ];
+  const set=overrides.filter(([k,v])=>String(o[k]??'').trim()!==''&&mdo218StudyNumber(o[k])!==null);
+  for(const [k,property] of set){
+   const n=mdo218StudyNumber(o[k]);
+   if((k==='tara_t'||k==='lunghezza_mm'||k==='velocita_kmh')&&n===0)continue;
+   t[property]=n;
+  }
+  t.mass=t.tare!==null&&t.tare>0&&t.load!==null&&t.load>=0?t.tare+t.load:null;
+  t.axleAvg=t.mass!==null&&t.nAx>0?t.mass/t.nAx:null;
+  t.studyOverrides=set.map(([key])=>key);
+  t.studyOverrideSource=String(o.fonte||'').trim();
+  return t;
+ });
+};
+function mdo218StudyUpdate(i,key,value){
+ const d=window.compDraft;mdo32Init(d);
+ const v=d?.voci?.[i];if(!v)return;
+ if(!v.integrazione_studio)v.integrazione_studio={};
+ v.integrazione_studio[key]=value;
+ const res=document.getElementById('compResult');if(res)res.innerHTML=renderCompResult(d);
+}
+const mdo218PrevCompList=renderCompList;
+renderCompList=function(d){
+ const html=mdo218PrevCompList(d);
+ if(!d?.ids?.length)return html;
+ const rows=mdo32Voci(d);
+ const cards=rows.map(x=>{
+  const obj=x.v.integrazione_studio||{};
+  const fld=(key,label)=>'<label class="small">'+label+
+   '<input class="field" type="number" min="0" step="any" value="'+esc(obj[key]??'')+
+   '" oninput="mdo218StudyUpdate('+x.i+',\''+key+'\',this.value)"></label>';
+  return '<details class="item" style="margin:8px 0;padding:12px"><summary><b>'+esc(x.id)+'</b> · Completa dati mancanti per questo studio</summary>'+
+  '<p class="small muted">Compila soltanto valori effettivamente disponibili da fonte verificata. Questi campi NON modificano la scheda del MdO e NON attestano da soli l’idoneità di circolazione.</p>'+
+  '<div class="formgrid">'+fld('tara_t','Tara (t)')+fld('lunghezza_mm','Lunghezza (mm)')+
+  fld('massa_frenata_t','Massa frenata per la configurazione (t)')+
+  fld('velocita_kmh','Velocità limite d’impiego (km/h)')+
+  '<label class="full">Fonte del valore / prescrizione<input class="field" value="'+esc(obj.fonte||'')+
+   '" oninput="mdo218StudyUpdate('+x.i+',\'fonte\',this.value)" placeholder="Es.: carta / FL e edizione / dato accertato"></label>'+
+  '<label class="full"><input type="checkbox" '+(obj.confermato?'checked ':'')+
+   'onchange="mdo218StudyUpdate('+x.i+',\'confermato\',this.checked)"> Trascrizione controllata dal compilatore</label></div>'+
+  '</details>';
+ }).join('');
+ return html+'<div class="panel"><h3>Integrazioni dei dati per lo studio</h3>'+
+ '<p class="small muted">Quando un valore tecnico è assente o incoerente, puoi registrarlo per lo studio e annotare la fonte, senza riscrivere la carta di circolazione.</p>'+cards+'</div>';
+};
+const mdo218PrevCompResult=renderCompResult;
+renderCompResult=function(d){
+ const rows=mdo32Voci(d),overridden=rows.filter(x=>x.studyOverrides?.length);
+ const warnings=overridden.map(x=>{
+  const complete=x.studyOverrideSource&&x.v?.integrazione_studio?.confermato;
+  return '<li>'+esc(x.id)+' · '+esc(x.studyOverrides.join(', '))+
+   (complete?' · trascrizione confermata dal compilatore':' · origine/riscontro da completare')+'</li>';
+ });
+ return (warnings.length?'<div class="note warn"><b>Valori integrati solo per questo studio:</b><ul>'+warnings.join('')+'</ul>'+
+ '<p class="small">La verifica regolamentare del convoglio resta distinta dalla conferma di trascrizione.</p></div>':'')+
+ mdo218PrevCompResult(d);
+};
+
 mdoBoot();
 </script></body></html>
