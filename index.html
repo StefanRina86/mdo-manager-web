@@ -381,6 +381,17 @@ async function mdo10SaveRfi(e,id){
  for(const key of ['ultima_annuale','ultima_periodica','ultima_quinquennale','ultima_soll_acc']){
   const date=String(f.get(key)||'');if(date)verifiche[key]=date;else delete verifiche[key];
  }
+ // Esiti inseriti esplicitamente dall'amministratore: nessun esito è presunto.
+ for(const key of ['ultima_annuale','ultima_periodica','ultima_quinquennale']){
+  const outcome=String(f.get('esito_'+key)||'DA_CONFERMARE');
+  if(!['DA_CONFERMARE','POSITIVO','NEGATIVO','NON_APPLICABILE'].includes(outcome))
+   return alert('Esito verifica non valido: '+key);
+  if((outcome==='POSITIVO'||outcome==='NEGATIVO')&&!verifiche[key])
+   return alert('Inserisci la data della verifica '+key+' prima di registrare un esito');
+  verifiche['esito_'+key]=outcome;
+  if(outcome==='NEGATIVO'&&stato==='ESER')
+   return alert('Non registrare ESER con una verifica negativa. Imposta il mezzo FUES, motivandone la causa.');
+ }
  const nome=String(f.get('nome')||'').trim();if(!nome)return alert('Inserisci la descrizione del mezzo');
  const presenti=mdo11Equipment.filter(o=>apparecchiature[o.key].presente);
  const prevista=presenti.some(o=>apparecchiature[o.key].verifica_applicabile==='SI');
@@ -3041,6 +3052,98 @@ async function mdo218ImportPeople(){
   await mdo24LoadPeople();mdo24PersonModal();mdoStatus('Personale importato: '+inserted+' nuovi, '+updated+' aggiornati');
  }catch(err){alert('Importazione parziale ('+(inserted+updated)+' righe). '+err.message)}
 }
+
+
+// MDO 2.18 — data + esito delle tre verifiche, senza falsi "mancanti".
+const mdo218OriginalEditRfi=mdo10EditRfi;
+mdo10EditRfi=function(id){
+ mdo218OriginalEditRfi(id);
+ const m=db.mezzi.find(x=>x.id===id);const form=document.querySelector('#modal form');
+ if(!m||!form)return;
+ for(const [k,name] of [['ultima_annuale','Annuale (12 mesi)'],['ultima_periodica','Periodica (33 mesi)'],['ultima_quinquennale','Quinquennale (60 mesi)']]){
+  const input=form.elements.namedItem(k);
+  const label=input?.closest('label');if(!label)continue;
+  const esito=String(m.verifiche?.['esito_'+k]||'DA_CONFERMARE');
+  const choices=[['DA_CONFERMARE','Da confermare'],['POSITIVO','Eseguita · esito positivo'],
+    ['NEGATIVO','Eseguita · esito negativo'],['NON_APPLICABILE','Non applicabile']];
+  label.insertAdjacentHTML('afterend','<label>Esito '+name+
+   '<select name="esito_'+k+'" class="field">'+
+    choices.map(([v,l])=>'<option value="'+v+'" '+(v===esito?'selected':'')+'>'+l+'</option>').join('')+
+   '</select></label>');
+ }
+ const info=[...form.querySelectorAll('h3')].find(x=>x.textContent.includes('Verifiche del mezzo'));
+ info?.insertAdjacentHTML('afterend','<p class="small muted full">La data e l’esito effettivo sono registrazioni distinte. Un esito positivo acquisito aggiorna le scadenze; un esito negativo non rende il mezzo utilizzabile. Le date precedenti senza esito non vengono considerate automaticamente positive.</p>');
+};
+const mdo218PreviousDeadlines=deadlines;
+deadlines=function(m){
+ const old=mdo218PreviousDeadlines(m),v=m.verifiche||{};
+ if(m.proprieta==='IMPRESA')return [];
+ const annual=old.find(x=>x.tipo==='Annuale MdO');
+ const periodic=old.find(x=>x.tipo==='Periodica · 33 mesi');
+ const five=old.find(x=>x.tipo==='Quinquennale · 60 mesi');
+ const lift=old.find(x=>x.tipo==='Sollevamento · annuale');
+ if(annual){annual.esito=v.esito_ultima_annuale||'DA_CONFERMARE';
+  if(annual.esito==='NON_APPLICABILE'){annual.date='';annual.completed=true}}
+ if(five){five.esito=v.esito_ultima_quinquennale||'DA_CONFERMARE';}
+ if(periodic){
+  periodic.esito=v.esito_ultima_periodica||'DA_CONFERMARE';
+  const q=v.ultima_quinquennale||'';
+  const p=v.ultima_periodica||'';
+  // La periodica del ciclo quinquennale è già eseguita: non replicare
+  // la vecchia scadenza a 33 mesi come segnalazione insoluta.
+  if(q&&p&&periodic.esito==='POSITIVO'&&p>=addMonthsIso(q,33)&&p<addMonthsIso(q,60)){
+   periodic.date='';periodic.reference=p;periodic.completed=true;
+   periodic.source='Periodica eseguita nel ciclo quinquennale corrente';
+  }
+  if(periodic.esito==='NON_APPLICABILE'){periodic.date='';periodic.completed=true}
+ }
+ if(lift){
+  const applicable=Object.values(m.apparecchiature||{}).some(a=>a?.presente===true&&a?.verifica_applicabile==='SI');
+  if(!applicable){lift.date='';lift.completed=true;lift.source='Non applicabile alle attrezzature censite'}
+ }
+ return old;
+};
+scadenze=function(){
+ const entries=db.mezzi.filter(m=>m.proprieta!=='IMPRESA').flatMap(m=>deadlines(m).map(v=>({...v,m})));
+ const status=x=>x.completed?(x.esito==='NON_APPLICABILE'?'Non applicabile':'Eseguita nel ciclo'):
+ !x.reference?'Data da inserire':
+ x.esito==='NEGATIVO'?'Esito negativo: verificare stato MdO':
+ x.date&&days(x.date)<0?'Scaduta':
+ x.date&&days(x.date)<=db.config.alertDays?'In scadenza':
+ x.esito==='DA_CONFERMARE'?'Esito da confermare':
+ 'Verifica eseguita · prossima scadenza';
+ return '<div class="panel"><h2>Scadenziario MdO RFI</h2>'+
+ '<p class="note">Annualità a 12 mesi dall’ultima annuale, periodica a 33 mesi e quinquennale a 60 mesi dall’ultima quinquennale. La periodica positiva già eseguita nel ciclo non viene più segnalata come scaduta. Gli esiti sono inseriti dal responsabile, non generati dal software.</p>'+
+ '<div class="toolbar"><label>Preavviso giorni <input class="field" type="number" min="1" max="365" style="max-width:90px" value="'+db.config.alertDays+'" onchange="db.config.alertDays=Number(this.value)||30;save();render()"></label></div>'+
+ tabella(['MdO','Verifica','Ultima data','Esito registrato','Prossima / stato'],entries.map(x=>
+ '<tr><td><button class="click" onclick="mdo10EditRfi(\''+esc(x.m.id)+'\')">'+esc(x.m.id)+'</button></td>'+
+ '<td>'+esc(x.tipo)+'</td><td>'+esc(fmtDate(x.reference))+'</td>'+
+ '<td>'+esc(x.esito||'—')+'</td><td>'+esc(x.date?fmtDate(x.date)+' · '+status(x):status(x))+'</td></tr>'))+
+ '</div>';
+};
+// Nell'elenco dello studio, le verifiche positive scadute in un ciclo precedente
+// non devono essere mostrate come controlli correnti ancora inevasi.
+const mdo218PriorCheckRows=checkRows;
+checkRows=function(d){
+ const result=mdo218PriorCheckRows(d);
+ for(const c of result.checks){
+  for(const id of d.ids||[]){
+   const m=compMezzo(id);if(!m||m.proprieta==='IMPRESA')continue;
+   const dd=deadlines(m);
+   for(const x of dd){
+    if(!c.name.startsWith(x.tipo+' · '+id))continue;
+    if(x.completed&&x.esito==='POSITIVO'){
+     c.status='CALCOLATO';c.detail='Verifica effettuata nel ciclo corrente, esito positivo registrato il '+fmtDate(x.reference)+'.';
+    }else if(x.esito==='POSITIVO'&&x.date&&days(x.date)>=0){
+     c.status='CALCOLATO';c.detail='Esito positivo registrato. Prossima scadenza '+fmtDate(x.date)+'.';
+    }else if(x.esito==='NEGATIVO'){
+     c.status='BLOCCANTE';c.detail='Ultima verifica registrata con esito negativo.';
+    }
+   }
+  }
+ }
+ return result;
+};
 
 mdoBoot();
 </script></body></html>
