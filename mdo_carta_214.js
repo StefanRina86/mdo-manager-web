@@ -5,6 +5,7 @@
 (function(){
 "use strict";
 const extra=[
+ ['modello','Modello','text'],
  ['data_rilascio_carta','Data rilascio carta di circolazione','date'],
  ['proprietario_ragione_sociale','Proprietario · ragione sociale','text'],
  ['proprietario_sede','Proprietario · sede / indirizzo','text'],
@@ -169,6 +170,17 @@ const previousSaveCard=mdo33SaveCard;
 mdo33SaveCard=async function(e,id){
  numberHistoryRows(e.target);
  return previousSaveCard(e,id);
+};
+const previousCompanyOpen=mdo9AddCompany;
+mdo9AddCompany=function(){
+ previousCompanyOpen();
+ const f=document.querySelector('#modal form');
+ const main=f?.querySelector('[name="modello"]');
+ const card=f?.querySelector('[name="card_modello"]');
+ if(main&&card){
+  main.addEventListener('input',()=>{if(card.value!==main.value)card.value=main.value});
+  card.addEventListener('input',()=>{if(main.value!==card.value)main.value=card.value});
+ }
 };
 const previousSaveCompany=mdo9SaveCompany;
 mdo9SaveCompany=async function(e){
