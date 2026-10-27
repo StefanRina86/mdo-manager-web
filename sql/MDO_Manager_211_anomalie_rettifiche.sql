@@ -84,4 +84,27 @@ END;
 $$;
 REVOKE ALL ON FUNCTION public.mdo31_archivia_anomalia(uuid,text) FROM PUBLIC,anon;
 GRANT EXECUTE ON FUNCTION public.mdo31_archivia_anomalia(uuid,text) TO authenticated;
+-- Rimozione MdO d'impresa riservata all'amministratore, anche se i permessi
+-- DELETE diretti sulle tabelle sono disabilitati. Non applicabile a MdO RFI.
+CREATE OR REPLACE FUNCTION public.mdo31_elimina_mezzo_impresa(p_codice_sap text)
+RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER SET search_path=''
+AS $
+DECLARE n integer;
+BEGIN
+ IF NOT public.mdo_is_admin() THEN
+  RAISE EXCEPTION 'Eliminazione MdO imprese riservata all’amministratore'
+    USING ERRCODE='42501';
+ END IF;
+ IF p_codice_sap IS NULL OR left(p_codice_sap,4)<>'IMP-' THEN
+  RAISE EXCEPTION 'Codice impresa non valido';
+ END IF;
+ DELETE FROM public.mdo_mezzi
+ WHERE codice_sap=p_codice_sap AND proprietario='IMPRESA';
+ GET DIAGNOSTICS n=ROW_COUNT;
+ RETURN n=1;
+END
+$;
+REVOKE ALL ON FUNCTION public.mdo31_elimina_mezzo_impresa(text) FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION public.mdo31_elimina_mezzo_impresa(text) TO authenticated;
+
 COMMIT;
