@@ -2,7 +2,7 @@
 :root{--nav:#0b263f;--blue:#0879be;--bg:#f2f5f8;--line:#dce4ed;--text:#243348;--muted:#607489;--card:#fff;--red:#c73341;--yellow:#b97710;--green:#197654}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:default}.app{display:flex;min-height:100vh}.side{background:var(--nav);color:#dce9f5;width:242px;flex-shrink:0;padding:24px 12px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;padding:5px 12px 23px}.brand-mark{background:var(--blue);padding:8px;border-radius:9px;color:white}.subbrand{font-size:11px;font-weight:500;opacity:.8}.nav{display:block;width:100%;border:0;background:transparent;color:#bdcfe1;text-align:left;padding:11px 14px;border-radius:9px;margin:4px 0;font-weight:550}.nav:hover,.nav.active{background:#174669;color:white}.foot{position:absolute;bottom:17px;left:18px;right:18px;font-size:11px;color:#b5c6d5}.main{flex:1;min-width:0}.top{background:white;border-bottom:1px solid var(--line);padding:17px 27px;display:flex;justify-content:space-between;align-items:center;gap:10px}.top h1{font-size:21px;margin:0}.content{padding:24px 27px;max-width:1450px}.muted{color:var(--muted)}h2{font-size:18px;margin:0 0 14px}h3{font-size:15px;margin:0 0 12px}.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:20px}.kpi,.panel{background:white;border:1px solid var(--line);border-radius:13px;padding:18px}.kpi .num{font-size:29px;font-weight:760}.kpi .tiny{font-size:12px;color:var(--muted)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{margin-bottom:16px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}.toolbar .grow{flex:1}.btn{border:1px solid var(--line);padding:9px 13px;border-radius:8px;background:white;color:var(--text);font-weight:650}.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}.btn.danger{color:var(--red)}.field{border:1px solid #cbd5e0;border-radius:7px;padding:9px 10px;background:white;color:var(--text);min-width:0}.toolbar input{width:300px;max-width:100%}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:11px}table{border-collapse:collapse;width:100%;background:white;text-align:left}th,td{padding:11px 12px;border-bottom:1px solid #edf1f5;white-space:nowrap}th{font-size:12px;color:#5d7084;background:#f9fbfd}tr:last-child td{border-bottom:0}tr:hover td{background:#f8fafc}.tag{display:inline-block;padding:3px 9px;font-size:11px;border-radius:30px;font-weight:800;background:#eaf0f7;color:#456}.tag.ESER{background:#dff5e9;color:#126a48}.tag.FUES{background:#fff0df;color:#985000}.tag.OFF{background:#ffe2e7;color:#a71d30}.tag.SOPP{background:#e4e7eb;color:#596271}.tag.DA_VERIFICARE{background:#edf0f6;color:#425d82}.click{color:#0676b4;background:none;border:0;padding:0;font-weight:700;text-align:left}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.formgrid label{display:flex;flex-direction:column;gap:5px;font-weight:650;font-size:12px}.formgrid input,.formgrid select,.formgrid textarea{width:100%}.full{grid-column:1/-1}.note{border-left:4px solid #6a92b0;background:#edf5fc;padding:10px 13px;border-radius:5px;margin-bottom:18px}.warn{border-left-color:#e0a94b;background:#fff8e8}.bad{border-left-color:#bb3348;background:#fff0f1}.actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:15px}.stack{display:grid;gap:10px}.item{border:1px solid var(--line);border-radius:9px;padding:12px}.small{font-size:12px}.pill{padding:2px 7px;border:1px solid var(--line);border-radius:6px;font-size:12px}.empty{padding:35px;text-align:center;color:var(--muted)}.dialog-bg{position:fixed;inset:0;background:#071b2aaa;display:flex;align-items:center;justify-content:center;z-index:20;padding:12px}.dialog{background:white;max-width:850px;width:100%;max-height:90vh;overflow:auto;border-radius:14px;padding:22px;box-shadow:0 12px 50px #0015}.dialog h2{margin-right:32px}.close{float:right;border:none;background:none;font-size:25px;line-height:1}.mobile-menu{display:none}.status-led{width:9px;height:9px;border-radius:100%;background:var(--yellow);display:inline-block;margin-right:4px}@media(max-width:980px){.kpis{grid-template-columns:repeat(3,1fr)}.side{width:190px}.grid2{grid-template-columns:1fr}}@media(max-width:700px){.side{display:none;position:fixed;z-index:15;top:0;left:0;width:250px}.side.open{display:block}.mobile-menu{display:inline-block}.top{padding:12px 14px}.top h1{font-size:17px}.content{padding:13px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi{padding:12px}.kpi .num{font-size:24px}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.panel{padding:13px}.toolbar .grow{flex-basis:100%}.toolbar input{width:100%}}
 
 @media(max-width:740px){.formgrid{grid-template-columns:1fr!important}.grid2{grid-template-columns:1fr!important}}
-</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></head><body><div class="app" style="display:none"><aside class="side" id="sidebar"><div class="brand"><span class="brand-mark">M</span><div>MDO Manager<div class="subbrand">UM TE1 · Gallarate</div></div></div><nav id="nav"></nav><div class="foot">Versione online 2.13 · Supabase<br>Non sostituisce le verifiche RFI</div></aside><div class="main"><header class="top"><div style="display:flex;align-items:center;gap:10px"><button class="btn mobile-menu" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button><h1 id="title">Dashboard</h1></div><span class="muted small">● Sincronizzato con Supabase</span></header><main class="content" id="view"></main></div></div><div id="modal"></div><script>
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></head><body><div class="app" style="display:none"><aside class="side" id="sidebar"><div class="brand"><span class="brand-mark">M</span><div>MDO Manager<div class="subbrand">UM TE1 · Gallarate</div></div></div><nav id="nav"></nav><div class="foot">Versione online 2.14 · Supabase<br>Non sostituisce le verifiche RFI</div></aside><div class="main"><header class="top"><div style="display:flex;align-items:center;gap:10px"><button class="btn mobile-menu" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button><h1 id="title">Dashboard</h1></div><span class="muted small">● Sincronizzato con Supabase</span></header><main class="content" id="view"></main></div></div><div id="modal"></div><script>
 const SEED=[];
 const SAP_ORDINI_SEED=[];
 const KEY='mdo_manager_v1';
@@ -2376,6 +2376,179 @@ printM40Draft=function(){
  const w=window.open('','_blank');if(!w)return alert('Consenti popup per stampare');
  w.document.open();w.document.write('<!doctype html><html lang="it"><head><meta charset="utf-8"><title>Mod. M.40 MdO · Studio</title>'+css+
  '</head><body>'+pre+'<table>'+cols+'</table>'+footer+'</body></html>');w.document.close();w.focus();setTimeout(()=>w.print(),400);
+};
+
+
+// MDO 2.14 — Allegato J completo (4 fogli), DOI PA SE FU 02.03 1 1.
+// I dati vengono conservati nel JSON della scheda tecnica del singolo MdO.
+// Le registrazioni storiche hanno righe ripetibili; nessun nuovo SQL necessario.
+const mdo34Groups=[
+ {title:'01 · Identificazione e registrazione',fields:[
+  ['data_rilascio_carta','Data rilascio carta','date'],
+  ['proprietario','Proprietario (ragione sociale)','text'],
+  ['proprietario_indirizzo','Sede / indirizzo proprietario','text'],
+  ['equipment','Numero Equipment','text'],
+  ['certificato_autorizzazione','Certificato autorizzazione alla circolazione','text'],
+  ['costruttore','Costruttore','text'],
+  ['costruttore_sede','Sede costruttore','text'],
+  ['anno_costruzione','Anno costruzione','number'],
+  ['data_prima_immatricolazione','Data prima immatricolazione','date'],
+  ['matricola_costruttore','Matricola costruttore','text'],
+  ['persone_cabina','Persone massime in cabina/e','number'],
+  ['ecm','ECM / soggetto manutentore','text']
+ ]},
+ {title:'02 · Meccanica, geometria e ingombri',fields:[
+  ['passo_interperno_mm','Passo o interperno (mm)','number'],
+  ['passo_carrello_mm','Passo carrello (mm)','number'],
+  ['diametro_ruote_nuovo_mm','Diametro ruote a nuovo (mm)','number'],
+  ['interasse_binari_minimo_lavoro_mm','Interasse minimo binari in fase di lavoro (mm)','number'],
+  ['pendenza_max_percorrenza_permille','Pendenza massima salita/discesa binario (‰)','number'],
+  ['sopraelevazione_max_percorrenza_mm','Massima sopraelevazione salita/discesa binario (mm)','number'],
+  ['sopraelevazione_max_lavoro_mm','Sopraelevazione massima in lavoro (mm)','number'],
+  ['trazione_fase_lavoro','Trazione in fase di lavoro','select',['ENDOTERMICA','ELETTRICA','IDRAULICA','ASSENTE','ALTRO']],
+  ['tipologia_sospensioni','Tipologia sospensioni','select',['GOMMA','MOLLE','PNEUMATICHE','ALTRO']],
+  ['tipologia_ruote','Tipologia ruote','select',['CERCHIONE_RIPORTATO','MONOBLOCCO','ALTRO']],
+  ['fanali_segnalamento','Fanali e luci di segnalamento','select',['UNIFICATI_FS','NON_UNIFICATI','ALTRO']],
+  ['fischi_trombe','Fischi e trombe','select',['UNIFICATI_FS','NON_UNIFICATI','ALTRO']],
+  ['manovra_spinta','Manovra a spinta','select',['SI','NO','CONDIZIONATA']],
+  ['pendenza_max_stazionamento_permille','Pendenza massima di stazionamento (‰)','number']
+ ]},
+ {title:'03 · Frenatura e sicurezza',fields:[
+  ['freno_continuo_tipo','Freno continuo automatico','select',['UNIFICATO','NON_UNIFICATO','ASSENTE','ALTRO']],
+  ['freno_diretto_tipo','Freno diretto','select',['UNIFICATO','NON_UNIFICATO','ASSENTE','ALTRO']],
+  ['freno_stazionamento','Freno di stazionamento','select',['SI','NO']],
+  ['condotta_freno_tipo','Condotta del freno','select',['UNIFICATA','NON_UNIFICATA','ASSENTE','ALTRO']],
+  ['aziona_pedali','Aziona i pedali','select',['SI','NO','CONDIZIONATA']],
+  ['idoneo_traino','Idoneo al traino di altri mezzi','select',['SI','NO','CONDIZIONATA']],
+  ['necessita_carro_scudo','Necessità di carro scudo','select',['SI','NO','CONDIZIONATA']],
+  ['rispetta_profilo_limite','Rispetta il profilo limite','select',['SI','NO','CONDIZIONATA']],
+  ['prescrizioni_sagoma','Prescrizioni di sagoma','textarea']
+ ]},
+ {title:'04 · Dotazioni di bordo (foglio 4)',fields:[
+  ['dot_bandiera_rossa','Bandiera rossa con asta','select',['SI','NO','NON_APPLICABILE']],
+  ['dot_tabella_coda','Tabella di coda','select',['SI','NO','NON_APPLICABILE']],
+  ['dot_fanali_coda','Fanali di coda','select',['SI','NO','NON_APPLICABILE']],
+  ['dot_torcia_fiamma','Torcia a fiamma rossa','select',['SI','NO','NON_APPLICABILE']],
+  ['dot_shuntaggio','Dispositivo di shuntaggio CdB','select',['SI','NO','NON_APPLICABILE']],
+  ['dot_lanterna','Lanterna luce rossa e bianca','select',['SI','NO','NON_APPLICABILE']],
+  ['dot_barra_traino','Barra di traino','select',['SI','NO','NON_APPLICABILE']],
+  ['dot_estintore','Estintore per ogni cabina','select',['SI','NO','NON_APPLICABILE']],
+  ['dot_scarpe','Scarpe per stazionamento','select',['SI','NO','NON_APPLICABILE']],
+  ['dot_vaschetta','Vaschetta raccolta liquidi','select',['SI','NO','NON_APPLICABILE']]
+ ]}
+];
+const mdo34Additional=[
+ ['tipologia_organi_aggancio','Tipologia organi di aggancio','select',['UNIFICATI_FS','UNIFICATI_UIC','NON_UNIFICATI','SPECIALI','ALTRO']],
+ ['tipologia_organi_repulsione','Tipologia organi di repulsione','select',['UNIFICATI_FS','UNIFICATI_UIC','NON_UNIFICATI','ASSENTI','ALTRO']],
+ ['necessita_coda_assoluta','Necessità ubicazione in coda assoluta','select',['SI','NO','CONDIZIONATA']],
+ ['data_ultima_quinquennale','Data ultima verifica quinquennale documentata','date'],
+ ['data_ultima_periodica','Data ultima verifica periodica documentata','date'],
+ ['data_ultima_annuale','Data ultima verifica annuale documentata','date']
+];
+const mdo34ExistingKeys=new Set(mdo33Specs.map(x=>x[0]));
+for(const entry of [...mdo34Groups.flatMap(g=>g.fields),...mdo34Additional]){
+ if(!mdo34ExistingKeys.has(entry[0])){mdo33Specs.push(entry);mdo34ExistingKeys.add(entry[0])}
+}
+const mdo34OldInput=mdo33Input;
+mdo33Input=function(k,label,type,options,value){
+ if(type==='date')return '<label>'+esc(label)+'<input class="field" type="date" name="card_'+k+'" value="'+esc(value||'')+'"></label>';
+ return mdo34OldInput(k,label,type,options,value);
+};
+const mdo34OldParse=mdo33ParseForm;
+mdo33ParseForm=function(form,original={}){
+ const result=mdo34OldParse(form,original);
+ for(const section of ['manutenzioni_officina','controlli_periodici','variazioni_proprietario','variazioni_utilizzatore']){
+  const raw=form.get('card_'+section);
+  if(raw===null)continue;
+  let arr;
+  try{arr=JSON.parse(String(raw))}catch(err){throw Error('Registro '+section+': impossibile leggere le righe')}
+  if(!Array.isArray(arr))throw Error('Registro '+section+': formato non valido');
+  for(const row of arr){
+   if(typeof row!=='object'||!row||Array.isArray(row))throw Error('Riga non valida in '+section);
+   if(row.data&&!/^\d{4}-\d{2}-\d{2}$/.test(row.data))throw Error('Data non valida nel registro '+section);
+  }
+  result[section]=arr;
+ }
+ // Allinea la tipologia organi al dato usato dal controllo ICMO sui 6 rotabili.
+ if(result.tipologia_organi_aggancio){
+   const map={UNIFICATI_FS:'FS',UNIFICATI_UIC:'UIC',NON_UNIFICATI:'NON_UNIFICATI',SPECIALI:'SPECIALI'};
+   result.aggancio_unificato=map[result.tipologia_organi_aggancio]||result.aggancio_unificato;
+ }
+ if(result.freno_continuo_tipo==='UNIFICATO')result.freno_continuo='SI';
+ if(result.freno_continuo_tipo==='ASSENTE')result.freno_continuo='NO';
+ return result;
+};
+function mdo34HistoryTable(name,label,rows){
+ const safe=Array.isArray(rows)?rows:[];
+ const value=esc(JSON.stringify(safe));
+ const cols=name.startsWith('variazioni')?
+  [['data','Data','date'],['soggetto','Ragione sociale','text'],['indirizzo','Indirizzo','text']]:
+  [['data','Data','date'],['riferimento','Verbale / ODL / officina','text'],['esito','Esito / descrizione','text'],['note','Note','text']];
+ const makeRow=(obj,i)=>'<div class="item mdo34-histrow" data-history="'+name+'" data-index="'+i+'" style="margin:5px 0">'+
+  '<div class="formgrid">'+cols.map(([key,title,type])=>'<label>'+title+'<input class="field" type="'+type+'" data-key="'+key+'" value="'+esc(obj?.[key]||'')+'" oninput="mdo34SyncHistory(\''+name+'\')"></label>').join('')+
+  '</div><button class="btn" type="button" onclick="mdo34RemoveHistory(\''+name+'\','+i+')">Rimuovi riga</button></div>';
+ return '<section class="full mdo34-section"><h3>'+esc(label)+'</h3>'+
+  '<p class="small muted">Registra le date riportate nei fogli 2 e 3 della carta. La semplice presenza di una data non certifica l’esito di una verifica.</p>'+
+  '<div id="mdo34Rows_'+name+'">'+safe.map(makeRow).join('')+'</div>'+
+  '<input type="hidden" name="card_'+name+'" id="mdo34JSON_'+name+'" value="'+value+'">'+
+  '<button type="button" class="btn" onclick="mdo34AddHistory(\''+name+'\')">+ Aggiungi registrazione</button></section>';
+}
+function mdo34RowHTML(name,entry={},i){
+ const cols=name.startsWith('variazioni')?
+ [['data','Data','date'],['soggetto','Ragione sociale','text'],['indirizzo','Indirizzo','text']]:
+ [['data','Data','date'],['riferimento','Verbale / ODL / officina','text'],['esito','Esito / descrizione','text'],['note','Note','text']];
+ return '<div class="item mdo34-histrow" data-history="'+name+'" data-index="'+i+'" style="margin:5px 0">'+
+ '<div class="formgrid">'+cols.map(([k,l,type])=>'<label>'+l+'<input class="field" type="'+type+'" data-key="'+k+'" value="'+esc(entry[k]||'')+'" oninput="mdo34SyncHistory(\''+name+'\')"></label>').join('')+'</div>'+
+ '<button class="btn" type="button" onclick="mdo34RemoveHistory(\''+name+'\','+i+')">Rimuovi riga</button></div>';
+}
+function mdo34SyncHistory(name){
+ const root=document.getElementById('mdo34Rows_'+name),hidden=document.getElementById('mdo34JSON_'+name);
+ if(!root||!hidden)return;
+ const rows=[...root.querySelectorAll('.mdo34-histrow')].map(el=>{
+  const obj={};for(const inp of el.querySelectorAll('[data-key]'))obj[inp.dataset.key]=inp.value.trim();
+  return obj;
+ }).filter(obj=>Object.values(obj).some(v=>v!==''));
+ hidden.value=JSON.stringify(rows);
+}
+function mdo34AddHistory(name){
+ const root=document.getElementById('mdo34Rows_'+name);if(!root)return;
+ root.insertAdjacentHTML('beforeend',mdo34RowHTML(name,{},root.children.length));mdo34SyncHistory(name);
+}
+function mdo34RemoveHistory(name,i){
+ const root=document.getElementById('mdo34Rows_'+name);if(!root)return;
+ root.children[i]?.remove();mdo34SyncHistory(name);
+}
+mdo33Fields=function(t={}){
+ // I primi campi sono organizzati come nella carta di circolazione (foglio 1).
+ const section=(title,entries)=>'<section class="full mdo34-section"><h3>'+title+'</h3><div class="formgrid">'+
+ entries.map(([k,label,type,opts])=>mdo33Input(k,label,type,opts||[],t[k])).join('')+'</div></section>';
+ const original=mdo33Specs.filter(x=>!mdo34Groups.some(g=>g.fields.some(f=>f[0]===x[0]))&&!mdo34Additional.some(f=>f[0]===x[0]));
+ return '<div class="full note">Allegato J · DOI PA SE FU 02.03 1 1 · Archivio digitale delle informazioni contenute nei quattro fogli della carta.</div>'+
+ section('Foglio 1 · Codice, classificazione, circolazione, masse e frenatura',original)+
+ section('Foglio 1 · Organi, prescrizioni e verifiche',mdo34Additional)+
+ mdo34Groups.map(g=>section(g.title,g.fields)).join('')+
+ mdo34HistoryTable('manutenzioni_officina','Foglio 2 · Interventi manutentivi obbligatori a cura di officina qualificata',t.manutenzioni_officina)+
+ mdo34HistoryTable('controlli_periodici','Foglio 2 · Controlli periodici / straordinari',t.controlli_periodici)+
+ mdo34HistoryTable('variazioni_proprietario','Foglio 3 · Variazioni proprietario',t.variazioni_proprietario)+
+ mdo34HistoryTable('variazioni_utilizzatore','Foglio 3 · Variazioni utilizzatore',t.variazioni_utilizzatore);
+};
+// I parametri composizione sono derivati dal singolo MdO; mai dalla scheda di un altro modello.
+const mdo34OldRenderComp=renderCompResult;
+renderCompResult=function(d){
+ let out=mdo34OldRenderComp(d);
+ const issues=[];
+ for(const id of d?.ids||[]){
+  const m=compMezzo(id);if(!m)continue;
+  const t=m.tecnica||{};
+  if(t.ammesso_composizione==='NO')issues.push(id+': carta indica NON AMMESSO in composizione');
+  if(t.necessita_coda_assoluta==='SI'&&d.ids.indexOf(id)!==d.ids.length-1)issues.push(id+': deve occupare la coda assoluta');
+  if(t.necessita_carro_scudo==='SI')issues.push(id+': necessità di carro scudo riportata nella carta');
+  if(t.rispetta_profilo_limite==='NO')issues.push(id+': non rispetta il profilo limite');
+  if(t.occupazione_cdb==='NO')issues.push(id+': non occupa i circuiti di binario');
+  if(t.limiti_circolazione)issues.push(id+': prescrizioni da carta — '+t.limiti_circolazione);
+  if(t.prescrizioni_sagoma&&String(t.prescrizioni_sagoma).toUpperCase()!=='NESSUNA')issues.push(id+': prescrizioni sagoma — '+t.prescrizioni_sagoma);
+ }
+ return (issues.length?'<div class="note warn"><b>Prescrizioni risultanti dalle carte</b><ul>'+issues.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>':'')+out;
 };
 
 mdoBoot();
