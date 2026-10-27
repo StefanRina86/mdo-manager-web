@@ -187,6 +187,23 @@ mdo9AddSaved=function(){
  if(!id||!mdo217Accept(id))return;
  mdo217PriorAddFirm();
 };
+const mdo217PreviousSaveTemp=saveTempMdo;
+saveTempMdo=function(e){
+ const d=window.compDraft,k=mdo217Kinds(d);
+ if(k.rfi&&(!d?.mistoEccezionale||!d?.motivoMisto||mdoRole!=='admin')){
+  e.preventDefault();return alert('Non è consentito aggiungere MdO temporanei di impresa a composizioni RFI ordinarie.');
+ }
+ return mdo217PreviousSaveTemp(e);
+};
+const mdo217PreviousSaveComp=saveComp;
+saveComp=async function(){
+ const d=window.compDraft,k=mdo217Kinds(d);
+ if(k.rfi&&k.imprese&&(!d?.mistoEccezionale||!d?.motivoMisto||mdoRole!=='admin')){
+  return alert('Studio misto RFI/imprese non salvabile senza eccezione motivata e ruolo amministratore.');
+ }
+ return mdo217PreviousSaveComp();
+};
+
 function mdo217MixToggle(v){
  const d=window.compDraft;if(!d)return;
  if(!v){d.mistoEccezionale=false;d.motivoMisto='';}
