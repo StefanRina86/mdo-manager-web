@@ -88,7 +88,7 @@ GRANT EXECUTE ON FUNCTION public.mdo31_archivia_anomalia(uuid,text) TO authentic
 -- DELETE diretti sulle tabelle sono disabilitati. Non applicabile a MdO RFI.
 CREATE OR REPLACE FUNCTION public.mdo31_elimina_mezzo_impresa(p_codice_sap text)
 RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER SET search_path=''
-AS $
+AS $$
 DECLARE n integer;
 BEGIN
  IF NOT public.mdo_is_admin() THEN
@@ -102,8 +102,8 @@ BEGIN
  WHERE codice_sap=p_codice_sap AND proprietario='IMPRESA';
  GET DIAGNOSTICS n=ROW_COUNT;
  RETURN n=1;
-END
-$;
+END;
+$$;
 REVOKE ALL ON FUNCTION public.mdo31_elimina_mezzo_impresa(text) FROM PUBLIC, anon;
 GRANT EXECUTE ON FUNCTION public.mdo31_elimina_mezzo_impresa(text) TO authenticated;
 
