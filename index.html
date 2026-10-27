@@ -1748,7 +1748,7 @@ function mdo32Totals(d){
  const allSeg=segments.length&&segments.every(x=>x.da&&x.a&&x.fl);
  const minSpeed=lim.length===a.length&&a.length>0&&(segSpeeds.length===segments.length||!segments.length)?Math.min(...lim,...segSpeeds,...(classic!==null?[classic]:[])):null;
  const slopes=segments.map(x=>mdo32N(x.pendenza)).filter(x=>x!==null);
- const maxSlope=slopes.length===segments.length&&segments.length?Math.max(...slopes):mdo32N(d.pendenza);
+ const maxSlope=segments.length?(slopes.length===segments.length?Math.max(...slopes):null):mdo32N(d.pendenza);
  const lenLimits=[mdo32N(d.lunghezzaLimite),...segments.map(x=>mdo32N(x.lunghezza))].filter(x=>x!==null);
  const minLengthLimit=lenLimits.length?Math.min(...lenLimits):null;
  const exceedsLength=length!==null&&minLengthLimit!==null&&length/1000>minLengthLimit;
