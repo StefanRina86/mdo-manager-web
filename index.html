@@ -2103,5 +2103,108 @@ function mdo33SixCheck(d){
  return {status:'BLOCCANTE',msg:'Composizione di '+selected.length+' rotabili con organi non unificati: massimo ordinario di 6, compresi i mezzi di trazione, salvo diversa disposizione delle carte (ICMO art.3/B).',count:selected.length};
 }
 
+
+// Applicazione automatica dei dati di frenatura e velocità estratti dalla scheda MdO.
+const mdo33OriginalVoci=mdo32Voci;
+mdo32Voci=function(d){
+ const rows=mdo33OriginalVoci(d);
+ return rows.map(x=>{
+  const cardBrake=mdo33BrakeMass(x.m,x.load,x.v.ruolo,x.v.freno_inserito!==false);
+  const cardSpeed=mdo33TechnicalSpeed(x.m,x.v.ruolo);
+  const localLimit=mdo32N(x.v.limite_kmh);
+  const appliedSpeed=cardSpeed===null?null:localLimit===null?cardSpeed:Math.min(cardSpeed,localLimit);
+  return {...x,brake:cardBrake,speed:appliedSpeed,cardBrake,cardSpeed};
+ });
+};
+const mdo33PrevRenderList=renderCompList;
+renderCompList=function(d){
+ let h=mdo33PrevRenderList(d),idx=0;
+ h=h.replace(/<label class="small">Massa frenata effettivamente disponibile[\s\S]*?<\/label>/g,()=>{
+  const i=idx++,x=mdo32Voci(d)[i],value=x?.brake;
+  return '<label class="small">Massa frenata dalla carta / configurazione'+
+  '<input class="field" readonly value="'+esc(value===null?'NON INSERITA':String(value)+' t')+'"></label>';
+ });
+ return h+'<p class="small muted">Frenatura ricavata dall’anagrafica: a vuoto se carico zero, a carico se è presente carico, zero per freno isolato. La velocità applicata dipende dal ruolo e non supera quella della carta. Il campo limite d’impiego consente soltanto una riduzione.</p>';
+};
+const mdo33OldCheckRows=checkRows;
+checkRows=function(d){
+ const r=mdo33OldCheckRows(d);
+ const t=mdo32Totals(d);
+ const six=mdo33SixCheck(d);
+ r.checks.push({name:'Numero rotabili e organi non unificati',status:six.status==='BLOCCANTE'?'BLOCCANTE':six.status==='NON_APPLICABILE'?'DA VALIDARE':'CALCOLATO',detail:six.msg,source:'ICMO art. 3/B / Carta di circolazione'});
+ const brake=r.checks.find(x=>x.name==='Massa frenata e rapporto aritmetico');
+ if(brake){
+  brake.status=t.ratio===null?'MANCANTE':'CALCOLATO';
+  brake.detail=t.ratio===null?'Mancano massa effettiva o massa frenata da carta nella configurazione dichiarata':
+   t.ratio.toFixed(1)+' %; massa frenata '+t.brakeMass.toFixed(2)+' t, massa convoglio '+t.totalMass.toFixed(2)+' t.';
+ }
+ const speed=r.checks.find(x=>x.name==='Confronto limiti di velocità');
+ if(speed){
+  speed.status=t.minSpeed===null?'MANCANTE':'CALCOLATO';
+  speed.detail=t.minSpeed===null?'Inserire velocità pertinenti nella carta dei mezzi e condizioni di linea':
+    'Minimo fra velocità pertinenti da carta, limiti d’impiego e limiti della tratta: '+t.minSpeed+' km/h.';
+ }
+ return r;
+};
+// In attesa delle tabelle FL indicizzate, valorizza soltanto il riferimento a FL23
+// quando entrambe le località appartengono alla linea; nessun dato numerico indovinato.
+const mdo33FL23Stops=['DOMODOSSOLA','VILLADOSSOLA','PALLANZENO','PIEDIMULERA','PREMOSELLO','VERBANIA PALLANZA','BAVENO','STRESA','BELGIRATE','LESA','MEINA','ARONA','DORMELLETTO','SESTO CALENDE','SOMMA LOMBARDO','GALLARATE','BUSTO ARSIZIO','LEGNANO','RHO','MILANO'];
+function mdo33Stop(x){return String(x||'').trim().toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[-_.]/g,' ').replace(/\s+/g,' ')}
+function mdo33SuggestFL(){
+ const d=window.compDraft;if(!d)return;
+ const from=mdo33Stop(d.origine),to=mdo33Stop(d.destinazione);
+ if(!from||!to)return alert('Inserisci prima origine e destinazione.');
+ const ix=s=>mdo33FL23Stops.findIndex(n=>s===n||n.startsWith(s+' ')||s.startsWith(n+' '));
+ if(ix(from)>=0&&ix(to)>=0){
+  d.linea='FL 23 · Domodossola–Milano';
+  d.fonteTratta='MIFL02302120262026 · controllare versione e fiancate applicabili';
+  const inputs=document.querySelectorAll('#view input');
+  inputs.forEach(input=>{if(input.oninput){
+    const eventCode=input.getAttribute('oninput')||'';
+    if(eventCode.includes("'linea'"))input.value=d.linea;
+    if(eventCode.includes("'fonteTratta'"))input.value=d.fonteTratta;
+  }});
+  document.getElementById('compResult').innerHTML=renderCompResult(d);
+  alert('Riferimento FL 23 suggerito per il percorso. Pendenze, velocità e categoria non sono state inserite automaticamente: devono essere estratte dalle fiancate del binario e della direzione effettiva.');
+ }else alert('Per questo percorso il programma non dispone ancora di una tabella FL strutturata. Compila i tratti con fonte, binario e direzione.');
+}
+const mdo33OldCalc=calcoli;
+calcoli=function(){
+ let html=mdo33OldCalc();
+ const panel='<div class="toolbar"><button class="btn" onclick="mdo33SuggestFL()">Identifica FL da origine/destinazione</button></div>'+
+ '<div class="note">L’identificazione del FL non fornisce automaticamente pendenze, velocità e prescrizioni: le fiancate e le eventuali disposizioni vigenti devono essere acquisite per tratta, binario e senso di marcia.</div>';
+ html=html.replace('<div class="panel"><h2>3 · Tratti percorsi e relativi FL</h2>',panel+'<div class="panel"><h2>3 · Tratti percorsi e relativi FL</h2>');
+ html=html.replace('Seleziona soltanto le prescrizioni da predisporre;', 'Le prescrizioni non sono caselle di consenso: il modulo distingue condizioni applicabili, numeri calcolati e attestazioni da rilasciare;');
+ return html;
+};
+const mdo33OldCompResult=renderCompResult;
+renderCompResult=function(d){
+ const result=mdo33OldCompResult(d),v=mdo33SixCheck(d),color=v.status==='BLOCCANTE'?'bad':'';
+ return '<div class="note '+color+'"><b>Composizione non unificata — '+esc(v.status)+': </b>'+esc(v.msg)+'</div>'+result;
+};
+// Per i rami deviati si applica la prescrizione soltanto quando il percorso
+// comprende un ramo deviato. Il confronto usa il minimo tra i limiti riportati.
+function mdo33EffectiveSpeed(d){
+ const t=mdo32Totals(d);let limit=t.minSpeed;
+ const diverted=(d.segmenti||[]).some(x=>x.ramo_deviato===true)||d.ramo_deviato===true;
+ if(diverted){
+  const v=t.a.map(x=>mdo32N(x.m?.tecnica?.velocita_deviata_kmh)).filter(x=>x!==null&&x>0);
+  if(v.length===t.a.length&&v.length)limit=limit===null?Math.min(...v):Math.min(limit,...v);
+  else return {limit,missingDeviata:true};
+ }
+ return {limit,missingDeviata:false};
+}
+const mdo33OldTotal=mdo32Totals;
+mdo32Totals=function(d){
+ const t=mdo33OldTotal(d);
+ const diversion=(d.segmenti||[]).some(x=>x.ramo_deviato===true)||d.ramo_deviato===true;
+ if(diversion){
+  const x=t.a.map(v=>mdo32N(v.m?.tecnica?.velocita_deviata_kmh)).filter(v=>v!==null&&v>0);
+  if(x.length!==t.a.length)t.minSpeed=null;
+  else if(x.length)t.minSpeed=t.minSpeed===null?Math.min(...x):Math.min(t.minSpeed,...x);
+ }
+ return t;
+};
+
 mdoBoot();
 </script></body></html>
