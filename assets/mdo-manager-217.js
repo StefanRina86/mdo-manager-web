@@ -84,10 +84,15 @@ async function mdo217SavePerson(e,i){
 }
 const mdo217PreviousAdmin=admin;
 admin=function(){
+ // Il vecchio doppio menu è mantenuto in codice solo per retrocompatibilità,
+ // ma la gestione ordinaria del personale avviene dalla scheda unificata.
+ const legacy=mdo217PreviousAdmin()
+  .replace(/<div class="toolbar"><button class="btn primary" onclick="mdo30AdminPeople\(\)">[\s\S]*?<\/button><\/div>/g,'')
+  .replace(/<div class="toolbar"><button class="btn primary" onclick="mdo24OpenPeople\(\)">[\s\S]*?<\/button><\/div>/g,'');
  return (mdoRole==='admin'?'<div class="panel"><h2>Anagrafica unica MdO</h2>'+
   '<p>Guida, scorta, prelievo, erogazione, anomalie e profilo utente: permessi distinti.</p>'+
   '<button class="btn primary" onclick="mdo217OpenPeople()">Gestisci tutto il personale MdO</button></div>':'')+
-  mdo217PreviousAdmin();
+  legacy;
 };
 
 // Le verifiche positive sono distinte da quelle programmate e dalle date di carta.
