@@ -325,7 +325,7 @@ function mdo10EditRfi(id){
  '<label>Data variazione stato<input class="field" type="date" name="data_stato" value="'+esc(m.data_stato||new Date().toISOString().slice(0,10))+'"></label>'+
  '<label class="full">Motivo / anomalia / officina<input class="field" name="causa" value="'+esc(m.causa||'')+'" placeholder="Obbligatorio per FUES e OFF"></label>'+
  '<div class="full note"><b>Modifica unica:</b> anagrafica, carta di circolazione, verifiche e attrezzature vengono salvate insieme su Supabase. Il valore 0 km/h importato da SAP non equivale a una velocità certificata.</div>'+ '<div class="toolbar full" style="position:sticky;top:0;z-index:2;background:white;padding:6px 0">'+
- '<button type="button" class="btn" onclick="mdo35Jump(\'mdo35Carta\')">Carta di circolazione · 86 campi</button>'+
+ '<button type="button" class="btn" onclick="mdo35Jump(\'mdo35Carta\')">Carta di circolazione</button>'+
  '<button type="button" class="btn" onclick="mdo35Jump(\'mdo35Verifiche\')">Verifiche</button>'+
  '<button type="button" class="btn" onclick="mdo35Jump(\'mdo35Attrezzature\')">Attrezzature</button></div>'+
  '<h3 class="full">Anagrafica e caratteristiche del mezzo</h3>'+ 
@@ -2591,7 +2591,7 @@ function mdo35RfiCard(m){
 // I campi storici gia' nel DB sono conservati: non vengono cancellati.
 const mdo36Catalog=new Map(mdo33Specs.map(row=>[row[0],row]));
 const mdo36Groups=[
- {title:'Identificazione · Carta di circolazione',open:true,fields:[
+ {title:'Identificazione · Carta di circolazione',open:false,fields:[
   'codice_identificazione','data_rilascio_carta','tipo_mdo','equipment',
   'certificato_autorizzazione','proprietario','proprietario_indirizzo',
   'anno_costruzione','data_prima_immatricolazione','matricola_costruttore'
