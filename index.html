@@ -2,7 +2,7 @@
 :root{--nav:#0b263f;--blue:#0879be;--bg:#f2f5f8;--line:#dce4ed;--text:#243348;--muted:#607489;--card:#fff;--red:#c73341;--yellow:#b97710;--green:#197654}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:default}.app{display:flex;min-height:100vh}.side{background:var(--nav);color:#dce9f5;width:242px;flex-shrink:0;padding:24px 12px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;padding:5px 12px 23px}.brand-mark{background:var(--blue);padding:8px;border-radius:9px;color:white}.subbrand{font-size:11px;font-weight:500;opacity:.8}.nav{display:block;width:100%;border:0;background:transparent;color:#bdcfe1;text-align:left;padding:11px 14px;border-radius:9px;margin:4px 0;font-weight:550}.nav:hover,.nav.active{background:#174669;color:white}.foot{position:absolute;bottom:17px;left:18px;right:18px;font-size:11px;color:#b5c6d5}.main{flex:1;min-width:0}.top{background:white;border-bottom:1px solid var(--line);padding:17px 27px;display:flex;justify-content:space-between;align-items:center;gap:10px}.top h1{font-size:21px;margin:0}.content{padding:24px 27px;max-width:1450px}.muted{color:var(--muted)}h2{font-size:18px;margin:0 0 14px}h3{font-size:15px;margin:0 0 12px}.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:20px}.kpi,.panel{background:white;border:1px solid var(--line);border-radius:13px;padding:18px}.kpi .num{font-size:29px;font-weight:760}.kpi .tiny{font-size:12px;color:var(--muted)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{margin-bottom:16px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}.toolbar .grow{flex:1}.btn{border:1px solid var(--line);padding:9px 13px;border-radius:8px;background:white;color:var(--text);font-weight:650}.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}.btn.danger{color:var(--red)}.field{border:1px solid #cbd5e0;border-radius:7px;padding:9px 10px;background:white;color:var(--text);min-width:0}.toolbar input{width:300px;max-width:100%}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:11px}table{border-collapse:collapse;width:100%;background:white;text-align:left}th,td{padding:11px 12px;border-bottom:1px solid #edf1f5;white-space:nowrap}th{font-size:12px;color:#5d7084;background:#f9fbfd}tr:last-child td{border-bottom:0}tr:hover td{background:#f8fafc}.tag{display:inline-block;padding:3px 9px;font-size:11px;border-radius:30px;font-weight:800;background:#eaf0f7;color:#456}.tag.ESER{background:#dff5e9;color:#126a48}.tag.FUES{background:#fff0df;color:#985000}.tag.OFF{background:#ffe2e7;color:#a71d30}.tag.SOPP{background:#e4e7eb;color:#596271}.tag.DA_VERIFICARE{background:#edf0f6;color:#425d82}.click{color:#0676b4;background:none;border:0;padding:0;font-weight:700;text-align:left}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.formgrid label{display:flex;flex-direction:column;gap:5px;font-weight:650;font-size:12px}.formgrid input,.formgrid select,.formgrid textarea{width:100%}.full{grid-column:1/-1}.note{border-left:4px solid #6a92b0;background:#edf5fc;padding:10px 13px;border-radius:5px;margin-bottom:18px}.warn{border-left-color:#e0a94b;background:#fff8e8}.bad{border-left-color:#bb3348;background:#fff0f1}.actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:15px}.stack{display:grid;gap:10px}.item{border:1px solid var(--line);border-radius:9px;padding:12px}.small{font-size:12px}.pill{padding:2px 7px;border:1px solid var(--line);border-radius:6px;font-size:12px}.empty{padding:35px;text-align:center;color:var(--muted)}.dialog-bg{position:fixed;inset:0;background:#071b2aaa;display:flex;align-items:center;justify-content:center;z-index:20;padding:12px}.dialog{background:white;max-width:850px;width:100%;max-height:90vh;overflow:auto;border-radius:14px;padding:22px;box-shadow:0 12px 50px #0015}.dialog h2{margin-right:32px}.close{float:right;border:none;background:none;font-size:25px;line-height:1}.mobile-menu{display:none}.status-led{width:9px;height:9px;border-radius:100%;background:var(--yellow);display:inline-block;margin-right:4px}@media(max-width:980px){.kpis{grid-template-columns:repeat(3,1fr)}.side{width:190px}.grid2{grid-template-columns:1fr}}@media(max-width:700px){.side{display:none;position:fixed;z-index:15;top:0;left:0;width:250px}.side.open{display:block}.mobile-menu{display:inline-block}.top{padding:12px 14px}.top h1{font-size:17px}.content{padding:13px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi{padding:12px}.kpi .num{font-size:24px}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.panel{padding:13px}.toolbar .grow{flex-basis:100%}.toolbar input{width:100%}}
 
 @media(max-width:740px){.formgrid{grid-template-columns:1fr!important}.grid2{grid-template-columns:1fr!important}}
-</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></head><body><div class="app" style="display:none"><aside class="side" id="sidebar"><div class="brand"><span class="brand-mark">M</span><div>MDO Manager<div class="subbrand">UM TE1 · Gallarate</div></div></div><nav id="nav"></nav><div class="foot">Versione online 2.16 · Supabase<br>Non sostituisce le verifiche RFI</div></aside><div class="main"><header class="top"><div style="display:flex;align-items:center;gap:10px"><button class="btn mobile-menu" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button><h1 id="title">Dashboard</h1></div><span class="muted small">● Sincronizzato con Supabase</span></header><main class="content" id="view"></main></div></div><div id="modal"></div><script>
+</style><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script></head><body><div class="app" style="display:none"><aside class="side" id="sidebar"><div class="brand"><span class="brand-mark">M</span><div>MDO Manager<div class="subbrand">UM TE1 · Gallarate</div></div></div><nav id="nav"></nav><div class="foot">Versione online 2.17 · Supabase<br>Non sostituisce le verifiche RFI</div></aside><div class="main"><header class="top"><div style="display:flex;align-items:center;gap:10px"><button class="btn mobile-menu" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button><h1 id="title">Dashboard</h1></div><span class="muted small">● Sincronizzato con Supabase</span></header><main class="content" id="view"></main></div></div><div id="modal"></div><script>
 const SEED=[];
 const SAP_ORDINI_SEED=[];
 const KEY='mdo_manager_v1';
@@ -2652,6 +2652,245 @@ mdo35RfiCard=function(m){
 // L'archiviazione non elimina mai dati delle versioni precedenti: il parse
 // aggiorna solo i campi presenti nel form e preserva gli altri.
 
+
+
+// MDO Manager 2.17 — Carta di circolazione: SOLAMENTE i campi mostrati
+// nel modello fornito (tabella caratteristiche + sezione Prescrizioni).
+// Restano fuori dotazioni, verifiche d'officina e i campi non presenti.
+// Campi preesistenti non più visualizzati: NON vengono cancellati.
+const mdo37F=(key,label,type='text')=>({key,label,type});
+const mdo37Rows=[
+ [mdo37F('codice_identificazione','Codice di Identificazione'),mdo37F('data_rilascio_carta','Data rilascio Carta di circolazione','date')],
+ [mdo37F('proprietario','Proprietario'),mdo37F('proprietario_indirizzo','Indirizzo proprietario')],
+ [mdo37F('tipo_mdo','Definizione classe mezzo'),mdo37F('equipment','Equipment')],
+ [mdo37F('certificato_autorizzazione','Estremi certificato di autorizzazione alla circolazione'),null],
+ [mdo37F('costruttore','Costruttore'),mdo37F('costruttore_sede','Sede costruttore')],
+ [mdo37F('anno_costruzione','Anno di costruzione','number'),mdo37F('velocita_isolato_kmh','Velocità massima isolato (km/h)','number')],
+ [mdo37F('data_prima_immatricolazione','Data della prima immatricolazione','date'),mdo37F('velocita_composizione_kmh','Velocità max in composizione (km/h)','number')],
+ [mdo37F('modello','Modello'),mdo37F('velocita_lavoro_kmh','Velocità massima di lavoro (km/h)','number')],
+ [mdo37F('matricola_costruttore','Matricola Costruttore'),mdo37F('massa_frenata_vuoto_t','Massa frenata a vuoto (t)','number')],
+ [mdo37F('persone_cabina','Persone max in cabina/e','number'),mdo37F('massa_frenata_carico_t','Massa frenata a carico (t)','number')],
+ [mdo37F('potenza_kw','Potenza nominale (kW)','number'),mdo37F('freno_continuo_tipo','Freno continuo automatico')],
+ [mdo37F('massa_vuoto_t','Massa a vuoto (t)','number'),mdo37F('freno_stazionamento','Freno di stazionamento','yesno')],
+ [mdo37F('carico_massimo_t','Carico massimo (t)','number'),mdo37F('freno_diretto_tipo','Freno diretto')],
+ [mdo37F('lunghezza_mm','Lunghezza massima (mm)','number'),mdo37F('condotta_freno_tipo','Condotta del freno')],
+ [mdo37F('passo_interperno_mm','Passo o interperno (mm)','number'),mdo37F('tipologia_sospensioni','Tipologia sospensioni')],
+ [mdo37F('passo_carrello_mm','Passo carrello (mm)','number'),mdo37F('tipologia_ruote','Tipologia ruote')],
+ [mdo37F('diametro_ruote_nuovo_mm','Diametro ruote a nuovo (mm)','number'),mdo37F('tipologia_organi_aggancio','Tipologia organi di aggancio')],
+ [mdo37F('interasse_binari_minimo_lavoro_mm','Min. interasse bin. fase lavoro (mm)','number'),mdo37F('tipologia_organi_repulsione','Tipologia organi di repulsione')],
+ [mdo37F('pendenza_max_percorrenza_permille','Max pendenza salita/discesa binario','number'),mdo37F('fanali_segnalamento','Fanali e luci di segnalamento')],
+ [mdo37F('sopraelevazione_max_percorrenza_mm','Max sopraelev. salita/discesa binario','number'),mdo37F('fischi_trombe','Fischi e trombe')],
+ [mdo37F('sopraelevazione_max_lavoro_mm','Sopraelevazione max di lavoro','number'),mdo37F('pendenza_max_stazionamento_permille','Max pendenza stazionamento','number')],
+ [mdo37F('trazione_fase_lavoro','Trazione in fase di lavoro'),mdo37F('manovra_spinta','Manovra a spinta','yesno')],
+ [mdo37F('numero_assi','N. assi','number'),mdo37F('carico_assiale_max_t','Peso max assiale (t)','number')]
+];
+const mdo37Prescriptions=[
+ [mdo37F('necessita_coda_assoluta','Necessità di ubicazione in coda assoluta','yesno'),mdo37F('necessita_carro_scudo','Necessità di carro scudo','yesno')],
+ [mdo37F('occupazione_cdb','Occupa i circuiti di binario','yesno'),mdo37F('aziona_pedali','Aziona i pedali','yesno')],
+ [mdo37F('idoneo_traino','Idoneo al traino di altri mezzi','yesno'),mdo37F('rispetta_profilo_limite','Rispetta il profilo limite','yesno')],
+ [mdo37F('ammesso_composizione','Ammesso in composizione','yesno'),null]
+];
+const mdo37PrescriptionsFull=[
+ mdo37F('categoria_linea','Categorie linee circolazione'),
+ mdo37F('prescrizioni_sagoma','Prescrizioni sagoma','textarea'),
+ mdo37F('limiti_circolazione','Prescrizioni di circolazione','textarea'),
+ mdo37F('prescrizioni_circolazione_2','Prescrizioni di circolazione','textarea')
+];
+const mdo37All=[...mdo37Rows.flat(),...mdo37Prescriptions.flat(),...mdo37PrescriptionsFull].filter(Boolean);
+if(new Set(mdo37All.map(f=>f.key)).size!==mdo37All.length)throw new Error('Campo duplicato nella trascrizione della carta');
+for(const f of mdo37All){
+ if(!mdo33Specs.some(row=>row[0]===f.key)){
+  mdo33Specs.push([f.key,f.label,f.type==='number'?'number':'text']);
+ }
+}
+function mdo37IsoDate(v){
+ const str=String(v??'').trim();
+ if(/^\d{4}-\d{2}-\d{2}$/.test(str))return str;
+ const match=str.match(/^(\d{2})[./](\d{2})[./](\d{4})$/);
+ return match?match[3]+'-'+match[2]+'-'+match[1]:'';
+}
+function mdo37Field(f,t){
+ if(!f)return '<div></div>';
+ let v=t[f.key]??'';
+ // Per i MdO preesistenti che hanno il riferimento in testata,
+ // mostra il valore già salvato nella carta se esiste, senza presumerlo.
+ const lbl=esc(f.label),key=esc('card_'+f.key);
+ if(f.type==='yesno'){
+  const x=String(v).trim().toUpperCase();
+  const options=['SI','NO'];
+  if(v!==''&&!options.includes(x))options.unshift(String(v));
+  return '<label class="mdo37-field">'+lbl+'<select class="field" name="'+key+'">'+
+    '<option value="">—</option>'+options.map(opt=>'<option value="'+esc(opt)+'" '+(opt.toUpperCase()===x?'selected':'')+'>'+esc(opt)+'</option>').join('')+
+    '</select></label>';
+ }
+ if(f.type==='textarea')return '<label class="mdo37-field">'+lbl+
+  '<textarea class="field" name="'+key+'" rows="2">'+esc(v)+'</textarea></label>';
+ const type=f.type==='number'?'number':f.type==='date'?'date':'text';
+ if(type==='date')v=mdo37IsoDate(v);
+ return '<label class="mdo37-field">'+lbl+'<input class="field" type="'+type+'" name="'+key+'"'+
+ (type==='number'?' step="any" min="0"':'')+' value="'+esc(String(v))+'"></label>';
+}
+function mdo37Pair(pair,t){
+ return '<div class="mdo37-pair">'+pair.map(f=>mdo37Field(f,t)).join('')+'</div>';
+}
+mdo33Fields=function(t={}){
+ return '<style>'+
+ '.mdo37-grid{display:flex;flex-direction:column;gap:5px}.mdo37-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:4px 0;border-bottom:1px solid #edf1f4}'+
+ '.mdo37-field{font-size:12px;display:flex;flex-direction:column;gap:5px;min-width:0}.mdo37-field .field{width:100%;font-size:14px}'+
+ '.mdo37-prescrizioni{margin-top:15px;padding-top:8px;border-top:2px solid #294d6a}'+
+ '@media(max-width:650px){.mdo37-pair{grid-template-columns:1fr;gap:9px}}'+
+ '</style>'+
+ '<div class="full"><h3>Carta di circolazione · Dati del mezzo</h3></div>'+
+ '<div class="full mdo37-grid">'+mdo37Rows.map(p=>mdo37Pair(p,t)).join('')+
+ '<section class="mdo37-prescrizioni"><h3 style="text-align:center">Prescrizioni</h3>'+
+ mdo37Prescriptions.map(p=>mdo37Pair(p,t)).join('')+
+ '<div class="mdo37-grid" style="margin-top:12px">'+mdo37PrescriptionsFull.map(f=>mdo37Pair([f,null],t)).join('')+'</div>'+
+ '</section></div>';
+};
+// Compilazione carta separata dalle verifiche e dallo stato operativo,
+// che sono già gestiti da funzionalità autonome.
+mdo35RfiCard=function(m){
+ const t={...(m?.tecnica||{})};
+ if(!t.equipment&&/^\d{6,15}$/.test(String(m?.id||'')))t.equipment=String(m.id);
+ if(!t.costruttore&&m?.costruttore)t.costruttore=m.costruttore;
+ if(!t.modello&&m?.modello)t.modello=m.modello;
+ return mdo33Fields(t);
+};
+// Evita modifiche arbitrarie agli altri attributi: il parse cambia solo
+// le chiavi card_* realmente presenti nel form.
+const mdo37OriginalParse=mdo33ParseForm;
+mdo33ParseForm=function(f,original={}){
+ const out=mdo37OriginalParse(f,original);
+ // Equipara le denominazioni presenti sulle carte per il limite ICMO
+ // senza alterare il testo originale trascritto.
+ const raw=String(out.tipologia_organi_aggancio||'').trim().toUpperCase();
+ if(f.get('card_tipologia_organi_aggancio')!==null)out.aggancio_unificato='DA_CARTA';
+ if(raw==='UNIFICATI FS'||raw==='UNIFICATI_FS')out.aggancio_unificato='FS';
+ else if(raw==='UNIFICATI UIC'||raw==='UNIFICATI_UIC')out.aggancio_unificato='UIC';
+ else if(raw==='NON UNIFICATI'||raw==='NON UNIFICATI FS'||raw==='NON_UNIFICATI')out.aggancio_unificato='NON_UNIFICATI';
+ if(out.modello===undefined&&f.get('card_modello')!==null)out.modello=String(f.get('card_modello')||'').trim();
+ return out;
+};
+// Gli editor RFI conservano lo stato e le verifiche; i campi anagrafici
+// duplicati non sono modificabili separatamente dalla carta.
+const mdo37PreviousRfiEdit=mdo10EditRfi;
+mdo10EditRfi=function(id){
+ mdo37PreviousRfiEdit(id);
+ const form=document.querySelector('#modal form');if(!form)return;
+ for(const key of ['matricola','costruttore','modello','libretto','note']){
+  const el=form.elements.namedItem(key);
+  if(el?.closest('label'))el.closest('label').style.display='none';
+ }
+ const name=form.elements.namedItem('nome');
+ if(name){name.readOnly=true;name.title='Descrizione di servizio: non fa parte dei dati della carta';}
+ const head=[...form.querySelectorAll('h3')].find(x=>x.textContent.includes('Anagrafica e caratteristiche'));
+ if(head)head.textContent='Riferimenti interni RFI';
+};
+const mdo37PreviousRfiSave=mdo10SaveRfi;
+mdo10SaveRfi=async function(e,id){
+ const f=e.target;
+ const cardMake=f.elements.namedItem('card_costruttore');
+ const cardModel=f.elements.namedItem('card_modello');
+ const cardNumber=f.elements.namedItem('card_matricola_costruttore');
+ const headerMake=f.elements.namedItem('costruttore');
+ const headerModel=f.elements.namedItem('modello');
+ const headerNumber=f.elements.namedItem('matricola');
+ if(cardMake&&headerMake)headerMake.value=cardMake.value;
+ if(cardModel&&headerModel)headerModel.value=cardModel.value;
+ if(cardNumber&&headerNumber)headerNumber.value=cardNumber.value;
+ return mdo37PreviousRfiSave(e,id);
+};
+// Anche Modifica dei mezzi di impresa apre direttamente gli stessi dati,
+// non la precedente scheda con campi duplicati e limitazioni inventate.
+mdo31EditCompany=function(id){
+ if(mdoRole!=='admin')return alert('Modifica riservata all’amministratore');
+ const m=db.mezzi.find(x=>x.id===id&&x.proprieta==='IMPRESA');
+ if(!m)return alert('MdO impresa non trovato');
+ modal('<h2>Carta di circolazione · '+esc(id)+'</h2>'+
+ '<p class="small muted">'+esc(m.impresa||'')+' · '+esc(m.nome||'')+'</p>'+
+ '<form class="formgrid" onsubmit="mdo37SaveCompany(event,\''+esc(id)+'\')">'+
+ mdo33Fields({...m.tecnica,
+  modello:m.tecnica?.modello||m.modello||'',
+  codice_identificazione:m.tecnica?.codice_identificazione||m.matricola||''})+
+ '<div class="actions full"><button class="btn" type="button" onclick="closeModal()">Annulla</button>'+
+ '<button class="btn primary" type="submit">Salva carta su Supabase</button></div></form>');
+};
+async function mdo37SaveCompany(e,id){
+ e.preventDefault();if(mdoRole!=='admin')return;
+ const btn=e.target.querySelector('button[type=submit]');btn.disabled=true;
+ try{
+  const m=db.mezzi.find(x=>x.id===id&&x.proprieta==='IMPRESA');if(!m)throw Error('MdO impresa non trovato');
+  const tecnica=mdo33ParseForm(new FormData(e.target),m.tecnica||{});
+  // Proprietario indicato sulla carta e impresa operativa sono due concetti
+  // distinti: correggere la carta non deve cambiare il gruppo aziendale.
+  const upd={...m,tecnica,modello:tecnica.modello||m.modello,
+   dataAggiornamento:new Date().toISOString()};
+  const {error}=await mdoClient.from('mdo_mezzi').update(mdoRow(upd)).eq('codice_sap',id).eq('proprietario','IMPRESA');
+  if(error)throw error;
+  await mdoLoadRemote();closeModal();render();mdoStatus('Carta impresa aggiornata');
+ }catch(err){alert('Salvataggio non riuscito: '+err.message)}
+ finally{btn.disabled=false}
+}
+
+
+// Il nuovo MdO di impresa usa la stessa carta, senza un secondo censimento
+// con campi di fantasia. Impresa e descrizione si derivano dalle voci del foglio.
+mdo9AddCompany=function(){
+ if(mdoRole!=='admin')return alert('Censimento riservato all’amministratore');
+ modal('<h2>Nuovo MdO · Carta di circolazione</h2>'+
+ '<form class="formgrid" onsubmit="mdo37SaveNewCompany(event)">'+mdo33Fields({})+
+ '<div class="actions full"><button type="button" class="btn" onclick="closeModal()">Annulla</button>'+
+ '<button type="submit" class="btn primary">Salva MdO impresa su Supabase</button></div></form>');
+};
+async function mdo37SaveNewCompany(e){
+ e.preventDefault();if(mdoRole!=='admin')return;
+ const btn=e.target.querySelector('button[type=submit]');btn.disabled=true;
+ try{
+  const t=mdo33ParseForm(new FormData(e.target),{});
+  const firm=String(t.proprietario||'').trim(),code=String(t.codice_identificazione||'').trim();
+  const name=[String(t.tipo_mdo||'').trim(),String(t.modello||'').trim()].filter(Boolean).join(' · ');
+  if(!firm||!code||!name)throw Error('Compila Proprietario, Codice di Identificazione e Definizione classe mezzo o Modello');
+  const id='IMP-'+firm.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,24)+'-'+code.toUpperCase().replace(/[^A-Z0-9-]/g,'').slice(0,40);
+  if(db.mezzi.some(m=>m.id===id))throw Error('Codice di identificazione già censito per questo proprietario');
+  const mezzo={id,nome:name,matricola:code,impresa:firm,proprieta:'IMPRESA',modello:t.modello||'',
+   stato:'CENSITO',tecnica:t,verifiche:{},abilitaComposizione:true,
+   fonte_validata:true,dataAggiornamento:new Date().toISOString()};
+  const {error}=await mdoClient.from('mdo_mezzi').insert(mdoRow(mezzo));
+  if(error)throw error;
+  await mdoLoadRemote();closeModal();render();mdoStatus('MdO impresa censito con soli dati della carta');
+ }catch(err){alert('MdO NON salvato: '+err.message)}
+ finally{btn.disabled=false}
+}
+
+
+// Anche il censimento NUOVO RFI utilizza soltanto i dati del foglio.
+// Equipment identifica la registrazione SAP; lo stato operativo si assegna
+// successivamente con il comando apposito, non si deduce dalla carta.
+mdo15AddRfi=function(){
+ if(mdoRole!=='admin')return alert('Censimento riservato all’amministratore');
+ modal('<h2>Nuovo MdO RFI · Carta di circolazione</h2>'+
+ '<form class="formgrid" onsubmit="mdo37SaveNewRfi(event)">'+mdo33Fields({})+
+ '<div class="actions full"><button type="button" class="btn" onclick="closeModal()">Annulla</button>'+
+ '<button type="submit" class="btn primary">Salva nuovo MdO RFI</button></div></form>');
+};
+async function mdo37SaveNewRfi(e){
+ e.preventDefault();if(mdoRole!=='admin')return;
+ const btn=e.target.querySelector('button[type=submit]');btn.disabled=true;
+ try{
+  const t=mdo33ParseForm(new FormData(e.target),{});
+  const id=String(t.equipment||'').trim(),desc=[t.tipo_mdo,t.modello].filter(Boolean).join(' · ');
+  if(!/^[0-9]{6,15}$/.test(id))throw Error('Il campo Equipment deve contenere il codice SAP numerico del mezzo (6–15 cifre)');
+  if(!desc)throw Error('Inserisci Definizione classe mezzo o Modello');
+  if(db.mezzi.some(m=>m.id===id))throw Error('Equipment già censito');
+  const m={id,nome:desc,matricola:t.matricola_costruttore||'',costruttore:t.costruttore||'',
+   modello:t.modello||'',nucleo:'',stato:'FUES',proprieta:'RFI',impresa:null,
+   archiviato:false,tecnica:t,verifiche:{},dataAggiornamento:new Date().toISOString()};
+  const {error}=await mdoClient.from('mdo_mezzi').insert(mdoRow(m));if(error)throw error;
+  await mdoLoadRemote();closeModal();render();
+  mdoStatus('MdO RFI censito inizialmente FUES per prudenza; imposta separatamente lo stato operativo effettivo');
+ }catch(err){alert('MdO NON salvato: '+err.message)}
+ finally{btn.disabled=false}
+}
 
 mdoBoot();
 </script></body></html>
