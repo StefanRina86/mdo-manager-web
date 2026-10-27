@@ -2824,5 +2824,35 @@ async function mdo37SaveCompany(e,id){
  finally{btn.disabled=false}
 }
 
+
+// Il nuovo MdO di impresa usa la stessa carta, senza un secondo censimento
+// con campi di fantasia. Impresa e descrizione si derivano dalle voci del foglio.
+mdo9AddCompany=function(){
+ if(mdoRole!=='admin')return alert('Censimento riservato all’amministratore');
+ modal('<h2>Nuovo MdO · Carta di circolazione</h2>'+
+ '<form class="formgrid" onsubmit="mdo37SaveNewCompany(event)">'+mdo33Fields({})+
+ '<div class="actions full"><button type="button" class="btn" onclick="closeModal()">Annulla</button>'+
+ '<button type="submit" class="btn primary">Salva MdO impresa su Supabase</button></div></form>');
+};
+async function mdo37SaveNewCompany(e){
+ e.preventDefault();if(mdoRole!=='admin')return;
+ const btn=e.target.querySelector('button[type=submit]');btn.disabled=true;
+ try{
+  const t=mdo33ParseForm(new FormData(e.target),{});
+  const firm=String(t.proprietario||'').trim(),code=String(t.codice_identificazione||'').trim();
+  const name=[String(t.tipo_mdo||'').trim(),String(t.modello||'').trim()].filter(Boolean).join(' · ');
+  if(!firm||!code||!name)throw Error('Compila Proprietario, Codice di Identificazione e Definizione classe mezzo o Modello');
+  const id='IMP-'+firm.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,24)+'-'+code.toUpperCase().replace(/[^A-Z0-9-]/g,'').slice(0,40);
+  if(db.mezzi.some(m=>m.id===id))throw Error('Codice di identificazione già censito per questo proprietario');
+  const mezzo={id,nome:name,matricola:code,impresa:firm,proprieta:'IMPRESA',modello:t.modello||'',
+   stato:'CENSITO',tecnica:t,verifiche:{},abilitaComposizione:true,
+   fonte_validata:true,dataAggiornamento:new Date().toISOString()};
+  const {error}=await mdoClient.from('mdo_mezzi').insert(mdoRow(mezzo));
+  if(error)throw error;
+  await mdoLoadRemote();closeModal();render();mdoStatus('MdO impresa censito con soli dati della carta');
+ }catch(err){alert('MdO NON salvato: '+err.message)}
+ finally{btn.disabled=false}
+}
+
 mdoBoot();
 </script></body></html>
