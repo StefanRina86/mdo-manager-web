@@ -2875,11 +2875,11 @@ async function mdo37SaveNewRfi(e){
   if(!desc)throw Error('Inserisci Definizione classe mezzo o Modello');
   if(db.mezzi.some(m=>m.id===id))throw Error('Equipment già censito');
   const m={id,nome:desc,matricola:t.matricola_costruttore||'',costruttore:t.costruttore||'',
-   modello:t.modello||'',nucleo:'',stato:'DA_VERIFICARE',proprieta:'RFI',impresa:null,
+   modello:t.modello||'',nucleo:'',stato:'FUES',proprieta:'RFI',impresa:null,
    archiviato:false,tecnica:t,verifiche:{},dataAggiornamento:new Date().toISOString()};
   const {error}=await mdoClient.from('mdo_mezzi').insert(mdoRow(m));if(error)throw error;
   await mdoLoadRemote();closeModal();render();
-  mdoStatus('MdO RFI censito; imposta separatamente il suo stato operativo');
+  mdoStatus('MdO RFI censito inizialmente FUES per prudenza; imposta separatamente lo stato operativo effettivo');
  }catch(err){alert('MdO NON salvato: '+err.message)}
  finally{btn.disabled=false}
 }
