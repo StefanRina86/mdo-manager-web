@@ -1848,7 +1848,18 @@ renderCompResult=function(d){
  (t.exceedsLength?'<div class="note bad">La lunghezza supera almeno un limite dichiarato. Verifica necessaria.</div>':'')+
  (t.a.some(x=>x.tare==null||x.load==null||x.brake==null||x.length==null)?'<div class="note warn">Alcuni dati d’impiego sono mancanti: i totali incompleti non sono confrontabili.</div>':'')+
  '<p class="small muted">La media massa/asse non dimostra la distribuzione reale sui singoli assi. Percentuale frenata, prestazione della trazione, compatibilità di aggancio, categoria di carico e stazionamento richiedono verifiche specifiche.</p>';
- return summary+'<h3>Altri controlli da completare</h3>'+mdo32OldResult(d);
+ const omit=['Massa totale effettiva','Lunghezza nominale','Massa frenata e rapporto aritmetico','Confronto limiti di velocità'];
+ const operational=checkRows(d).checks.filter(c=>!omit.some(prefix=>c.name.startsWith(prefix)));
+ operational.forEach(c=>{
+  if(c.name==='Massa rimorchiata / prestazione'&&t.hauled!==null){
+   c.status='DA VALIDARE';c.detail='Massa delle unità non motrici attive: '+fmt(t.hauled)+' t; la prestazione della motrice alla pendenza applicabile resta da verificare.';
+  }
+  if(c.name==='Percorso e massima pendenza'&&d.segmenti?.length&&t.allSeg){
+   c.status='DA VALIDARE';c.detail='Tratti, FL e progressione inseriti. Verificare prescrizioni, dati FL e pendenze per ogni tratto.';
+  }
+ });
+ return summary+'<h3>Controlli specifici ancora necessari</h3>'+tabella(['Verifica','Stato','Motivazione'],operational.map(c=>'<tr><td>'+esc(c.name)+'</td><td>'+esc(c.status)+'</td><td>'+esc(c.detail)+'</td></tr>'))+
+ '<div class="note warn"><b>Esito di circolabilità: non determinato.</b> I dati delle carte sono già anagrafati e non va allegata nuovamente la carta. L’esito operativo richiede le verifiche PGOS/ICMO, la tratta reale e le attestazioni del personale competente.</div>';
 };
 function mdo32Print(title,html,landscape=true){
  const w=window.open('','_blank');if(!w)return alert('Consenti popup per stampare');
