@@ -1564,7 +1564,7 @@ mdo18Refresh=async function(){
  let deleted=0;
  table.querySelectorAll('tbody tr').forEach((tr,i)=>{
   const r=list[i];if(!r)return;
-  const d=r.dettagli||{},can=mdoRole==='admin'||(mdoSession?.user?.id&&d.account_id===mdoSession.user.id);
+  const d=r.dettagli||{},can=mdoRole==='admin'||(mdoSession?.user?.id&&r.created_by===mdoSession.user.id);
   const isDeleted=d.annullato===true||d.annullato==='true';
   const td=document.createElement('td');
   if(isDeleted){deleted++;tr.style.display='none';tr.classList.add('mdo31-archived');td.textContent='ELIMINATA · storico';}
@@ -1581,7 +1581,7 @@ mdo18Refresh=async function(){
 };
 async function mdo31EditFault(i){
  const r=window.mdo18Faults?.[i];if(!r||r.dettagli?.annullato)return;
- try{if(mdoRole!=='admin'&&r.dettagli?.account_id!==mdoSession?.user?.id)return alert('Modifica riservata al compilatore o amministratore');
+ try{if(mdoRole!=='admin'&&r.created_by!==mdoSession?.user?.id)return alert('Modifica riservata al compilatore o amministratore');
  await mdo18NewFault(r.codice_sap);
  const form=document.querySelector('#modal form');if(!form)return;
  const oldData=r.dettagli||{},values={
