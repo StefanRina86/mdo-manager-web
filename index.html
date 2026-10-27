@@ -2469,6 +2469,13 @@ mdo33ParseForm=function(form,original={}){
   }
   result[section]=arr;
  }
+ // Allinea la tipologia organi al dato usato dal controllo ICMO sui 6 rotabili.
+ if(result.tipologia_organi_aggancio){
+   const map={UNIFICATI_FS:'FS',UNIFICATI_UIC:'UIC',NON_UNIFICATI:'NON_UNIFICATI',SPECIALI:'SPECIALI'};
+   result.aggancio_unificato=map[result.tipologia_organi_aggancio]||result.aggancio_unificato;
+ }
+ if(result.freno_continuo_tipo==='UNIFICATO')result.freno_continuo='SI';
+ if(result.freno_continuo_tipo==='ASSENTE')result.freno_continuo='NO';
  return result;
 };
 function mdo34HistoryTable(name,label,rows){
