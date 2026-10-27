@@ -1523,8 +1523,8 @@ async function mdo31DeleteCompany(id){
   (used?'ATTENZIONE: compare in '+used+' studi condivisi. Quegli studi potrebbero non trovare più il mezzo.\n':'')+
   'Le eventuali carte conservate separatamente non saranno cancellate.'))return;
  try{
-  const {data,error}=await mdoClient.from('mdo_mezzi').delete().eq('codice_sap',id).eq('proprietario','IMPRESA').select('codice_sap');
-  if(error)throw error;if(!data?.length)throw Error('Supabase non ha eliminato il mezzo: controlla i permessi');
+  const {data,error}=await mdoClient.rpc('mdo31_elimina_mezzo_impresa',{p_codice_sap:id});
+  if(error)throw error;if(data!==true)throw Error('Mezzo impresa non trovato; nessuna eliminazione effettuata');
   await mdoLoadRemote();render();mdo15ShowGroup(m.impresa);mdoStatus('MdO impresa eliminato: '+id);
  }catch(err){alert('Eliminazione NON riuscita: '+err.message)}
 }
