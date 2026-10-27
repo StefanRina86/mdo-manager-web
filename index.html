@@ -3214,5 +3214,15 @@ renderCompResult=function(d){
  mdo218PrevCompResult(d);
 };
 
+// Accesso unificato: le precedenti due gestioni persone non compaiono più
+// come pulsanti distinti nell'amministrazione (le RPC esistenti restano attive).
+const mdo218PreviousAdmin=admin;
+admin=function(){
+ const html=mdo218PreviousAdmin();
+ return html
+  .replace('<button class="btn primary" onclick="mdo30AdminPeople()">Gestisci autorizzati anomalie · CUM / Specialista / CT</button>','')
+  .replace('Gestisci personale gasolio (CID)','Gestisci personale MdO · guida, scorta e permessi');
+};
+
 mdoBoot();
 </script></body></html>
