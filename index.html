@@ -1086,6 +1086,91 @@ const mdo218OldGroup=mdo15ShowGroup;
 mdo15ShowGroup=function(group,history=false){if(group==='RFI')return mdo218OldGroup(group,history);const dest=document.getElementById('mdo9Group');if(!dest)return;const rows=db.mezzi.filter(m=>m.proprieta==='IMPRESA'&&m.impresa===group&&!!m.archiviato===history);dest.innerHTML='<h3>'+esc(group)+(history?' · archivio':' · attivi')+'</h3><div class="toolbar"><button class="btn" onclick="mdo15ShowGroup(\''+esc(group)+'\','+(!history)+')">'+(history?'Torna ai mezzi attivi':'Mostra archiviati')+'</button></div>'+tabella(['Identificativo','Mezzo','Stato','Azioni'],rows.map(m=>'<tr><td>'+esc(m.id)+'</td><td>'+esc(m.nome)+'</td><td>'+esc(m.stato)+'</td><td>'+(mdoRole==='admin'?'<button class="btn" onclick="mdo218EditCompany(\''+esc(m.id)+'\')">Modifica</button> <button class="btn" onclick="mdo218CompanyArchive(\''+esc(m.id)+'\','+history+')">'+(history?'Ripristina':'Archivia')+'</button> '+(history?'<button class="btn danger" onclick="mdo218CompanyDelete(\''+esc(m.id)+'\')">Elimina</button>':''):'Solo lettura')+'</td></tr>'))};
 mdo9ParcoGroup=mdo15ShowGroup;
 
+
+// ===== MDO Manager 2.19 — itinerari FL condivisi, flusso convogli essenziale =====
+// I dati incompleti/non validati non producono limiti operativi.
+let mdo219FL=[],mdo219Points=[],mdo219Segments=[],mdo219FLStatus='Archivio FL non ancora caricato';
+async function mdo219LoadFL(){
+ if(!mdoSession||!mdoClient)return;
+ const [a,b,c]=await Promise.all([
+  mdoClient.from('mdo_fl_fascicoli').select('codice,titolo,versione,validato').order('codice'),
+  mdoClient.from('mdo_fl_localita').select('id,fl_codice,nome,km_m,binario,validato').order('km_m'),
+  mdoClient.from('mdo_fl_tratti').select('id,fl_codice,binario,km_da_m,km_a_m,pendenza_permille,limite_kmh,validato,fonte').order('km_da_m')]);
+ if(a.error||b.error||c.error){mdo219FLStatus='Archivio FL non disponibile: '+(a.error||b.error||c.error).message;mdo219FL=[];mdo219Points=[];mdo219Segments=[];return}
+ mdo219FL=a.data||[];mdo219Points=b.data||[];mdo219Segments=c.data||[];
+ mdo219FLStatus='Archivio condiviso: '+mdo219FL.length+' FL, '+mdo219Points.length+' località, '+mdo219Segments.length+' tratti';
+}
+const mdo219PrevLoad=mdoLoadRemote;
+mdoLoadRemote=async function(){await mdo219PrevLoad();try{await mdo219LoadFL()}catch(e){mdo219FLStatus='Errore FL: '+e.message}};
+function mdo219Set(k,value){const d=window.compDraft;if(!d)return;d[k]=value;if(k==='fl'){d.flStart='';d.flEnd='';d.kmStart='';d.kmEnd='';d.origine='';d.destinazione='';}
+ if(['flStart','flEnd'].includes(k)){const q=mdo219Points.find(x=>String(x.id)===String(value));if(q){d[k==='flStart'?'origine':'destinazione']=q.nome;d[k==='flStart'?'kmStart':'kmEnd']=q.km_m==null?'':mdo217Fmt(q.km_m)}}
+ const x=document.getElementById('mdo217view');if(x)x.outerHTML=mdo219Route();
+}
+function mdo219Route(){
+ const d=window.compDraft||{},f=mdo219FL.find(x=>x.codice===d.fl),pt=mdo219Points.filter(x=>x.fl_codice===d.fl),k1=mdo217Km(d.kmStart),k2=mdo217Km(d.kmEnd),lo=Math.min(k1,k2),hi=Math.max(k1,k2);
+ const one=(k,arr,empty)=>'<select class="field" onchange="mdo219Set(\''+k+'\',this.value)">'+mdo218Sel(arr,d[k],empty)+'</select>';
+ const bin=d.binario||'';
+ const seg=(k1!==null&&k2!==null&&k1!==k2&&bin)?mdo219Segments.filter(x=>x.fl_codice===d.fl&&x.binario===bin&&x.km_a_m>lo&&x.km_da_m<hi).sort((a,b)=>a.km_da_m-b.km_da_m):[];
+ let cursor=lo,full=!!seg.length;for(const x of seg){if(x.km_da_m>cursor)full=false;cursor=Math.max(cursor,x.km_a_m)}if(cursor<hi)full=false;
+ const verified=full&&seg.every(x=>x.validato===true)&&!!f?.validato;
+ const grades=seg.filter(x=>x.pendenza_permille!==null).map(x=>Number(x.pendenza_permille));
+ const vmax=verified&&seg.every(x=>x.limite_kmh!==null)?Math.min(...seg.map(x=>Number(x.limite_kmh))):null;
+ const grad=verified&&grades.length===seg.length?Math.max(...grades.map(Math.abs)):null;
+ const opt=pt.map(x=>[String(x.id),x.nome+' · '+(x.km_m==null?'km non disponibile':mdo217Fmt(x.km_m))+(x.validato?'':' · da validare')]);
+ const noData=!mdo219FL.length;
+ return '<div class="panel" id="mdo217view"><h2>2 · Percorso guidato</h2><p class="small muted">'+esc(mdo219FLStatus)+'. Scegli il fascicolo e le località; puoi precisare le progressive per il cantiere.</p><div class="formgrid">'+
+ '<label>Fascicolo Linea'+one('fl',mdo219FL.map(x=>[x.codice,x.codice+' · '+x.titolo]),'Seleziona FL')+'</label>'+
+ '<label>Binario'+one('binario',[['Pari','Pari'],['Dispari','Dispari'],['Unico','Unico']],'Seleziona binario')+'</label>'+
+ '<label>Località iniziale'+one('flStart',opt,'Seleziona origine')+'</label>'+
+ '<label>Località finale'+one('flEnd',opt,'Seleziona destinazione')+'</label>'+
+ '<label>Progressiva iniziale<input class="field" placeholder="35+200" value="'+esc(d.kmStart||'')+'" onchange="mdo219Set(\'kmStart\',this.value)"></label>'+
+ '<label>Progressiva finale<input class="field" placeholder="35+900" value="'+esc(d.kmEnd||'')+'" onchange="mdo219Set(\'kmEnd\',this.value)"></label>'+
+ '<label>Fase del movimento'+one('mdo217Phase',[['fase1','Fase 1 · accesso'],['fase2','Fase 2 · lavoro'],['fase3','Fase 3 · rientro'],['trasferimento','Trasferimento']],'Seleziona fase')+'</label></div>'+
+ '<div class="note '+(verified?'':'warn')+'">'+(verified?'Tratti FL registrati e validati: pendenza massima in valore assoluto '+(grad==null?'non presente':grad+'‰')+' · limite di linea '+(vmax==null?'non presente':vmax+' km/h'):'Dati FL NON completi o non validati per tutto il percorso: nessun limite operativo determinato.')+'</div>'+
+ '<details><summary>Dettagli tratta ('+seg.length+' segmenti)</summary>'+(seg.length?tabella(['Da','A','Pendenza','Limite','Fonte / Stato'],seg.map(x=>'<tr><td>'+mdo217Fmt(x.km_da_m)+'</td><td>'+mdo217Fmt(x.km_a_m)+'</td><td>'+esc(x.pendenza_permille??'—')+'‰</td><td>'+esc(x.limite_kmh??'—')+' km/h</td><td>'+esc(x.fonte||'—')+' · '+(x.validato?'Validato':'Da verificare')+'</td></tr>')):'Nessun tratto corrispondente')+'</details>'+
+ (noData?'<p class="small muted">Dopo l’esecuzione dello SQL 2.19, importa i FL con progressive e limiti verificati. La tabella non viene popolata con valori ipotizzati.</p>':'')+'</div>';
+}
+function mdo219Quick(){
+ const d=window.compDraft||{},ms=(d.ids||[]).map(compMezzo).filter(Boolean);const lines=[];
+ ms.forEach(m=>{
+  if(m.stato!=='ESER')lines.push([m,'Stato del mezzo',m.stato||'Non definito','stato']);
+  if(m.proprieta==='IMPRESA'&&m.abilitaComposizione!==true)lines.push([m,'Impiego impresa','Selezionabilità da verificare','impresa']);
+  const v=m.verifiche||{};for(const [name,key] of [['Periodica','ultima_periodica'],['Quinquennale','ultima_quinquennale']]){
+   const date=v[key]||'';lines.push([m,name,date?'Ultima eseguita: '+fmtDate(date):'Data mancante','data']);
+  }
+  const t=m.tecnica||{};for(const [key,name] of [['massa_vuoto_t','Massa a vuoto'],['massa_frenata_carico_t','Massa frenata pertinente'],['aggancio','Aggancio']])if(t[key]===undefined||t[key]===null||t[key]==='')lines.push([m,name,'Dato mancante','tecnica']);
+ });
+ const edit=m=>m.proprieta==='IMPRESA'?'mdo218EditCompany': 'mdo10EditRfi';
+ return '<div class="panel" id="mdo219quick"><h2>3 · Controlli essenziali</h2><p class="small muted">Periodica e quinquennale: verifica documentale per la circolazione. Annuali, sollevamento e manutenzioni restano nello scadenziario; eventuali limitazioni specifiche prevalgono. Le date non sostituiscono attestazioni o riscontri effettivi.</p>'+
+ (!ms.length?'<p>Seleziona i mezzi.</p>':lines.length?tabella(['MdO','Controllo','Dato disponibile','Completa'],lines.map(([m,name,detail])=>'<tr><td>'+esc(m.id)+'</td><td>'+esc(name)+'</td><td>'+esc(detail)+'</td><td>'+(mdoRole==='admin'?'<button class="btn" onclick="'+edit(m)+'(\''+esc(m.id)+'\')">Apri scheda</button>':'<span class="muted">Amministratore</span>')+'</td></tr>')):'<div class="note">Nessun campo essenziale mancante tra quelli censiti. Verifiche operative e documentali ancora necessarie.</div>')+
+ '<p class="small muted">Non vengono duplicati i riscontri per ogni riga. La bozza M.40 resta distinta dal documento ufficiale.</p></div>';
+}
+const mdo219OldCalcoli=calcoli;
+calcoli=function(){let html=mdo219OldCalcoli();const first=html.indexOf('<div class="panel" id="mdo217view">');const next=html.indexOf('<div class="panel"><h2>Controlli rapidi della composizione</h2>',first);if(first!==-1&&next!==-1)html=html.slice(0,first)+mdo219Route()+html.slice(next);
+ // Sostituzione delimitata dal pannello controlli e dal successivo pannello risultati.
+ const start=html.indexOf('<div class="panel"><h2>Controlli rapidi della composizione</h2>');
+ const end=html.indexOf('<div class="panel"><h2>3 · Risultati, controlli e M.40</h2>',start);
+ if(start!==-1&&end!==-1)html=html.slice(0,start)+mdo219Quick()+html.slice(end);
+ // La sezione risultati resta disponibile nei dettagli anziché costituire una seconda checklist dominante.
+ html=html.replace('<div class="panel"><h2>3 · Risultati, controlli e M.40</h2>','<div class="panel"><h2>4 · Riepilogo e stampa</h2>');
+ return html;
+};
+// Ricostruzione controllata del pannello durante aggiunta/rimozione MdO.
+const mdo219OldRefresh=refreshComp;
+refreshComp=function(){mdo219OldRefresh();const v=document.getElementById('mdo217view');if(v)v.outerHTML=mdo219Route();const c=document.getElementById('mdo219quick');if(c)c.outerHTML=mdo219Quick();};
+// Non cancellare definitivamente un MdO di impresa se è ancora usato nello storico studi.
+mdo218CompanyDelete=async function(id){
+ if(mdoRole!=='admin'||!mdoSession)return alert('Solo amministratore');
+ const m=db.mezzi.find(x=>x.id===id&&x.proprieta==='IMPRESA');if(!m||!m.archiviato)return alert('Archivia prima il mezzo di impresa.');
+ const {data,error}=await mdoClient.from('mdo_convoglio_elementi').select('id,mezzo_temporaneo').limit(1000);
+ if(error)return alert('Non posso verificare lo storico: eliminazione non disponibile. '+error.message);
+ if((data||[]).some(x=>x.mezzo_temporaneo?.id===id))return alert('MdO utilizzato in studi precedenti: conservalo archiviato.');
+ if(!confirm('Eliminare definitivamente il censimento '+id+'?'))return;
+ const code=prompt('Digita il codice del mezzo per confermare');if(code!==id)return;
+ const out=await mdoClient.from('mdo_mezzi').delete().eq('codice_sap',id);if(out.error)return alert('Eliminazione non consentita: '+out.error.message);
+ await mdoLoadRemote();render();
+};
+
 mdoBoot();
 
 </script></body></html>
